@@ -1,3 +1,4 @@
+#include "qkpch.h"
 #include "Log.h"
 
 namespace Quark {

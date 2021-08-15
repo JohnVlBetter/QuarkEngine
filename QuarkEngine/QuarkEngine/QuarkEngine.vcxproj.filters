@@ -34,6 +34,7 @@
     <ClInclude Include="src\Quark\Log.h">
       <Filter>Quark</Filter>
     </ClInclude>
+    <ClInclude Include="src\qkpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Quark\Application.cpp">
@@ -42,5 +43,6 @@
     <ClCompile Include="src\Quark\Log.cpp">
       <Filter>Quark</Filter>
     </ClCompile>
+    <ClCompile Include="src\qkpch.cpp" />
   </ItemGroup>
 </Project>

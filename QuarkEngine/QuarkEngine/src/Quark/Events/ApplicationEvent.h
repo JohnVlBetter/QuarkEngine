@@ -2,8 +2,6 @@
 
 #include "Event.h"
 
-#include <sstream>
-
 namespace Quark {
 
 	class QUARK_API WindowResizeEvent : public Event

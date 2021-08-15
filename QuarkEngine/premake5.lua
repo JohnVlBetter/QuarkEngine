@@ -18,6 +18,9 @@ project "QuarkEngine"
 	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
 
+	pchheader "qkpch.h"
+	pchsource "QuarkEngine/src/qkpch.cpp"
+
 	files
 	{
 		"%{prj.name}/src/**.h",
