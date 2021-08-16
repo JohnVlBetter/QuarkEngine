@@ -1,3 +1,6 @@
 [submodule "QuarkEngine/third/spdlog"]
 	path = QuarkEngine/third/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "QuarkEngine/third/GLFW"]
+	path = QuarkEngine/third/GLFW
+	url = https://github.com/glfw/glfw

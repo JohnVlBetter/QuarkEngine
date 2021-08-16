@@ -10,6 +10,12 @@ workspace "QuarkEngine"
 
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
+-- Include directories relative to root folder (solution directory)
+IncludeDir = {}
+IncludeDir["GLFW"] = "third/GLFW/include"
+
+include "third/GLFW"
+
 project "QuarkEngine"
 	location "QuarkEngine"
 	kind "SharedLib"
@@ -30,7 +36,14 @@ project "QuarkEngine"
 	includedirs
 	{
 		"%{prj.name}/src",
-		"third/spdlog/include"
+		"third/spdlog/include",
+		"%{IncludeDir.GLFW}"
+	}
+
+	links 
+	{ 
+		"GLFW",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -41,7 +54,8 @@ project "QuarkEngine"
 		defines
 		{
 			"QK_PLATFORM_WINDOWS",
-			"QUARK_BUILD_DLL"
+			"QUARK_BUILD_DLL",
+			"QK_ENABLE_ASSERTS"
 		}
 
 		postbuildcommands
