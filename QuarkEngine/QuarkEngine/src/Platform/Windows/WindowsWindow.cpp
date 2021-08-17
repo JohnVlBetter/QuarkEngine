@@ -5,6 +5,8 @@
 #include "Quark/Events/MouseEvent.h"
 #include "Quark/Events/KeyEvent.h"
 
+#include <glad/glad.h>
+
 namespace Quark {
 
 	static bool sGLFWInitialized = false;
@@ -49,6 +51,8 @@ namespace Quark {
 
 		mWindow = glfwCreateWindow((int)props.Width, (int)props.Height, mData.Title.c_str(), nullptr, nullptr);
 		glfwMakeContextCurrent(mWindow);
+		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
+		QK_CORE_ASSERT(status, "Failed to initialize Glad!");
 		glfwSetWindowUserPointer(mWindow, &mData);
 		SetVSync(true);
 

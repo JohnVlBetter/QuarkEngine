@@ -13,8 +13,10 @@ outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 -- Include directories relative to root folder (solution directory)
 IncludeDir = {}
 IncludeDir["GLFW"] = "third/GLFW/include"
+IncludeDir["Glad"] = "third/Glad/include"
 
 include "third/GLFW"
+include "third/Glad"
 
 project "QuarkEngine"
 	location "QuarkEngine"
@@ -37,12 +39,14 @@ project "QuarkEngine"
 	{
 		"%{prj.name}/src",
 		"third/spdlog/include",
-		"%{IncludeDir.GLFW}"
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}"
 	}
 
 	links 
 	{ 
 		"GLFW",
+		"Glad",
 		"opengl32.lib"
 	}
 
@@ -55,7 +59,8 @@ project "QuarkEngine"
 		{
 			"QK_PLATFORM_WINDOWS",
 			"QUARK_BUILD_DLL",
-			"QK_ENABLE_ASSERTS"
+			"QK_ENABLE_ASSERTS",
+			"GLFW_INCLUDE_NONE"
 		}
 
 		postbuildcommands
@@ -65,14 +70,17 @@ project "QuarkEngine"
 
 	filter "configurations:Debug"
 		defines "QK_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "QK_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "QK_DIST"
+		buildoptions "/MD"
 		optimize "On"
 
 project "Sandbox"
@@ -112,12 +120,15 @@ project "Sandbox"
 
 	filter "configurations:Debug"
 		defines "QK_DEBUG"
+		buildoptions "/MDd"
 		symbols "On"
 
 	filter "configurations:Release"
 		defines "QK_RELEASE"
+		buildoptions "/MD"
 		optimize "On"
 
 	filter "configurations:Dist"
 		defines "QK_DIST"
+		buildoptions "/MD"
 		optimize "On"

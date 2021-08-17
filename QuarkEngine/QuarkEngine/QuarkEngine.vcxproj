@@ -80,11 +80,12 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_ENABLE_ASSERTS;GLFW_INCLUDE_NONE;QK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -102,14 +103,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_ENABLE_ASSERTS;GLFW_INCLUDE_NONE;QK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -128,14 +130,15 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_ENABLE_ASSERTS;GLFW_INCLUDE_NONE;QK_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -159,6 +162,8 @@
     <ClInclude Include="src\Quark\Events\Event.h" />
     <ClInclude Include="src\Quark\Events\KeyEvent.h" />
     <ClInclude Include="src\Quark\Events\MouseEvent.h" />
+    <ClInclude Include="src\Quark\Layer.h" />
+    <ClInclude Include="src\Quark\LayerStack.h" />
     <ClInclude Include="src\Quark\Log.h" />
     <ClInclude Include="src\Quark\Window.h" />
     <ClInclude Include="src\qkpch.h" />
@@ -166,6 +171,8 @@
   <ItemGroup>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Quark\Application.cpp" />
+    <ClCompile Include="src\Quark\Layer.cpp" />
+    <ClCompile Include="src\Quark\LayerStack.cpp" />
     <ClCompile Include="src\Quark\Log.cpp" />
     <ClCompile Include="src\qkpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
@@ -174,6 +181,9 @@
   <ItemGroup>
     <ProjectReference Include="..\third\GLFW\GLFW.vcxproj">
       <Project>{154B857C-0182-860D-AA6E-6C109684020F}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third\Glad\Glad.vcxproj">
+      <Project>{BDD6857C-A90D-870D-52FA-6C103E10030F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

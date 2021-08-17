@@ -3,7 +3,7 @@
 
 #include "Log.h"
 
-#include <GLFW/glfw3.h>
+#include <glad/glad.h>
 
 namespace Quark {
 
@@ -19,12 +19,27 @@ namespace Quark {
 	{
 	}
 
+	void Application::PushLayer(Layer* layer)
+	{
+		mLayerStack.PushLayer(layer);
+	}
+
+	void Application::PushOverlay(Layer* layer)
+	{
+		mLayerStack.PushOverlay(layer);
+	}
+
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
 
-		QK_CORE_TRACE("{0}", e);
+		for (auto it = mLayerStack.end(); it != mLayerStack.begin(); )
+		{
+			(*--it)->OnEvent(e);
+			if (e.Handled)
+				break;
+		}
 	}
 
 	void Application::Run() {
@@ -32,9 +47,12 @@ namespace Quark {
 		if (e.IsInCategory(EventCategoryApplication))
 			while (mRunning)
 			{
-				QK_CORE_TRACE(e);
 				glClearColor(1, 0, 1, 1);
 				glClear(GL_COLOR_BUFFER_BIT);
+
+				for (Layer* layer : mLayerStack)
+					layer->OnUpdate();
+
 				mWindow->OnUpdate();
 			}
 		if (e.IsInCategory(EventCategoryInput))

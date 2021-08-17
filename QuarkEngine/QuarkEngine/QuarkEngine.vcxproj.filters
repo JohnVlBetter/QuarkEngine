@@ -40,6 +40,12 @@
     <ClInclude Include="src\Quark\Events\MouseEvent.h">
       <Filter>Quark\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Layer.h">
+      <Filter>Quark</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\LayerStack.h">
+      <Filter>Quark</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Log.h">
       <Filter>Quark</Filter>
     </ClInclude>
@@ -53,6 +59,12 @@
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Application.cpp">
+      <Filter>Quark</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Layer.cpp">
+      <Filter>Quark</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\LayerStack.cpp">
       <Filter>Quark</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Log.cpp">

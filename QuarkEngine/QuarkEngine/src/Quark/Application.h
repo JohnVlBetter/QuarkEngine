@@ -1,10 +1,11 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
-#include "Quark/Events/ApplicationEvent.h"
 
 #include "Window.h"
+#include "Quark/LayerStack.h"
+#include "Quark/Events/Event.h"
+#include "Quark/Events/ApplicationEvent.h"
 
 namespace Quark {
 
@@ -17,11 +18,15 @@ namespace Quark {
 		void Run();
 
 		void OnEvent(Event& e);
+
+		void PushLayer(Layer* layer);
+		void PushOverlay(Layer* layer);
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> mWindow;
 		bool mRunning = true;
+		LayerStack mLayerStack;
 	};
 
 	//to be define in client
