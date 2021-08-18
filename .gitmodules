@@ -4,3 +4,6 @@
 [submodule "QuarkEngine/third/GLFW"]
 	path = QuarkEngine/third/GLFW
 	url = https://github.com/glfw/glfw
+[submodule "QuarkEngine/third/imgui"]
+	path = QuarkEngine/third/imgui
+	url = http://github.com/ocornut/imgui

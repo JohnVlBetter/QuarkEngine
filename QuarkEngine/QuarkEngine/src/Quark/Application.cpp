@@ -9,8 +9,13 @@ namespace Quark {
 
 #define BIND_EVENT_FN(x) std::bind(&Application::x, this, std::placeholders::_1)
 
+	Application* Application::sInstance = nullptr;
+
 	Application::Application()
 	{
+		QK_CORE_ASSERT(!sInstance, "Application already exists!");
+		sInstance = this;
+
 		mWindow = std::unique_ptr<Window>(Window::Create());
 		mWindow->SetEventCallback(BIND_EVENT_FN(OnEvent));
 	}
@@ -22,11 +27,13 @@ namespace Quark {
 	void Application::PushLayer(Layer* layer)
 	{
 		mLayerStack.PushLayer(layer);
+		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer)
 	{
 		mLayerStack.PushOverlay(layer);
+		layer->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e)

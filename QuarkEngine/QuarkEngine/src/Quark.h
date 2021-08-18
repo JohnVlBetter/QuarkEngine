@@ -7,5 +7,7 @@
 #include "Quark/Layer.h"
 #include "Quark/Log.h"
 
+#include "Quark/ImGui/ImGuiLayer.h"
+
 // entry point
 #include "Quark/EntryPoint.h"

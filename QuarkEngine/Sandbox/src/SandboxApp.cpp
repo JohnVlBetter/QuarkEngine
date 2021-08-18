@@ -24,6 +24,7 @@ class Sandbox : public Quark::Application {
 public:
 	Sandbox() {
 		PushLayer(new ExampleLayer());
+		PushOverlay(new Quark::ImGuiLayer());
 	}
 	virtual ~Sandbox() {
 	

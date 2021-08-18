@@ -21,12 +21,18 @@ namespace Quark {
 
 		void PushLayer(Layer* layer);
 		void PushOverlay(Layer* layer);
+
+		inline Window& GetWindow() { return *mWindow; }
+
+		inline static Application& Get() { return *sInstance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> mWindow;
 		bool mRunning = true;
 		LayerStack mLayerStack;
+	private:
+		static Application* sInstance;
 	};
 
 	//to be define in client

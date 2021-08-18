@@ -4,6 +4,9 @@
     <Filter Include="Platform">
       <UniqueIdentifier>{2AC788B4-1694-E3BF-3FAD-D1672BD9184E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Platform\OpenGL">
+      <UniqueIdentifier>{1E7D2C1D-8A08-9AE1-9319-1DD6FF23F6E1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Platform\Windows">
       <UniqueIdentifier>{64FBD71A-50F4-F66C-7926-DCF1657ED678}</UniqueIdentifier>
     </Filter>
@@ -13,8 +16,14 @@
     <Filter Include="Quark\Events">
       <UniqueIdentifier>{CD1C67BB-B97F-F65F-6205-2F164E47C2E2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Quark\ImGui">
+      <UniqueIdentifier>{F3ECAAEE-5FA2-23E4-E896-1DBB544B1AE8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
+      <Filter>Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -40,6 +49,9 @@
     <ClInclude Include="src\Quark\Events\MouseEvent.h">
       <Filter>Quark\Events</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\ImGui\ImGuiLayer.h">
+      <Filter>Quark\ImGui</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Layer.h">
       <Filter>Quark</Filter>
     </ClInclude>
@@ -55,11 +67,17 @@
     <ClInclude Include="src\qkpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
+      <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Application.cpp">
       <Filter>Quark</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\ImGui\ImGuiLayer.cpp">
+      <Filter>Quark\ImGui</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Layer.cpp">
       <Filter>Quark</Filter>
