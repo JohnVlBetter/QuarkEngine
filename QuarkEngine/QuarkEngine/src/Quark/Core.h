@@ -10,6 +10,10 @@
 	#error Quark only supports Windows!
 #endif
 
+#ifdef QK_DEBUG
+	#define QK_ENABLE_ASSERTS
+#endif
+
 #ifdef QK_ENABLE_ASSERTS
 	#define QK_CORE_ASSERT(x, ...) { if(!(x)) { QK_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else

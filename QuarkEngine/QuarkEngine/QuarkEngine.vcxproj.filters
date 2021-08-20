@@ -24,6 +24,9 @@
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h">
       <Filter>Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
+      <Filter>Platform\Windows</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>Platform\Windows</Filter>
     </ClInclude>
@@ -52,6 +55,12 @@
     <ClInclude Include="src\Quark\ImGui\ImGuiLayer.h">
       <Filter>Quark\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Input.h">
+      <Filter>Quark</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\KeyCodes.h">
+      <Filter>Quark</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Layer.h">
       <Filter>Quark</Filter>
     </ClInclude>
@@ -59,6 +68,9 @@
       <Filter>Quark</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Log.h">
+      <Filter>Quark</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\MouseButtonCodes.h">
       <Filter>Quark</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Window.h">
@@ -69,6 +81,9 @@
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
       <Filter>Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>Platform\Windows</Filter>

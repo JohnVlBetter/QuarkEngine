@@ -10,12 +10,19 @@ public:
 
 	void OnUpdate() override
 	{
-		QK_CORE_INFO("ExampleLayer::Update");
+		if (Quark::Input::IsKeyPressed(QK_KEY_TAB))
+			QK_CORE_TRACE("Tab key is pressed (poll)!");
 	}
 
 	void OnEvent(Quark::Event& event) override
 	{
-		QK_CORE_INFO("{0}", event);
+		if (event.GetEventType() == Quark::EventType::KeyPressed)
+		{
+			Quark::KeyPressedEvent& e = (Quark::KeyPressedEvent&)event;
+			if (e.GetKeyCode() == QK_KEY_Q)
+				QK_CORE_TRACE("Tab key is pressed (event)!");
+			QK_CORE_TRACE("{0}", (char)e.GetKeyCode());
+		}
 	}
 
 };

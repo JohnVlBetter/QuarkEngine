@@ -80,12 +80,11 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_ENABLE_ASSERTS;GLFW_INCLUDE_NONE;QK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;GLFW_INCLUDE_NONE;QK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
-      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
-      <AdditionalOptions>/MDd %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -95,7 +94,7 @@
       <ImportLibrary>..\bin\Debug-windows-x86_64\QuarkEngine\QuarkEngine.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Debug-windows-x86_64\QuarkEngine\QuarkEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\QuarkEngine\QuarkEngine.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\QuarkEngine\QuarkEngine.dll ..\bin\Debug-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Debug-windows-x86_64\QuarkEngine\QuarkEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Debug-windows-x86_64\QuarkEngine\QuarkEngine.dll "..\bin\Debug-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Debug-windows-x86_64\QuarkEngine\QuarkEngine.dll "..\bin\Debug-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -103,15 +102,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_ENABLE_ASSERTS;GLFW_INCLUDE_NONE;QK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;GLFW_INCLUDE_NONE;QK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -122,7 +120,7 @@
       <ImportLibrary>..\bin\Release-windows-x86_64\QuarkEngine\QuarkEngine.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Release-windows-x86_64\QuarkEngine\QuarkEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\QuarkEngine\QuarkEngine.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\QuarkEngine\QuarkEngine.dll ..\bin\Release-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Release-windows-x86_64\QuarkEngine\QuarkEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Release-windows-x86_64\QuarkEngine\QuarkEngine.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Release-windows-x86_64\QuarkEngine\QuarkEngine.dll "..\bin\Release-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -130,15 +128,14 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;QK_ENABLE_ASSERTS;GLFW_INCLUDE_NONE;QK_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;GLFW_INCLUDE_NONE;QK_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <MinimalRebuild>false</MinimalRebuild>
       <StringPooling>true</StringPooling>
-      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
-      <AdditionalOptions>/MD %(AdditionalOptions)</AdditionalOptions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
@@ -149,11 +146,12 @@
       <ImportLibrary>..\bin\Dist-windows-x86_64\QuarkEngine\QuarkEngine.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>IF EXIST ..\bin\Dist-windows-x86_64\QuarkEngine\QuarkEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\QuarkEngine\QuarkEngine.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\QuarkEngine\QuarkEngine.dll ..\bin\Dist-windows-x86_64\Sandbox &gt; nul)</Command>
+      <Command>IF EXIST ..\bin\Dist-windows-x86_64\QuarkEngine\QuarkEngine.dll\ (xcopy /Q /E /Y /I ..\bin\Dist-windows-x86_64\QuarkEngine\QuarkEngine.dll "..\bin\Dist-windows-x86_64\Sandbox\" &gt; nul) ELSE (xcopy /Q /Y /I ..\bin\Dist-windows-x86_64\QuarkEngine\QuarkEngine.dll "..\bin\Dist-windows-x86_64\Sandbox\" &gt; nul)</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Quark.h" />
     <ClInclude Include="src\Quark\Application.h" />
@@ -164,14 +162,18 @@
     <ClInclude Include="src\Quark\Events\KeyEvent.h" />
     <ClInclude Include="src\Quark\Events\MouseEvent.h" />
     <ClInclude Include="src\Quark\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Quark\Input.h" />
+    <ClInclude Include="src\Quark\KeyCodes.h" />
     <ClInclude Include="src\Quark\Layer.h" />
     <ClInclude Include="src\Quark\LayerStack.h" />
     <ClInclude Include="src\Quark\Log.h" />
+    <ClInclude Include="src\Quark\MouseButtonCodes.h" />
     <ClInclude Include="src\Quark\Window.h" />
     <ClInclude Include="src\qkpch.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Quark\Application.cpp" />
     <ClCompile Include="src\Quark\ImGui\ImGuiLayer.cpp" />
