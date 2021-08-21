@@ -1,2 +1,2 @@
 # QuarkEngine
-render and game
+Used in games and rendering related
