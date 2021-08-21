@@ -1,5 +1,7 @@
 #include <Quark.h>
 
+#include "imgui/imgui.h"
+
 class ExampleLayer : public Quark::Layer
 {
 public:
@@ -12,6 +14,13 @@ public:
 	{
 		if (Quark::Input::IsKeyPressed(QK_KEY_TAB))
 			QK_CORE_TRACE("Tab key is pressed (poll)!");
+	}
+
+	virtual void OnImGuiRender() override
+	{
+		ImGui::Begin("Test");
+		ImGui::Text("Hello World");
+		ImGui::End();
 	}
 
 	void OnEvent(Quark::Event& event) override
@@ -31,7 +40,6 @@ class Sandbox : public Quark::Application {
 public:
 	Sandbox() {
 		PushLayer(new ExampleLayer());
-		PushOverlay(new Quark::ImGuiLayer());
 	}
 	virtual ~Sandbox() {
 	

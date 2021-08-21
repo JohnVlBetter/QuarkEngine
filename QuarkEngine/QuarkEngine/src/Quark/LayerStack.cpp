@@ -5,7 +5,6 @@ namespace Quark {
 
 	LayerStack::LayerStack()
 	{
-		mLayerInsert = mLayers.begin();
 	}
 
 	LayerStack::~LayerStack()
@@ -16,7 +15,8 @@ namespace Quark {
 
 	void LayerStack::PushLayer(Layer* layer)
 	{
-		mLayerInsert = mLayers.emplace(mLayerInsert, layer);
+		mLayers.emplace(mLayers.begin() + mLayerInsertIndex, layer);
+		mLayerInsertIndex++;
 	}
 
 	void LayerStack::PushOverlay(Layer* overlay)
@@ -30,7 +30,7 @@ namespace Quark {
 		if (it != mLayers.end())
 		{
 			mLayers.erase(it);
-			mLayerInsert--;
+			mLayerInsertIndex--;
 		}
 	}
 

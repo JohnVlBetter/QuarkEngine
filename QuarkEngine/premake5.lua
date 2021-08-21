@@ -110,6 +110,7 @@ project "Sandbox"
 	{
 		"third/spdlog/include",
 		"QuarkEngine/src",
+		"third",
 		"%{IncludeDir.glm}"
 	}
 

@@ -565,7 +565,6 @@
     <ClInclude Include="..\third\glm\glm\vec3.hpp" />
     <ClInclude Include="..\third\glm\glm\vec4.hpp" />
     <ClInclude Include="..\third\glm\glm\vector_relational.hpp" />
-    <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Quark.h" />
@@ -587,10 +586,10 @@
     <ClInclude Include="src\qkpch.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Quark\Application.cpp" />
+    <ClCompile Include="src\Quark\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Quark\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Quark\Layer.cpp" />
     <ClCompile Include="src\Quark\LayerStack.cpp" />

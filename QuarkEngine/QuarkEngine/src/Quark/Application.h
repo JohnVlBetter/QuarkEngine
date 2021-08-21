@@ -7,6 +7,8 @@
 #include "Quark/Events/Event.h"
 #include "Quark/Events/ApplicationEvent.h"
 
+#include "Quark/ImGui/ImGuiLayer.h"
+
 namespace Quark {
 
 	class QUARK_API Application
@@ -29,6 +31,7 @@ namespace Quark {
 		bool OnWindowClose(WindowCloseEvent& e);
 
 		std::unique_ptr<Window> mWindow;
+		ImGuiLayer* mImGuiLayer;
 		bool mRunning = true;
 		LayerStack mLayerStack;
 	private:
