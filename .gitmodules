@@ -7,3 +7,6 @@
 [submodule "QuarkEngine/third/imgui"]
 	path = QuarkEngine/third/imgui
 	url = http://github.com/ocornut/imgui
+[submodule "QuarkEngine/third/glm"]
+	path = QuarkEngine/third/glm
+	url = https://github.com/g-truc/glm

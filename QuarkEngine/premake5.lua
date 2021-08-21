@@ -16,6 +16,8 @@ IncludeDir = {}
 IncludeDir["GLFW"] = "third/GLFW/include"
 IncludeDir["Glad"] = "third/Glad/include"
 IncludeDir["ImGui"] = "third/imgui"
+IncludeDir["glm"] = "third/glm"
+
 
 include "third/GLFW"
 include "third/Glad"
@@ -36,7 +38,9 @@ project "QuarkEngine"
 	files
 	{
 		"%{prj.name}/src/**.h",
-		"%{prj.name}/src/**.cpp"
+		"%{prj.name}/src/**.cpp",
+		"third/glm/**.hpp",
+		"third/glm/**.inl"
 	}
 
 	includedirs
@@ -45,7 +49,8 @@ project "QuarkEngine"
 		"third/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}"
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.glm}"
 	}
 
 	links 
@@ -104,7 +109,8 @@ project "Sandbox"
 	includedirs
 	{
 		"third/spdlog/include",
-		"QuarkEngine/src"
+		"QuarkEngine/src",
+		"%{IncludeDir.glm}"
 	}
 
 	links
