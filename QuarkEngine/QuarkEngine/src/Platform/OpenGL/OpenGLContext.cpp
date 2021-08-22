@@ -18,6 +18,13 @@ namespace Quark {
 		glfwMakeContextCurrent(mWindowHandle);
 		int status = gladLoadGLLoader((GLADloadproc)glfwGetProcAddress);
 		QK_CORE_ASSERT(status, "Failed to initialize Glad!");
+
+		QK_CORE_INFO("---------------------------------------");
+		QK_CORE_INFO("OpenGL Info:");
+		QK_CORE_INFO("  Vendor: {0}", glGetString(GL_VENDOR));
+		QK_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
+		QK_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
+		QK_CORE_INFO("---------------------------------------");
 	}
 
 	void OpenGLContext::SwapBuffers()

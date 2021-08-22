@@ -34,6 +34,8 @@ namespace Quark {
 		ImGuiLayer* mImGuiLayer;
 		bool mRunning = true;
 		LayerStack mLayerStack;
+
+		unsigned int mVertexArray, mVertexBuffer, mIndexBuffer;
 	private:
 		static Application* sInstance;
 	};
