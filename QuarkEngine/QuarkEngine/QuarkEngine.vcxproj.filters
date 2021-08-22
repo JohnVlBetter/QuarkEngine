@@ -7,6 +7,9 @@
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Platform\OpenGL">
+      <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Platform\Windows">
       <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
@@ -18,6 +21,9 @@
     </Filter>
     <Filter Include="src\Quark\ImGui">
       <UniqueIdentifier>{8A208506-F6AB-F2CA-FFBC-75BF6BC74ECB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Quark\Renderer">
+      <UniqueIdentifier>{06B38086-F296-41DC-5BF7-3B2F47FA2B5E}</UniqueIdentifier>
     </Filter>
     <Filter Include="third">
       <UniqueIdentifier>{C0EF6C10-2C04-95C1-F585-3821615991F2}</UniqueIdentifier>
@@ -1287,6 +1293,9 @@
     <ClInclude Include="..\third\glm\glm\vector_relational.hpp">
       <Filter>third\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -1338,6 +1347,9 @@
     <ClInclude Include="src\Quark\MouseButtonCodes.h">
       <Filter>src\Quark</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\GraphicsContext.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Window.h">
       <Filter>src\Quark</Filter>
     </ClInclude>
@@ -1346,6 +1358,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>

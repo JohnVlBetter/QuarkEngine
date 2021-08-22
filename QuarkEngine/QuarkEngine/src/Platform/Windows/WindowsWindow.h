@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Quark/Window.h"
+#include "Quark/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>
 
@@ -28,6 +29,7 @@ namespace Quark {
 		virtual void Shutdown();
 	private:
 		GLFWwindow* mWindow;
+		GraphicsContext* mContext;
 
 		struct WindowData
 		{

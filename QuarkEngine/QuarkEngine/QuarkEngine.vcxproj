@@ -556,6 +556,7 @@
     <ClInclude Include="..\third\glm\glm\vec3.hpp" />
     <ClInclude Include="..\third\glm\glm\vec4.hpp" />
     <ClInclude Include="..\third\glm\glm\vector_relational.hpp" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\Windows\WindowsInput.h" />
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\Quark.h" />
@@ -573,10 +574,12 @@
     <ClInclude Include="src\Quark\LayerStack.h" />
     <ClInclude Include="src\Quark\Log.h" />
     <ClInclude Include="src\Quark\MouseButtonCodes.h" />
+    <ClInclude Include="src\Quark\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Quark\Window.h" />
     <ClInclude Include="src\qkpch.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Quark\Application.cpp" />
