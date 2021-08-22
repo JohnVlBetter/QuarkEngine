@@ -13,6 +13,8 @@
 #include "Quark/Renderer/Buffer.h"
 #include "Quark/Renderer/VertexArray.h"
 
+#include "Quark/Renderer/OrthographicCamera.h"
+
 namespace Quark {
 
 	class QUARK_API Application
@@ -44,6 +46,8 @@ namespace Quark {
 
 		std::shared_ptr<Shader> mBlueShader;
 		std::shared_ptr<VertexArray> mSquareVA;
+
+		OrthographicCamera mCamera;
 	private:
 		static Application* sInstance;
 	};

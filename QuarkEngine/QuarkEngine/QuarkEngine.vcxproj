@@ -579,6 +579,7 @@
     <ClInclude Include="src\Quark\MouseButtonCodes.h" />
     <ClInclude Include="src\Quark\Renderer\Buffer.h" />
     <ClInclude Include="src\Quark\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Quark\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Quark\Renderer\RenderCommand.h" />
     <ClInclude Include="src\Quark\Renderer\Renderer.h" />
     <ClInclude Include="src\Quark\Renderer\RendererAPI.h" />
@@ -601,6 +602,7 @@
     <ClCompile Include="src\Quark\LayerStack.cpp" />
     <ClCompile Include="src\Quark\Log.cpp" />
     <ClCompile Include="src\Quark\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Quark\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Quark\Renderer\RenderCommand.cpp" />
     <ClCompile Include="src\Quark\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Quark\Renderer\RendererAPI.cpp" />

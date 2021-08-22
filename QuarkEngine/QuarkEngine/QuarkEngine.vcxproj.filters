@@ -1362,6 +1362,9 @@
     <ClInclude Include="src\Quark\Renderer\GraphicsContext.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\OrthographicCamera.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Renderer\RenderCommand.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
@@ -1422,6 +1425,9 @@
       <Filter>src\Quark</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Renderer\Buffer.cpp">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\OrthographicCamera.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Renderer\RenderCommand.cpp">
