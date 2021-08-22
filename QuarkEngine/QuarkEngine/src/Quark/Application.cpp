@@ -3,7 +3,7 @@
 
 #include "Log.h"
 
-#include <glad/glad.h>
+#include "Quark/Renderer/Renderer.h"
 
 #include "Input.h"
 
@@ -157,16 +157,18 @@ namespace Quark {
 		if (e.IsInCategory(EventCategoryApplication))
 			while (mRunning)
 			{
-				glClearColor(0.1f, 0.1f, 0.1f, 1);
-				glClear(GL_COLOR_BUFFER_BIT);
+				RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+				RenderCommand::Clear();
+
+				Renderer::BeginScene();
 
 				mBlueShader->Bind();
-				mSquareVA->Bind();
-				glDrawElements(GL_TRIANGLES, mSquareVA->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+				Renderer::Submit(mSquareVA);
 
 				mShader->Bind();
-				mVertexArray->Bind();
-				glDrawElements(GL_TRIANGLES, mVertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+				Renderer::Submit(mVertexArray);
+
+				Renderer::EndScene();
 
 				for (Layer* layer : mLayerStack)
 					layer->OnUpdate();
