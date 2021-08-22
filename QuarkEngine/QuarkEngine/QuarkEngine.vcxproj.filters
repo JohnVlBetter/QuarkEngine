@@ -1299,6 +1299,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsInput.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -1362,6 +1365,9 @@
     <ClInclude Include="src\Quark\Renderer\Shader.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\VertexArray.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Window.h">
       <Filter>src\Quark</Filter>
     </ClInclude>
@@ -1374,6 +1380,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
@@ -1407,6 +1416,9 @@
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Renderer\Shader.cpp">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\VertexArray.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">

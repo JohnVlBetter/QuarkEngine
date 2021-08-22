@@ -11,6 +11,7 @@
 
 #include "Quark/Renderer/Shader.h"
 #include "Quark/Renderer/Buffer.h"
+#include "Quark/Renderer/VertexArray.h"
 
 namespace Quark {
 
@@ -38,10 +39,11 @@ namespace Quark {
 		bool mRunning = true;
 		LayerStack mLayerStack;
 
-		unsigned int mVertexArray;
-		std::unique_ptr<Shader> mShader;
-		std::unique_ptr<VertexBuffer> mVertexBuffer;
-		std::unique_ptr<IndexBuffer> mIndexBuffer;
+		std::shared_ptr<Shader> mShader;
+		std::shared_ptr<VertexArray> mVertexArray;
+
+		std::shared_ptr<Shader> mBlueShader;
+		std::shared_ptr<VertexArray> mSquareVA;
 	private:
 		static Application* sInstance;
 	};
