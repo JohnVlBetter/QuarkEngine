@@ -9,6 +9,9 @@
 
 #include "Quark/ImGui/ImGuiLayer.h"
 
+#include "Quark/Renderer/Shader.h"
+#include "Quark/Renderer/Buffer.h"
+
 namespace Quark {
 
 	class QUARK_API Application
@@ -35,7 +38,10 @@ namespace Quark {
 		bool mRunning = true;
 		LayerStack mLayerStack;
 
-		unsigned int mVertexArray, mVertexBuffer, mIndexBuffer;
+		unsigned int mVertexArray;
+		std::unique_ptr<Shader> mShader;
+		std::unique_ptr<VertexBuffer> mVertexBuffer;
+		std::unique_ptr<IndexBuffer> mIndexBuffer;
 	private:
 		static Application* sInstance;
 	};
