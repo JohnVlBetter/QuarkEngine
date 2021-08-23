@@ -1392,6 +1392,9 @@
     <ClInclude Include="src\Quark\Core\Timestep.h">
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
@@ -1453,6 +1456,9 @@
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

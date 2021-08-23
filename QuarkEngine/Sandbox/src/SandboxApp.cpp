@@ -1,8 +1,11 @@
 #include <Quark.h>
 
+#include "Platform/OpenGL/OpenGLShader.h"
+
 #include "imgui/imgui.h"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
 class ExampleLayer : public Quark::Layer
 {
@@ -84,9 +87,9 @@ public:
 			}
 		)";
 
-		mShader.reset(new Quark::Shader(vertexSrc, fragmentSrc));
+		mShader.reset(Quark::Shader::Create(vertexSrc, fragmentSrc));
 
-		std::string blueShaderVertexSrc = R"(
+		std::string flatColorShaderVertexSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) in vec3 a_Position;
@@ -101,18 +104,19 @@ public:
 			}
 		)";
 
-		std::string blueShaderFragmentSrc = R"(
+		std::string flatColorShaderFragmentSrc = R"(
 			#version 330 core
 			
 			layout(location = 0) out vec4 color;
 			in vec3 v_Position;
+			uniform vec3 u_Color;
 			void main()
 			{
-				color = vec4(0.2, 0.3, 0.8, 1.0);
+				color = vec4(u_Color, 1.0);
 			}
 		)";
 
-		mBlueShader.reset(new Quark::Shader(blueShaderVertexSrc, blueShaderFragmentSrc));
+		mFlatColorShader.reset(Quark::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
 	}
 
 	void OnUpdate(Quark::Timestep ts) override
@@ -142,13 +146,17 @@ public:
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
+		std::dynamic_pointer_cast<Quark::OpenGLShader>(mFlatColorShader)->Bind();
+		std::dynamic_pointer_cast<Quark::OpenGLShader>(mFlatColorShader)->UploadUniformFloat3("u_Color", mSquareColor);
+
+
 		for (int y = 0; y < 20; y++)
 		{
 			for (int x = 0; x < 20; x++)
 			{
 				glm::vec3 pos(x * 0.11f, y * 0.11f, 0.0f);
 				glm::mat4 transform = glm::translate(glm::mat4(1.0f), pos) * scale;
-				Quark::Renderer::Submit(mBlueShader, mSquareVA, transform);
+				Quark::Renderer::Submit(mFlatColorShader, mSquareVA, transform);
 			}
 		}
 		Quark::Renderer::Submit(mShader, mVertexArray);
@@ -158,7 +166,9 @@ public:
 
 	virtual void OnImGuiRender() override
 	{
-
+		ImGui::Begin("Settings");
+		ImGui::ColorEdit3("Square Color", glm::value_ptr(mSquareColor));
+		ImGui::End();
 	}
 
 	void OnEvent(Quark::Event& event) override
@@ -169,7 +179,7 @@ public:
 		std::shared_ptr<Quark::Shader> mShader;
 		std::shared_ptr<Quark::VertexArray> mVertexArray;
 
-		std::shared_ptr<Quark::Shader> mBlueShader;
+		std::shared_ptr<Quark::Shader> mFlatColorShader;
 		std::shared_ptr<Quark::VertexArray> mSquareVA;
 
 		Quark::OrthographicCamera mCamera;
@@ -178,6 +188,8 @@ public:
 
 		float mCameraRotation = 0.0f;
 		float mCameraRotationSpeed = 180.0f;
+
+		glm::vec3 mSquareColor = { 0.2f, 0.3f, 0.8f };
 };
 
 class Sandbox : public Quark::Application {
