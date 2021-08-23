@@ -46,6 +46,9 @@
     <Filter Include="third\glm\glm\gtx">
       <UniqueIdentifier>{409E80A2-ACB4-7E38-F52B-0A5A61814FC0}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Quark\Core">
+      <UniqueIdentifier>{0418f98f-84ff-4c32-9066-e1fa3ca1d64c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\third\glm\glm\common.hpp">
@@ -1385,6 +1388,9 @@
     </ClInclude>
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\Timestep.h">
+      <Filter>src\Quark\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -7,17 +7,12 @@
 #include "Quark/Events/Event.h"
 #include "Quark/Events/ApplicationEvent.h"
 
+#include "Quark/Core/Timestep.h"
 #include "Quark/ImGui/ImGuiLayer.h"
-
-#include "Quark/Renderer/Shader.h"
-#include "Quark/Renderer/Buffer.h"
-#include "Quark/Renderer/VertexArray.h"
-
-#include "Quark/Renderer/OrthographicCamera.h"
 
 namespace Quark {
 
-	class QUARK_API Application
+	class Application
 	{
 	public:
 		Application();
@@ -41,13 +36,7 @@ namespace Quark {
 		bool mRunning = true;
 		LayerStack mLayerStack;
 
-		std::shared_ptr<Shader> mShader;
-		std::shared_ptr<VertexArray> mVertexArray;
-
-		std::shared_ptr<Shader> mBlueShader;
-		std::shared_ptr<VertexArray> mSquareVA;
-
-		OrthographicCamera mCamera;
+		float mLastFrameTime = 0.0f;
 	private:
 		static Application* sInstance;
 	};

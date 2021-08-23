@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Quark/Core.h"
+#include "Quark/Core/Timestep.h"
 #include "Quark/Events/Event.h"
 
 namespace Quark {
@@ -13,7 +14,7 @@ namespace Quark {
 
 		virtual void OnAttach() {}
 		virtual void OnDetach() {}
-		virtual void OnUpdate() {}
+		virtual void OnUpdate(Timestep ts) {}
 		virtual void OnImGuiRender() {}
 		virtual void OnEvent(Event& event) {}
 
