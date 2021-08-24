@@ -1314,6 +1314,9 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -1392,6 +1395,9 @@
     <ClInclude Include="src\Quark\Renderer\Shader.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\Texture.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Renderer\VertexArray.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
@@ -1400,12 +1406,6 @@
     </ClInclude>
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\Renderer\Texture.h">
-      <Filter>src\Quark\Renderer</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
-      <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1422,6 +1422,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
@@ -1469,17 +1472,14 @@
     <ClCompile Include="src\Quark\Renderer\Shader.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\Texture.cpp">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\Quark\Renderer\VertexArray.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Quark\Renderer\Texture.cpp">
-      <Filter>src\Quark\Renderer</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
-      <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
