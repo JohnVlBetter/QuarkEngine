@@ -16,6 +16,9 @@
     <Filter Include="src\Quark">
       <UniqueIdentifier>{60A3B7B3-CC0D-6C2A-154C-1DD081F5497F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Quark\Core">
+      <UniqueIdentifier>{B8E35DBA-A4B1-51C0-8D45-C2E679B22D25}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Quark\Events">
       <UniqueIdentifier>{44C387CE-30BC-A620-59EE-8BA54546862C}</UniqueIdentifier>
     </Filter>
@@ -46,8 +49,8 @@
     <Filter Include="third\glm\glm\gtx">
       <UniqueIdentifier>{409E80A2-ACB4-7E38-F52B-0A5A61814FC0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Quark\Core">
-      <UniqueIdentifier>{0418f98f-84ff-4c32-9066-e1fa3ca1d64c}</UniqueIdentifier>
+    <Filter Include="third\stb_image">
+      <UniqueIdentifier>{5A50E696-C6DB-535B-CFEC-D64F3BF7AF5B}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1296,6 +1299,9 @@
     <ClInclude Include="..\third\glm\glm\vector_relational.hpp">
       <Filter>third\glm\glm</Filter>
     </ClInclude>
+    <ClInclude Include="..\third\stb_image\stb_image.h">
+      <Filter>third\stb_image</Filter>
+    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
@@ -1303,6 +1309,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
@@ -1322,6 +1331,9 @@
     </ClInclude>
     <ClInclude Include="src\Quark\Core.h">
       <Filter>src\Quark</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\Timestep.h">
+      <Filter>src\Quark\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\EntryPoint.h">
       <Filter>src\Quark</Filter>
@@ -1389,14 +1401,17 @@
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Core\Timestep.h">
-      <Filter>src\Quark\Core</Filter>
+    <ClInclude Include="src\Quark\Renderer\Texture.h">
+      <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\third\stb_image\stb_image.cpp">
+      <Filter>third\stb_image</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1404,6 +1419,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
@@ -1457,7 +1475,10 @@
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+    <ClCompile Include="src\Quark\Renderer\Texture.cpp">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
   </ItemGroup>

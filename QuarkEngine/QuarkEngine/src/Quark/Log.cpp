@@ -3,8 +3,8 @@
 
 namespace Quark {
 
-	std::shared_ptr<spdlog::logger> Log::mCoreLogger;
-	std::shared_ptr<spdlog::logger> Log::mClientLogger;
+	SPtr<spdlog::logger> Log::mCoreLogger;
+	SPtr<spdlog::logger> Log::mClientLogger;
 
 	void Log::Init() {
 		spdlog::set_pattern("%^[%l][%T]%n: %v%$");

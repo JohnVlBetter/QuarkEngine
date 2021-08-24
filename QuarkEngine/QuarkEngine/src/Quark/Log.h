@@ -12,11 +12,11 @@ namespace Quark {
 	public:
 		static void Init();
 
-		inline static std::shared_ptr<spdlog::logger>& GetCoreLogger() { return mCoreLogger; }
-		inline static std::shared_ptr<spdlog::logger>& GetClientLogger() { return mClientLogger; }
+		inline static SPtr<spdlog::logger>& GetCoreLogger() { return mCoreLogger; }
+		inline static SPtr<spdlog::logger>& GetClientLogger() { return mClientLogger; }
 	private:
-		static std::shared_ptr<spdlog::logger> mCoreLogger;
-		static std::shared_ptr<spdlog::logger> mClientLogger;
+		static SPtr<spdlog::logger> mCoreLogger;
+		static SPtr<spdlog::logger> mClientLogger;
 	};
 }
 

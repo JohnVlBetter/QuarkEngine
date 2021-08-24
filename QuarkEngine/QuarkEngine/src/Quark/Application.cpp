@@ -20,7 +20,7 @@ namespace Quark {
 		QK_CORE_ASSERT(!sInstance, "Application already exists!");
 		sInstance = this;
 
-		mWindow = std::unique_ptr<Window>(Window::Create());
+		mWindow = UPtr<Window>(Window::Create());
 		mWindow->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
 		mImGuiLayer = new ImGuiLayer();

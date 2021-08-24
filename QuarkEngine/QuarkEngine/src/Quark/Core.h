@@ -1,5 +1,7 @@
 #pragma once
 
+#include <memory>
+
 #ifdef QK_PLATFORM_WINDOWS
 	#if QK_DYNAMIC_LINK
 		#ifdef QUARK_BUILD_DLL
@@ -26,4 +28,14 @@
 
 #define BIT(x) (1 << x) 
 
-#define QK_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1) 
+#define QK_BIND_EVENT_FN(fn) std::bind(&fn, this, std::placeholders::_1)
+
+namespace Quark {
+
+	template<typename T>
+	using UPtr = std::unique_ptr<T>;
+
+	template<typename T>
+	using SPtr = std::shared_ptr<T>;
+
+}

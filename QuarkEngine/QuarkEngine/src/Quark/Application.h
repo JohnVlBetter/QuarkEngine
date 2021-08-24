@@ -31,7 +31,7 @@ namespace Quark {
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
 
-		std::unique_ptr<Window> mWindow;
+		UPtr<Window> mWindow;
 		ImGuiLayer* mImGuiLayer;
 		bool mRunning = true;
 		LayerStack mLayerStack;

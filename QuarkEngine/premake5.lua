@@ -17,6 +17,7 @@ IncludeDir["GLFW"] = "third/GLFW/include"
 IncludeDir["Glad"] = "third/Glad/include"
 IncludeDir["ImGui"] = "third/imgui"
 IncludeDir["glm"] = "third/glm"
+IncludeDir["stb_image"] = "third/stb_image"
 
 
 include "third/GLFW"
@@ -40,6 +41,8 @@ project "QuarkEngine"
 	{
 		"%{prj.name}/src/**.h",
 		"%{prj.name}/src/**.cpp",
+		"third/stb_image/**.h",
+		"third/stb_image/**.cpp",
 		"third/glm/**.hpp",
 		"third/glm/**.inl"
 	}
@@ -56,7 +59,8 @@ project "QuarkEngine"
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.stb_image}"
 	}
 
 	links 

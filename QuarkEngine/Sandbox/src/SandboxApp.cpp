@@ -21,7 +21,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		std::shared_ptr<Quark::VertexBuffer> vertexBuffer;
+		Quark::SPtr<Quark::VertexBuffer> vertexBuffer;
 		vertexBuffer.reset(Quark::VertexBuffer::Create(vertices, sizeof(vertices)));
 		Quark::BufferLayout layout = {
 			{ Quark::ShaderDataType::Float3, "a_Position" },
@@ -31,28 +31,29 @@ public:
 		mVertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		std::shared_ptr<Quark::IndexBuffer> indexBuffer;
+		Quark::SPtr<Quark::IndexBuffer> indexBuffer;
 		indexBuffer.reset(Quark::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		mVertexArray->SetIndexBuffer(indexBuffer);
 
 		mSquareVA.reset(Quark::VertexArray::Create());
 
-		float squareVertices[3 * 4] = {
-			-0.5f, -0.5f, 0.0f,
-			 0.5f, -0.5f, 0.0f,
-			 0.5f,  0.5f, 0.0f,
-			-0.5f,  0.5f, 0.0f
+		float squareVertices[5 * 4] = {
+			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		std::shared_ptr<Quark::VertexBuffer> squareVB;
+		Quark::SPtr<Quark::VertexBuffer> squareVB;
 		squareVB.reset(Quark::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
 		squareVB->SetLayout({
-			{ Quark::ShaderDataType::Float3, "a_Position" }
+			{ Quark::ShaderDataType::Float3, "a_Position" },
+			{ Quark::ShaderDataType::Float2, "a_TexCoord" }
 			});
 		mSquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		std::shared_ptr<Quark::IndexBuffer> squareIB;
+		Quark::SPtr<Quark::IndexBuffer> squareIB;
 		squareIB.reset(Quark::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
 		mSquareVA->SetIndexBuffer(squareIB);
 
@@ -117,6 +118,41 @@ public:
 		)";
 
 		mFlatColorShader.reset(Quark::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+
+		std::string textureShaderVertexSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) in vec3 a_Position;
+			layout(location = 1) in vec2 a_TexCoord;
+			uniform mat4 u_ViewProjection;
+			uniform mat4 u_Transform;
+			out vec2 v_TexCoord;
+			void main()
+			{
+				v_TexCoord = a_TexCoord;
+				gl_Position = u_ViewProjection * u_Transform * vec4(a_Position, 1.0);	
+			}
+		)";
+
+		std::string textureShaderFragmentSrc = R"(
+			#version 330 core
+			
+			layout(location = 0) out vec4 color;
+			in vec2 v_TexCoord;
+			
+			uniform sampler2D u_Texture;
+			void main()
+			{
+				color = texture(u_Texture, v_TexCoord);
+			}
+		)";
+
+		mTextureShader.reset(Quark::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
+
+		mTexture = Quark::Texture2D::Create("assets/textures/scene.jpg");
+
+		std::dynamic_pointer_cast<Quark::OpenGLShader>(mTextureShader)->Bind();
+		std::dynamic_pointer_cast<Quark::OpenGLShader>(mTextureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Quark::Timestep ts) override
@@ -159,7 +195,11 @@ public:
 				Quark::Renderer::Submit(mFlatColorShader, mSquareVA, transform);
 			}
 		}
-		Quark::Renderer::Submit(mShader, mVertexArray);
+		mTexture->Bind();
+		Quark::Renderer::Submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
+		// Triangle
+		// Quark::Renderer::Submit(mShader, mVertexArray);
 
 		Quark::Renderer::EndScene();
 	}
@@ -176,11 +216,13 @@ public:
 
 	}
 	private:
-		std::shared_ptr<Quark::Shader> mShader;
-		std::shared_ptr<Quark::VertexArray> mVertexArray;
+		Quark::SPtr<Quark::Shader> mShader;
+		Quark::SPtr<Quark::VertexArray> mVertexArray;
 
-		std::shared_ptr<Quark::Shader> mFlatColorShader;
-		std::shared_ptr<Quark::VertexArray> mSquareVA;
+		Quark::SPtr<Quark::Shader> mFlatColorShader, mTextureShader;
+		Quark::SPtr<Quark::VertexArray> mSquareVA;
+
+		Quark::SPtr<Quark::Texture2D> mTexture;
 
 		Quark::OrthographicCamera mCamera;
 		glm::vec3 mCameraPosition;
