@@ -88,7 +88,7 @@ public:
 			}
 		)";
 
-		mShader.reset(Quark::Shader::Create(vertexSrc, fragmentSrc));
+		mShader = Quark::Shader::Create("VertexPosColor", vertexSrc, fragmentSrc);
 
 		std::string flatColorShaderVertexSrc = R"(
 			#version 330 core
@@ -117,15 +117,15 @@ public:
 			}
 		)";
 
-		mFlatColorShader.reset(Quark::Shader::Create(flatColorShaderVertexSrc, flatColorShaderFragmentSrc));
+		mFlatColorShader = Quark::Shader::Create("VextexPosColor", flatColorShaderVertexSrc, flatColorShaderFragmentSrc);
 
-		mTextureShader.reset(Quark::Shader::Create("assets/shaders/Texture.glsl"));
+		auto textureShader = mShaderLibrary.Load("assets/shaders/Texture.glsl");
 
 		mTexture = Quark::Texture2D::Create("assets/textures/scene.jpg");
 		mLogoTexture = Quark::Texture2D::Create("assets/textures/logo.png");
 
-		std::dynamic_pointer_cast<Quark::OpenGLShader>(mTextureShader)->Bind();
-		std::dynamic_pointer_cast<Quark::OpenGLShader>(mTextureShader)->UploadUniformInt("u_Texture", 0);
+		std::dynamic_pointer_cast<Quark::OpenGLShader>(textureShader)->Bind();
+		std::dynamic_pointer_cast<Quark::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Quark::Timestep ts) override
@@ -168,11 +168,12 @@ public:
 				Quark::Renderer::Submit(mFlatColorShader, mSquareVA, transform);
 			}
 		}
-		mTexture->Bind();
-		Quark::Renderer::Submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		auto textureShader = mShaderLibrary.Get("Texture");
 
+		mTexture->Bind();
+		Quark::Renderer::Submit(textureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 		mLogoTexture->Bind();
-		Quark::Renderer::Submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+		Quark::Renderer::Submit(textureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
 		// Triangle
 		// Quark::Renderer::Submit(mShader, mVertexArray);
@@ -192,10 +193,11 @@ public:
 
 	}
 	private:
+		Quark::ShaderLibrary mShaderLibrary;
 		Quark::SPtr<Quark::Shader> mShader;
 		Quark::SPtr<Quark::VertexArray> mVertexArray;
 
-		Quark::SPtr<Quark::Shader> mFlatColorShader, mTextureShader;
+		Quark::SPtr<Quark::Shader> mFlatColorShader;
 		Quark::SPtr<Quark::VertexArray> mSquareVA;
 
 		Quark::SPtr<Quark::Texture2D> mTexture, mLogoTexture;
