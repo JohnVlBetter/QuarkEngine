@@ -150,6 +150,7 @@ public:
 		mTextureShader.reset(Quark::Shader::Create(textureShaderVertexSrc, textureShaderFragmentSrc));
 
 		mTexture = Quark::Texture2D::Create("assets/textures/scene.jpg");
+		mLogoTexture = Quark::Texture2D::Create("assets/textures/logo.png");
 
 		std::dynamic_pointer_cast<Quark::OpenGLShader>(mTextureShader)->Bind();
 		std::dynamic_pointer_cast<Quark::OpenGLShader>(mTextureShader)->UploadUniformInt("u_Texture", 0);
@@ -198,6 +199,9 @@ public:
 		mTexture->Bind();
 		Quark::Renderer::Submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
 
+		mLogoTexture->Bind();
+		Quark::Renderer::Submit(mTextureShader, mSquareVA, glm::scale(glm::mat4(1.0f), glm::vec3(1.5f)));
+
 		// Triangle
 		// Quark::Renderer::Submit(mShader, mVertexArray);
 
@@ -222,7 +226,7 @@ public:
 		Quark::SPtr<Quark::Shader> mFlatColorShader, mTextureShader;
 		Quark::SPtr<Quark::VertexArray> mSquareVA;
 
-		Quark::SPtr<Quark::Texture2D> mTexture;
+		Quark::SPtr<Quark::Texture2D> mTexture, mLogoTexture;
 
 		Quark::OrthographicCamera mCamera;
 		glm::vec3 mCameraPosition;

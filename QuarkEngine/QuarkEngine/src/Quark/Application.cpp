@@ -23,6 +23,8 @@ namespace Quark {
 		mWindow = UPtr<Window>(Window::Create());
 		mWindow->SetEventCallback(BIND_EVENT_FN(OnEvent));
 
+		Renderer::Init();
+
 		mImGuiLayer = new ImGuiLayer();
 		PushOverlay(mImGuiLayer);
 	}
