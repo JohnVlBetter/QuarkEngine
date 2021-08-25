@@ -11,7 +11,7 @@ class ExampleLayer : public Quark::Layer
 {
 public:
 	ExampleLayer()
-		: Layer("Example"), mCamera(-1.6f, 1.6f, -0.9f, 0.9f), mCameraPosition(0.0f)
+		: Layer("Example"), mCameraController(1280.0f / 720.0f)
 	{
 		mVertexArray.reset(Quark::VertexArray::Create());
 
@@ -130,28 +130,14 @@ public:
 
 	void OnUpdate(Quark::Timestep ts) override
 	{
-		if (Quark::Input::IsKeyPressed(QK_KEY_LEFT))
-			mCameraPosition.x -= mCameraMoveSpeed * ts;
-		else if (Quark::Input::IsKeyPressed(QK_KEY_RIGHT))
-			mCameraPosition.x += mCameraMoveSpeed * ts;
-
-		if (Quark::Input::IsKeyPressed(QK_KEY_UP))
-			mCameraPosition.y += mCameraMoveSpeed * ts;
-		else if (Quark::Input::IsKeyPressed(QK_KEY_DOWN))
-			mCameraPosition.y -= mCameraMoveSpeed * ts;
-
-		if (Quark::Input::IsKeyPressed(QK_KEY_A))
-			mCameraRotation += mCameraRotationSpeed * ts;
-		if (Quark::Input::IsKeyPressed(QK_KEY_D))
-			mCameraRotation -= mCameraRotationSpeed * ts;
-
+		//Update
+		mCameraController.OnUpdate(ts);
+		
+		//Render
 		Quark::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		Quark::RenderCommand::Clear();
 
-		mCamera.SetPosition(mCameraPosition);
-		mCamera.SetRotation(mCameraRotation);
-
-		Quark::Renderer::BeginScene(mCamera);
+		Quark::Renderer::BeginScene(mCameraController.GetCamera());
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
@@ -188,9 +174,9 @@ public:
 		ImGui::End();
 	}
 
-	void OnEvent(Quark::Event& event) override
+	void OnEvent(Quark::Event& e) override
 	{
-
+		mCameraController.OnEvent(e);
 	}
 	private:
 		Quark::ShaderLibrary mShaderLibrary;
@@ -202,12 +188,7 @@ public:
 
 		Quark::SPtr<Quark::Texture2D> mTexture, mLogoTexture;
 
-		Quark::OrthographicCamera mCamera;
-		glm::vec3 mCameraPosition;
-		float mCameraMoveSpeed = 5.0f;
-
-		float mCameraRotation = 0.0f;
-		float mCameraRotationSpeed = 180.0f;
+		Quark::OrthographicCameraController mCameraController;
 
 		glm::vec3 mSquareColor = { 0.2f, 0.3f, 0.8f };
 };

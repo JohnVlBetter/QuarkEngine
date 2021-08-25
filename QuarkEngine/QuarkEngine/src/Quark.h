@@ -12,6 +12,7 @@
 #include "Quark/Input.h"
 #include "Quark/KeyCodes.h"
 #include "Quark/MouseButtonCodes.h"
+#include "Quark/OrthographicCameraController.h"
 
 #include "Quark/ImGui/ImGuiLayer.h"
 

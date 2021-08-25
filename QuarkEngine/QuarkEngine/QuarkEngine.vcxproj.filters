@@ -1407,6 +1407,9 @@
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\OrthographicCameraController.h">
+      <Filter>src\Quark</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\stb_image\stb_image.cpp">
@@ -1480,6 +1483,9 @@
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\OrthographicCameraController.cpp">
+      <Filter>src\Quark</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

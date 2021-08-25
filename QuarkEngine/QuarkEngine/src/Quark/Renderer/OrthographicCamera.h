@@ -9,6 +9,8 @@ namespace Quark {
 	public:
 		OrthographicCamera(float left, float right, float bottom, float top);
 
+		void SetProjection(float left, float right, float bottom, float top);
+
 		const glm::vec3& GetPosition() const { return mPosition; }
 		void SetPosition(const glm::vec3& position) { mPosition = position; RecalculateViewMatrix(); }
 
