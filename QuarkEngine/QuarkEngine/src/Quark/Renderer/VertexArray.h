@@ -19,7 +19,7 @@ namespace Quark {
 		virtual const std::vector<SPtr<VertexBuffer>>& GetVertexBuffers() const = 0;
 		virtual const SPtr<IndexBuffer>& GetIndexBuffer() const = 0;
 
-		static VertexArray* Create();
+		static SPtr<VertexArray> Create();
 	};
 
 }

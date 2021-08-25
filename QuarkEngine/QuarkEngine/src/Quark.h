@@ -26,6 +26,3 @@
 #include "Quark/Renderer/VertexArray.h"
 
 #include "Quark/Renderer/OrthographicCamera.h"
-
-// entry point
-#include "Quark/Core/EntryPoint.h"

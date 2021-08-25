@@ -1,4 +1,5 @@
 #include <Quark.h>
+#include <Quark/Core/EntryPoint.h>
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
@@ -7,13 +8,15 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+#include "Sandbox2D.h"
+
 class ExampleLayer : public Quark::Layer
 {
 public:
 	ExampleLayer()
 		: Layer("Example"), mCameraController(1280.0f / 720.0f)
 	{
-		mVertexArray.reset(Quark::VertexArray::Create());
+		mVertexArray = Quark::VertexArray::Create();
 
 		float vertices[3 * 7] = {
 			-0.5f, -0.5f, 0.0f, 0.8f, 0.2f, 0.8f, 1.0f,
@@ -35,7 +38,7 @@ public:
 		indexBuffer.reset(Quark::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
 		mVertexArray->SetIndexBuffer(indexBuffer);
 
-		mSquareVA.reset(Quark::VertexArray::Create());
+		mSquareVA = Quark::VertexArray::Create();
 
 		float squareVertices[5 * 4] = {
 			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
@@ -196,7 +199,8 @@ public:
 class Sandbox : public Quark::Application {
 public:
 	Sandbox() {
-		PushLayer(new ExampleLayer());
+		// PushLayer(new ExampleLayer());
+		PushLayer(new Sandbox2D());
 	}
 	virtual ~Sandbox() {
 	
