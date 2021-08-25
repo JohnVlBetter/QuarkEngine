@@ -21,5 +21,7 @@ private:
 	Quark::SPtr<Quark::VertexArray> mSquareVA;
 	Quark::SPtr<Quark::Shader> mFlatColorShader;
 
+	Quark::SPtr<Quark::Texture2D> mCheckerboardTexture;
+
 	glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
 };
