@@ -1,7 +1,7 @@
 #include "qkpch.h"
 #include "WindowsInput.h"
 
-#include "Quark/Application.h"
+#include "Quark/Core/Application.h"
 #include <GLFW/glfw3.h>
 
 namespace Quark {

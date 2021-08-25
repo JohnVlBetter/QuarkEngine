@@ -1329,17 +1329,38 @@
     <ClInclude Include="src\Quark.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Application.h">
-      <Filter>src\Quark</Filter>
+    <ClInclude Include="src\Quark\Core\Application.h">
+      <Filter>src\Quark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Core.h">
-      <Filter>src\Quark</Filter>
+    <ClInclude Include="src\Quark\Core\Core.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\EntryPoint.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\Input.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\KeyCodes.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\Layer.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\LayerStack.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\Log.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\MouseButtonCodes.h">
+      <Filter>src\Quark\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Core\Timestep.h">
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\EntryPoint.h">
-      <Filter>src\Quark</Filter>
+    <ClInclude Include="src\Quark\Core\Window.h">
+      <Filter>src\Quark\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Events\ApplicationEvent.h">
       <Filter>src\Quark\Events</Filter>
@@ -1356,24 +1377,6 @@
     <ClInclude Include="src\Quark\ImGui\ImGuiLayer.h">
       <Filter>src\Quark\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Input.h">
-      <Filter>src\Quark</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\KeyCodes.h">
-      <Filter>src\Quark</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\Layer.h">
-      <Filter>src\Quark</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\LayerStack.h">
-      <Filter>src\Quark</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\Log.h">
-      <Filter>src\Quark</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\MouseButtonCodes.h">
-      <Filter>src\Quark</Filter>
-    </ClInclude>
     <ClInclude Include="src\Quark\Renderer\Buffer.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
@@ -1381,6 +1384,9 @@
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Renderer\OrthographicCamera.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\OrthographicCameraController.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Renderer\RenderCommand.h">
@@ -1401,14 +1407,8 @@
     <ClInclude Include="src\Quark\Renderer\VertexArray.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Window.h">
-      <Filter>src\Quark</Filter>
-    </ClInclude>
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\OrthographicCameraController.h">
-      <Filter>src\Quark</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1439,8 +1439,17 @@
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
-    <ClCompile Include="src\Quark\Application.cpp">
-      <Filter>src\Quark</Filter>
+    <ClCompile Include="src\Quark\Core\Application.cpp">
+      <Filter>src\Quark\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Core\Layer.cpp">
+      <Filter>src\Quark\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Core\LayerStack.cpp">
+      <Filter>src\Quark\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Core\Log.cpp">
+      <Filter>src\Quark\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\ImGui\ImGuiBuild.cpp">
       <Filter>src\Quark\ImGui</Filter>
@@ -1448,19 +1457,13 @@
     <ClCompile Include="src\Quark\ImGui\ImGuiLayer.cpp">
       <Filter>src\Quark\ImGui</Filter>
     </ClCompile>
-    <ClCompile Include="src\Quark\Layer.cpp">
-      <Filter>src\Quark</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Quark\LayerStack.cpp">
-      <Filter>src\Quark</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Quark\Log.cpp">
-      <Filter>src\Quark</Filter>
-    </ClCompile>
     <ClCompile Include="src\Quark\Renderer\Buffer.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Renderer\OrthographicCamera.cpp">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\OrthographicCameraController.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Renderer\RenderCommand.cpp">
@@ -1483,9 +1486,6 @@
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Quark\OrthographicCameraController.cpp">
-      <Filter>src\Quark</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

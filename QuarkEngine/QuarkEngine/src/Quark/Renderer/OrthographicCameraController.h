@@ -18,6 +18,9 @@ namespace Quark {
 
 		OrthographicCamera& GetCamera() { return mCamera; }
 		const OrthographicCamera& GetCamera() const { return mCamera; }
+
+		float GetZoomLevel() const { return mZoomLevel; }
+		void SetZoomLevel(float level) { mZoomLevel = level; }
 	private:
 		bool OnMouseScrolled(MouseScrolledEvent& e);
 		bool OnWindowResized(WindowResizeEvent& e);

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Quark/Window.h"
+#include "Quark/Core/Window.h"
 #include "Quark/Renderer/GraphicsContext.h"
 
 #include <GLFW/glfw3.h>

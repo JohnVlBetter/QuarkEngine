@@ -5,7 +5,7 @@
 #include "backends/imgui_impl_glfw.h"
 #include "backends/imgui_impl_opengl3.h"
 
-#include "Quark/Application.h"
+#include "Quark/Core/Application.h"
 
 // TEMPORARY
 #include <GLFW/glfw3.h>

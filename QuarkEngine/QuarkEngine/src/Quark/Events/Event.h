@@ -1,7 +1,7 @@
 #pragma once
 
 #include "qkpch.h"
-#include "Quark/Core.h"
+#include "Quark/Core/Core.h"
 
 namespace Quark {
 

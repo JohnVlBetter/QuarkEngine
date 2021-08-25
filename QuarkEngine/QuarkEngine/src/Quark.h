@@ -3,16 +3,16 @@
 #include <stdio.h>
 
 //for use by quark apps
-#include "Quark/Application.h"
-#include "Quark/Layer.h"
-#include "Quark/Log.h"
+#include "Quark/Core/Application.h"
+#include "Quark/Core/Layer.h"
+#include "Quark/Core/Log.h"
 
 #include "Quark/Core/Timestep.h"
 
-#include "Quark/Input.h"
-#include "Quark/KeyCodes.h"
-#include "Quark/MouseButtonCodes.h"
-#include "Quark/OrthographicCameraController.h"
+#include "Quark/Core/Input.h"
+#include "Quark/Core/KeyCodes.h"
+#include "Quark/Core/MouseButtonCodes.h"
+#include "Quark/Renderer/OrthographicCameraController.h"
 
 #include "Quark/ImGui/ImGuiLayer.h"
 
@@ -28,4 +28,4 @@
 #include "Quark/Renderer/OrthographicCamera.h"
 
 // entry point
-#include "Quark/EntryPoint.h"
+#include "Quark/Core/EntryPoint.h"

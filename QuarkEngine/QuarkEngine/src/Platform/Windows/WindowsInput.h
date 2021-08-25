@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Quark/Input.h"
+#include "Quark/Core/Input.h"
 
 namespace Quark {
 

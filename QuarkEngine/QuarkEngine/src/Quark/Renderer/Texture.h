@@ -2,7 +2,7 @@
 
 #include <string>
 
-#include "Quark/Core.h"
+#include "Quark/Core/Core.h"
 
 namespace Quark {
 

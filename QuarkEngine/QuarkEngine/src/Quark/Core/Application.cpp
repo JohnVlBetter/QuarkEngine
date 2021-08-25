@@ -1,7 +1,7 @@
 #include "qkpch.h"
 #include "Application.h"
 
-#include "Log.h"
+#include "Quark/Core/Log.h"
 
 #include "Quark/Renderer/Renderer.h"
 
@@ -48,7 +48,8 @@ namespace Quark {
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(std::bind(&Application::OnWindowClose, this, std::placeholders::_1));
+		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
 
 		for (auto it = mLayerStack.end(); it != mLayerStack.begin(); )
 		{
@@ -67,8 +68,11 @@ namespace Quark {
 				Timestep timestep = time - mLastFrameTime;
 				mLastFrameTime = time;
 
-				for (Layer* layer : mLayerStack)
-					layer->OnUpdate(timestep);
+				if (!mMinimized)
+				{
+					for (Layer* layer : mLayerStack)
+						layer->OnUpdate(timestep);
+				}
 
 				mImGuiLayer->Begin();
 				for (Layer* layer : mLayerStack)
@@ -89,5 +93,19 @@ namespace Quark {
 	{
 		mRunning = false;
 		return true;
+	}
+
+	bool Application::OnWindowResize(WindowResizeEvent& e)
+	{
+		if (e.GetWidth() == 0 || e.GetHeight() == 0)
+		{
+			mMinimized = true;
+			return false;
+		}
+
+		mMinimized = false;
+		Renderer::OnWindowResize(e.GetWidth(), e.GetHeight());
+
+		return false;
 	}
 }

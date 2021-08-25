@@ -1,8 +1,8 @@
 #include "qkpch.h"
 #include "OrthographicCameraController.h"
 
-#include "Quark/Input.h"
-#include "Quark/KeyCodes.h"
+#include "Quark/Core/Input.h"
+#include "Quark/Core/KeyCodes.h"
 
 namespace Quark {
 

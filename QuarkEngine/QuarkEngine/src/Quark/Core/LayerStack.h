@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Quark/Core.h"
+#include "Quark/Core/Core.h"
 #include "Layer.h"
 
 #include <vector>

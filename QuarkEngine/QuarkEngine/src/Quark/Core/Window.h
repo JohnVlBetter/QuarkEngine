@@ -2,7 +2,7 @@
 
 #include "qkpch.h"
 
-#include "Quark/Core.h"
+#include "Quark/Core/Core.h"
 #include "Quark/Events/Event.h"
 
 namespace Quark {

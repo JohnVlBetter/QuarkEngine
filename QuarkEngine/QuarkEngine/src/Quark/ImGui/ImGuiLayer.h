@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Quark/Layer.h"
+#include "Quark/Core/Layer.h"
 
 #include "Quark/Events/ApplicationEvent.h"
 #include "Quark/Events/KeyEvent.h"

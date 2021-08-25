@@ -3,7 +3,7 @@
 #include "Core.h"
 
 #include "Window.h"
-#include "Quark/LayerStack.h"
+#include "Quark/Core/LayerStack.h"
 #include "Quark/Events/Event.h"
 #include "Quark/Events/ApplicationEvent.h"
 
@@ -30,10 +30,12 @@ namespace Quark {
 		inline static Application& Get() { return *sInstance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
+		bool OnWindowResize(WindowResizeEvent& e);
 
 		UPtr<Window> mWindow;
 		ImGuiLayer* mImGuiLayer;
 		bool mRunning = true;
+		bool mMinimized = false;
 		LayerStack mLayerStack;
 
 		float mLastFrameTime = 0.0f;
