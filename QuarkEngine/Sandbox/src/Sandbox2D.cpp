@@ -1,5 +1,5 @@
 #include "Sandbox2D.h"
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -41,7 +41,7 @@ private:
 	bool mStopped;
 };
 
-#define PROFILE_SCOPE(name) Timer timer(name, [&](ProfileResult profileResult) { mProfileResults.push_back(profileResult); })
+#define PROFILE_SCOPE(name) Timer timer##__LINE__(name, [&](ProfileResult profileResult) { mProfileResults.push_back(profileResult); })
 
 
 Sandbox2D::Sandbox2D()

@@ -612,6 +612,7 @@
     <ClCompile Include="src\Quark\ImGui\ImGuiBuild.cpp" />
     <ClCompile Include="src\Quark\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Quark\Renderer\Buffer.cpp" />
+    <ClCompile Include="src\Quark\Renderer\GraphicsContext.cpp" />
     <ClCompile Include="src\Quark\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Quark\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Quark\Renderer\RenderCommand.cpp" />

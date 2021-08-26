@@ -1,7 +1,7 @@
 #include "qkpch.h"
-#include "Shader.h"
+#include "Quark/Renderer/Shader.h"
 
-#include "Renderer.h"
+#include "Quark/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 
 namespace Quark {
@@ -10,7 +10,7 @@ namespace Quark {
 		switch (Renderer::GetAPI())
 		{
 		case RendererAPI::API::None:    QK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filepath);
+		case RendererAPI::API::OpenGL:  return CreateSPtr<OpenGLShader>(filepath);
 		}
 
 		QK_CORE_ASSERT(false, "Unknown RendererAPI!");
@@ -23,7 +23,7 @@ namespace Quark {
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None:    QK_CORE_ASSERT(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc);
+			case RendererAPI::API::OpenGL:  return CreateSPtr<OpenGLShader>(name, vertexSrc, fragmentSrc);
 		}
 
 		QK_CORE_ASSERT(false, "Unknown RendererAPI!");

@@ -1,5 +1,7 @@
 #include "qkpch.h"
-#include "Log.h"
+#include "Quark/Core/Log.h"
+
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Quark {
 

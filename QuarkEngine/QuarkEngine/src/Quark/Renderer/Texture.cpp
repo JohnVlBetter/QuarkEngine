@@ -1,7 +1,7 @@
 #include "qkpch.h"
-#include "Texture.h"
+#include "Quark/Renderer/Texture.h"
 
-#include "Renderer.h"
+#include "Quark/Renderer/Renderer.h"
 #include "Platform/OpenGL/OpenGLTexture.h"
 
 namespace Quark {

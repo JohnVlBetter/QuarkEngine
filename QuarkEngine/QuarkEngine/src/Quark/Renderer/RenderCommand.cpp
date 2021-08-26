@@ -1,10 +1,8 @@
 #include "qkpch.h"
-#include "RenderCommand.h"
-
-#include "Platform/OpenGL/OpenGLRendererAPI.h"
+#include "Quark/Renderer/RenderCommand.h"
 
 namespace Quark {
 
-	RendererAPI* RenderCommand::sRendererAPI = new OpenGLRendererAPI;
+	UPtr<RendererAPI> RenderCommand::sRendererAPI = RendererAPI::Create();
 
 }

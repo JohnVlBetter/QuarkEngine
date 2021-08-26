@@ -1,9 +1,9 @@
 #include "qkpch.h"
-#include "Renderer2D.h"
+#include "Quark/Renderer/Renderer2D.h"
 
-#include "VertexArray.h"
-#include "Shader.h"
-#include "RenderCommand.h"
+#include "Quark/Renderer/VertexArray.h"
+#include "Quark/Renderer/Shader.h"
+#include "Quark/Renderer/RenderCommand.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -30,8 +30,7 @@ namespace Quark {
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		SPtr<VertexBuffer> squareVB;
-		squareVB.reset(VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		SPtr<VertexBuffer> squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float2, "a_TexCoord" }
@@ -39,8 +38,7 @@ namespace Quark {
 		sData->QuadVertexArray->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		SPtr<IndexBuffer> squareIB;
-		squareIB.reset(IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		SPtr<IndexBuffer> squareIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		sData->QuadVertexArray->SetIndexBuffer(squareIB);
 
 		sData->WhiteTexture = Texture2D::Create(1, 1);

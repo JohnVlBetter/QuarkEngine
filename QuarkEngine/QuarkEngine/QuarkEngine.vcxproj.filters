@@ -1493,5 +1493,8 @@
     <ClCompile Include="src\Quark\Renderer\Renderer2D.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\GraphicsContext.cpp">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

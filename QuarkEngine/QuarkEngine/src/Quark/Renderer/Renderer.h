@@ -1,9 +1,9 @@
 #pragma once
 
-#include "RenderCommand.h"
+#include "Quark/Renderer/RenderCommand.h"
 
-#include "OrthographicCamera.h"
-#include "Shader.h"
+#include "Quark/Renderer/OrthographicCamera.h"
+#include "Quark/Renderer/Shader.h"
 
 namespace Quark {
 
@@ -11,6 +11,8 @@ namespace Quark {
 	{
 	public:
 		static void Init();
+		static void Shutdown();
+
 		static void OnWindowResize(uint32_t width, uint32_t height);
 
 		static void BeginScene(OrthographicCamera& camera);
@@ -26,7 +28,7 @@ namespace Quark {
 			glm::mat4 ViewProjectionMatrix;
 		};
 
-		static SceneData* mSceneData;
+		static UPtr<SceneData> mSceneData;
 	};
 
 

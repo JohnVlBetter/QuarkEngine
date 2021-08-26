@@ -1,5 +1,5 @@
 #include "qkpch.h"
-#include "WindowsInput.h"
+#include "Platform/Windows/WindowsInput.h"
 
 #include "Quark/Core/Application.h"
 #include <GLFW/glfw3.h>

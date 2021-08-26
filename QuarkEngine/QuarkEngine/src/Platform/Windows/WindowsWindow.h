@@ -29,7 +29,7 @@ namespace Quark {
 		virtual void Shutdown();
 	private:
 		GLFWwindow* mWindow;
-		GraphicsContext* mContext;
+		UPtr<GraphicsContext> mContext;
 
 		struct WindowData
 		{

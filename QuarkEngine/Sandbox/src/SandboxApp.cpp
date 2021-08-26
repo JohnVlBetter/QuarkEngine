@@ -3,7 +3,7 @@
 
 #include "Platform/OpenGL/OpenGLShader.h"
 
-#include "imgui/imgui.h"
+#include <imgui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
@@ -24,8 +24,7 @@ public:
 			 0.0f,  0.5f, 0.0f, 0.8f, 0.8f, 0.2f, 1.0f
 		};
 
-		Quark::SPtr<Quark::VertexBuffer> vertexBuffer;
-		vertexBuffer.reset(Quark::VertexBuffer::Create(vertices, sizeof(vertices)));
+		Quark::SPtr<Quark::VertexBuffer> vertexBuffer = Quark::VertexBuffer::Create(vertices, sizeof(vertices));
 		Quark::BufferLayout layout = {
 			{ Quark::ShaderDataType::Float3, "a_Position" },
 			{ Quark::ShaderDataType::Float4, "a_Color" }
@@ -34,8 +33,7 @@ public:
 		mVertexArray->AddVertexBuffer(vertexBuffer);
 
 		uint32_t indices[3] = { 0, 1, 2 };
-		Quark::SPtr<Quark::IndexBuffer> indexBuffer;
-		indexBuffer.reset(Quark::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t)));
+		Quark::SPtr<Quark::IndexBuffer> indexBuffer = Quark::IndexBuffer::Create(indices, sizeof(indices) / sizeof(uint32_t));
 		mVertexArray->SetIndexBuffer(indexBuffer);
 
 		mSquareVA = Quark::VertexArray::Create();
@@ -47,8 +45,7 @@ public:
 			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
 		};
 
-		Quark::SPtr<Quark::VertexBuffer> squareVB;
-		squareVB.reset(Quark::VertexBuffer::Create(squareVertices, sizeof(squareVertices)));
+		Quark::SPtr<Quark::VertexBuffer> squareVB = Quark::VertexBuffer::Create(squareVertices, sizeof(squareVertices));
 		squareVB->SetLayout({
 			{ Quark::ShaderDataType::Float3, "a_Position" },
 			{ Quark::ShaderDataType::Float2, "a_TexCoord" }
@@ -56,8 +53,7 @@ public:
 		mSquareVA->AddVertexBuffer(squareVB);
 
 		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		Quark::SPtr<Quark::IndexBuffer> squareIB;
-		squareIB.reset(Quark::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t)));
+		Quark::SPtr<Quark::IndexBuffer> squareIB = Quark::IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
 		mSquareVA->SetIndexBuffer(squareIB);
 
 		std::string vertexSrc = R"(
@@ -127,8 +123,8 @@ public:
 		mTexture = Quark::Texture2D::Create("assets/textures/scene.jpg");
 		mLogoTexture = Quark::Texture2D::Create("assets/textures/logo.png");
 
-		std::dynamic_pointer_cast<Quark::OpenGLShader>(textureShader)->Bind();
-		std::dynamic_pointer_cast<Quark::OpenGLShader>(textureShader)->UploadUniformInt("u_Texture", 0);
+		textureShader->Bind();
+		textureShader->SetInt("u_Texture", 0);
 	}
 
 	void OnUpdate(Quark::Timestep ts) override
@@ -144,9 +140,8 @@ public:
 
 		glm::mat4 scale = glm::scale(glm::mat4(1.0f), glm::vec3(0.1f));
 
-		std::dynamic_pointer_cast<Quark::OpenGLShader>(mFlatColorShader)->Bind();
-		std::dynamic_pointer_cast<Quark::OpenGLShader>(mFlatColorShader)->UploadUniformFloat3("u_Color", mSquareColor);
-
+		mFlatColorShader->Bind();
+		mFlatColorShader->SetFloat3("u_Color", mSquareColor);
 
 		for (int y = 0; y < 20; y++)
 		{

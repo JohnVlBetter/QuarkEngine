@@ -1,11 +1,11 @@
 #include "qkpch.h"
-#include "Application.h"
+#include "Quark/Core/Application.h"
 
 #include "Quark/Core/Log.h"
 
 #include "Quark/Renderer/Renderer.h"
 
-#include "Input.h"
+#include "Quark/Core/Input.h"
 
 #include <glfw/glfw3.h>
 
@@ -20,8 +20,8 @@ namespace Quark {
 		QK_CORE_ASSERT(!sInstance, "Application already exists!");
 		sInstance = this;
 
-		mWindow = UPtr<Window>(Window::Create());
-		mWindow->SetEventCallback(BIND_EVENT_FN(OnEvent));
+		mWindow = Window::Create();
+		mWindow->SetEventCallback(QK_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
 
@@ -31,6 +31,7 @@ namespace Quark {
 	
 	Application::~Application()
 	{
+		Renderer::Shutdown();
 	}
 
 	void Application::PushLayer(Layer* layer)
@@ -48,8 +49,8 @@ namespace Quark {
 	void Application::OnEvent(Event& e)
 	{
 		EventDispatcher dispatcher(e);
-		dispatcher.Dispatch<WindowCloseEvent>(BIND_EVENT_FN(OnWindowClose));
-		dispatcher.Dispatch<WindowResizeEvent>(BIND_EVENT_FN(OnWindowResize));
+		dispatcher.Dispatch<WindowCloseEvent>(QK_BIND_EVENT_FN(Application::OnWindowClose));
+		dispatcher.Dispatch<WindowResizeEvent>(QK_BIND_EVENT_FN(Application::OnWindowResize));
 
 		for (auto it = mLayerStack.end(); it != mLayerStack.begin(); )
 		{

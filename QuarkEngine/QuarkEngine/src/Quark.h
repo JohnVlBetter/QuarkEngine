@@ -3,6 +3,8 @@
 #include <stdio.h>
 
 //for use by quark apps
+#include "Quark/Core/Core.h"
+
 #include "Quark/Core/Application.h"
 #include "Quark/Core/Layer.h"
 #include "Quark/Core/Log.h"

@@ -2,7 +2,7 @@
 
 #include <glm/glm.hpp>
 
-#include "VertexArray.h"
+#include "Quark/Renderer/VertexArray.h"
 
 namespace Quark {
 
@@ -22,6 +22,7 @@ namespace Quark {
 		virtual void DrawIndexed(const SPtr<VertexArray>& vertexArray) = 0;
 
 		inline static API GetAPI() { return sAPI; }
+		static UPtr<RendererAPI> Create();
 	private:
 		static API sAPI;
 	};

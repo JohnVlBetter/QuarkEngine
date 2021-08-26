@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Core.h"
+#include "Quark/Core/Core.h"
 
-#include "Window.h"
+#include "Quark/Core/Window.h"
 #include "Quark/Core/LayerStack.h"
 #include "Quark/Events/Event.h"
 #include "Quark/Events/ApplicationEvent.h"

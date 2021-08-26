@@ -1,8 +1,8 @@
 #pragma once
 
-#include "OrthographicCamera.h"
+#include "Quark/Renderer/OrthographicCamera.h"
 
-#include "Texture.h"
+#include "Quark/Renderer/Texture.h"
 
 namespace Quark {
 

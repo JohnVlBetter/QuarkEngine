@@ -1,6 +1,6 @@
 #pragma once
 
-#include "RendererAPI.h"
+#include "Quark/Renderer/RendererAPI.h"
 
 namespace Quark {
 
@@ -32,7 +32,7 @@ namespace Quark {
 			sRendererAPI->DrawIndexed(vertexArray);
 		}
 	private:
-		static RendererAPI* sRendererAPI;
+		static UPtr<RendererAPI> sRendererAPI;
 	};
 
 }

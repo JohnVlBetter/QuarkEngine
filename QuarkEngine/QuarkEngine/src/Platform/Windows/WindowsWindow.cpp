@@ -1,5 +1,5 @@
 #include "qkpch.h"
-#include "WindowsWindow.h"
+#include "Platform/Windows/WindowsWindow.h"
 
 #include "Quark/Events/ApplicationEvent.h"
 #include "Quark/Events/MouseEvent.h"
@@ -9,16 +9,16 @@
 
 namespace Quark {
 
-	static bool sGLFWInitialized = false;
+	static uint8_t sGLFWWindowCount = 0;
 
 	static void GLFWErrorCallback(int error, const char* description)
 	{
 		QK_CORE_ERROR("GLFW Error ({0}): {1}", error, description);
 	}
 
-	Window* Window::Create(const WindowProps& props)
+	UPtr<Window> Window::Create(const WindowProps& props)
 	{
-		return new WindowsWindow(props);
+		return CreateUPtr<WindowsWindow>(props);
 	}
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
@@ -39,19 +39,17 @@ namespace Quark {
 
 		QK_CORE_INFO("Creating window {0} ({1}, {2})", props.Title, props.Width, props.Height);
 
-		if (!sGLFWInitialized)
+		if (sGLFWWindowCount == 0)
 		{
-			// TODO: glfwTerminate on system shutdown
 			int success = glfwInit();
 			QK_CORE_ASSERT(success, "Could not intialize GLFW!");
-
 			glfwSetErrorCallback(GLFWErrorCallback);
-			sGLFWInitialized = true;
 		}
 
+		++sGLFWWindowCount;
 		mWindow = glfwCreateWindow((int)props.Width, (int)props.Height, mData.Title.c_str(), nullptr, nullptr);
 		
-		mContext = new OpenGLContext(mWindow);
+		mContext = GraphicsContext::Create(mWindow);
 		mContext->Init();
 
 		glfwSetWindowUserPointer(mWindow, &mData);
@@ -151,6 +149,12 @@ namespace Quark {
 	void WindowsWindow::Shutdown()
 	{
 		glfwDestroyWindow(mWindow);
+		--sGLFWWindowCount;
+
+		if (sGLFWWindowCount == 0)
+		{
+			glfwTerminate();
+		}
 	}
 
 	void WindowsWindow::OnUpdate()
