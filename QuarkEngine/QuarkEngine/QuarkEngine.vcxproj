@@ -577,6 +577,7 @@
     <ClInclude Include="src\Quark\Core\MouseButtonCodes.h" />
     <ClInclude Include="src\Quark\Core\Timestep.h" />
     <ClInclude Include="src\Quark\Core\Window.h" />
+    <ClInclude Include="src\Quark\Debug\Instrumentor.h" />
     <ClInclude Include="src\Quark\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Quark\Events\Event.h" />
     <ClInclude Include="src\Quark\Events\KeyEvent.h" />

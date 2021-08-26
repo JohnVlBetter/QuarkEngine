@@ -86,8 +86,6 @@ namespace Quark {
 		{
 			QK_CORE_TRACE(e);
 		}
-
-		while (true);
 	}
 
 	bool Application::OnWindowClose(WindowCloseEvent& e)

@@ -52,6 +52,9 @@
     <Filter Include="third\stb_image">
       <UniqueIdentifier>{5A50E696-C6DB-535B-CFEC-D64F3BF7AF5B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Quark\Debug">
+      <UniqueIdentifier>{01f5d3c7-921a-4062-a926-bd2cdf10354a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\third\glm\glm\common.hpp">
@@ -1412,6 +1415,9 @@
     </ClInclude>
     <ClInclude Include="src\Quark\Renderer\Renderer2D.h">
       <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Debug\Instrumentor.h">
+      <Filter>src\Quark\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

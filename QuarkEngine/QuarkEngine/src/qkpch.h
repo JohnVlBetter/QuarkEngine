@@ -18,3 +18,5 @@
 #include <unordered_set>
 
 #include "Quark/Core/Log.h"
+
+#include "Quark/Debug/Instrumentor.h"
