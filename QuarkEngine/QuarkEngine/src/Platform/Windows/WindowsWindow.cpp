@@ -23,16 +23,22 @@ namespace Quark {
 
 	WindowsWindow::WindowsWindow(const WindowProps& props)
 	{
+		QK_PROFILE_FUNCTION();
+
 		Init(props);
 	}
 
 	WindowsWindow::~WindowsWindow()
 	{
+		QK_PROFILE_FUNCTION();
+
 		Shutdown();
 	}
 
 	void WindowsWindow::Init(const WindowProps& props)
 	{
+		QK_PROFILE_FUNCTION();
+
 		mData.Title = props.Title;
 		mData.Width = props.Width;
 		mData.Height = props.Height;
@@ -41,13 +47,18 @@ namespace Quark {
 
 		if (sGLFWWindowCount == 0)
 		{
+			QK_PROFILE_SCOPE("glfwInit");
+
 			int success = glfwInit();
 			QK_CORE_ASSERT(success, "Could not intialize GLFW!");
 			glfwSetErrorCallback(GLFWErrorCallback);
 		}
 
-		++sGLFWWindowCount;
-		mWindow = glfwCreateWindow((int)props.Width, (int)props.Height, mData.Title.c_str(), nullptr, nullptr);
+		{
+			QK_PROFILE_SCOPE("glfwCreateWindow");
+			mWindow = glfwCreateWindow((int)props.Width, (int)props.Height, mData.Title.c_str(), nullptr, nullptr);
+			++sGLFWWindowCount;
+		}
 		
 		mContext = GraphicsContext::Create(mWindow);
 		mContext->Init();
@@ -148,6 +159,8 @@ namespace Quark {
 
 	void WindowsWindow::Shutdown()
 	{
+		QK_PROFILE_FUNCTION();
+
 		glfwDestroyWindow(mWindow);
 		--sGLFWWindowCount;
 
@@ -159,12 +172,16 @@ namespace Quark {
 
 	void WindowsWindow::OnUpdate()
 	{
+		QK_PROFILE_FUNCTION();
+
 		glfwPollEvents();
 		mContext->SwapBuffers();
 	}
 
 	void WindowsWindow::SetVSync(bool enabled)
 	{
+		QK_PROFILE_FUNCTION();
+
 		if (enabled)
 			glfwSwapInterval(1);
 		else

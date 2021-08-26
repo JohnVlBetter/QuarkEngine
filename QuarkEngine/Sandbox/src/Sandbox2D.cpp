@@ -11,11 +11,14 @@ Sandbox2D::Sandbox2D()
 
 void Sandbox2D::OnAttach()
 {
+	QK_PROFILE_FUNCTION();
+
 	mCheckerboardTexture = Quark::Texture2D::Create("assets/textures/scene.jpg");
 }
 
 void Sandbox2D::OnDetach()
 {
+	QK_PROFILE_FUNCTION();
 }
 
 void Sandbox2D::OnUpdate(Quark::Timestep ts)
@@ -23,10 +26,7 @@ void Sandbox2D::OnUpdate(Quark::Timestep ts)
 	QK_PROFILE_FUNCTION();
 
 	// Update
-	{
-		QK_PROFILE_SCOPE("CameraController::OnUpdate");
-		mCameraController.OnUpdate(ts);
-	}
+	mCameraController.OnUpdate(ts);
 
 	// Render
 	{

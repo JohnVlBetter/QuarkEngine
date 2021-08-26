@@ -17,6 +17,8 @@ namespace Quark {
 
 	Application::Application()
 	{
+		QK_PROFILE_FUNCTION();
+
 		QK_CORE_ASSERT(!sInstance, "Application already exists!");
 		sInstance = this;
 
@@ -31,23 +33,31 @@ namespace Quark {
 	
 	Application::~Application()
 	{
+		QK_PROFILE_FUNCTION();
+
 		Renderer::Shutdown();
 	}
 
 	void Application::PushLayer(Layer* layer)
 	{
+		QK_PROFILE_FUNCTION();
+
 		mLayerStack.PushLayer(layer);
 		layer->OnAttach();
 	}
 
 	void Application::PushOverlay(Layer* layer)
 	{
+		QK_PROFILE_FUNCTION();
+
 		mLayerStack.PushOverlay(layer);
 		layer->OnAttach();
 	}
 
 	void Application::OnEvent(Event& e)
 	{
+		QK_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<WindowCloseEvent>(QK_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(QK_BIND_EVENT_FN(Application::OnWindowResize));
@@ -61,24 +71,36 @@ namespace Quark {
 	}
 
 	void Application::Run() {
+		QK_PROFILE_FUNCTION();
+
 		WindowResizeEvent e(1920, 1080);
 		if (e.IsInCategory(EventCategoryApplication))
 			while (mRunning)
 			{
+				QK_PROFILE_SCOPE("RunLoop");
+
 				float time = (float)glfwGetTime();
 				Timestep timestep = time - mLastFrameTime;
 				mLastFrameTime = time;
 
 				if (!mMinimized)
 				{
-					for (Layer* layer : mLayerStack)
-						layer->OnUpdate(timestep);
-				}
+					{
+						QK_PROFILE_SCOPE("LayerStack OnUpdate");
 
-				mImGuiLayer->Begin();
-				for (Layer* layer : mLayerStack)
-					layer->OnImGuiRender();
-				mImGuiLayer->End();
+						for (Layer* layer : mLayerStack)
+							layer->OnUpdate(timestep);
+					}
+
+					mImGuiLayer->Begin();
+					{
+						QK_PROFILE_SCOPE("LayerStack OnImGuiRender");
+
+						for (Layer* layer : mLayerStack)
+							layer->OnImGuiRender();
+					}
+					mImGuiLayer->End();
+				}
 
 				mWindow->OnUpdate();
 			}
@@ -96,6 +118,8 @@ namespace Quark {
 
 	bool Application::OnWindowResize(WindowResizeEvent& e)
 	{
+		QK_PROFILE_FUNCTION();
+
 		if (e.GetWidth() == 0 || e.GetHeight() == 0)
 		{
 			mMinimized = true;

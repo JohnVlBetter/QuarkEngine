@@ -20,6 +20,8 @@ namespace Quark {
 
 	void Renderer2D::Init()
 	{
+		QK_PROFILE_FUNCTION();
+
 		sData = new Renderer2DStorage();
 		sData->QuadVertexArray = VertexArray::Create();
 
@@ -57,13 +59,15 @@ namespace Quark {
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
+		QK_PROFILE_FUNCTION();
+
 		sData->TextureShader->Bind();
 		sData->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
 	}
 
 	void Renderer2D::EndScene()
 	{
-
+		QK_PROFILE_FUNCTION();
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -73,6 +77,8 @@ namespace Quark {
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const glm::vec4& color)
 	{
+		QK_PROFILE_FUNCTION();
+
 		sData->TextureShader->SetFloat4("u_Color", color);
 		sData->WhiteTexture->Bind();
 
@@ -90,6 +96,8 @@ namespace Quark {
 
 	void Renderer2D::DrawQuad(const glm::vec3& position, const glm::vec2& size, const SPtr<Texture2D>& texture)
 	{
+		QK_PROFILE_FUNCTION();
+
 		sData->TextureShader->SetFloat4("u_Color", glm::vec4(1.0f));
 		texture->Bind();
 

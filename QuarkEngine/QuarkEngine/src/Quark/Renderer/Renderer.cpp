@@ -10,6 +10,8 @@ namespace Quark {
 
 	void Renderer::Init()
 	{
+		QK_PROFILE_FUNCTION();
+
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}

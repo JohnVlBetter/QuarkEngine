@@ -13,6 +13,8 @@ namespace Quark {
 
 	void OrthographicCameraController::OnUpdate(Timestep ts)
 	{
+		QK_PROFILE_FUNCTION();
+
 		if (Input::IsKeyPressed(QK_KEY_A))
 			mCameraPosition.x -= mCameraTranslationSpeed * ts;
 		else if (Input::IsKeyPressed(QK_KEY_D))
@@ -40,6 +42,8 @@ namespace Quark {
 
 	void OrthographicCameraController::OnEvent(Event& e)
 	{
+		QK_PROFILE_FUNCTION();
+
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<MouseScrolledEvent>(QK_BIND_EVENT_FN(OrthographicCameraController::OnMouseScrolled));
 		dispatcher.Dispatch<WindowResizeEvent>(QK_BIND_EVENT_FN(OrthographicCameraController::OnWindowResized));
@@ -47,6 +51,8 @@ namespace Quark {
 
 	bool OrthographicCameraController::OnMouseScrolled(MouseScrolledEvent& e)
 	{
+		QK_PROFILE_FUNCTION();
+
 		mZoomLevel -= e.GetYOffset() * 0.25f;
 		mZoomLevel = std::max(mZoomLevel, 0.05f);
 		mCamera.SetProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
@@ -55,6 +61,8 @@ namespace Quark {
 
 	bool OrthographicCameraController::OnWindowResized(WindowResizeEvent& e)
 	{
+		QK_PROFILE_FUNCTION();
+
 		mAspectRatio = (float)e.GetWidth() / (float)e.GetHeight();
 		mCamera.SetProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
 		return false;

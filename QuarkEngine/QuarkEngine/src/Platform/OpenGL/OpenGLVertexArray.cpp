@@ -28,26 +28,36 @@ namespace Quark {
 
 	OpenGLVertexArray::OpenGLVertexArray()
 	{
+		QK_PROFILE_FUNCTION();
+
 		glCreateVertexArrays(1, &mRendererID);
 	}
 
 	OpenGLVertexArray::~OpenGLVertexArray()
 	{
+		QK_PROFILE_FUNCTION();
+
 		glDeleteVertexArrays(1, &mRendererID);
 	}
 
 	void OpenGLVertexArray::Bind() const
 	{
+		QK_PROFILE_FUNCTION();
+
 		glBindVertexArray(mRendererID);
 	}
 
 	void OpenGLVertexArray::Unbind() const
 	{
+		QK_PROFILE_FUNCTION();
+
 		glBindVertexArray(0);
 	}
 
 	void OpenGLVertexArray::AddVertexBuffer(const SPtr<VertexBuffer>& vertexBuffer)
 	{
+		QK_PROFILE_FUNCTION();
+
 		QK_CORE_ASSERT(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(mRendererID);
@@ -72,6 +82,8 @@ namespace Quark {
 
 	void OpenGLVertexArray::SetIndexBuffer(const SPtr<IndexBuffer>& indexBuffer)
 	{
+		QK_PROFILE_FUNCTION();
+
 		glBindVertexArray(mRendererID);
 		indexBuffer->Bind();
 
