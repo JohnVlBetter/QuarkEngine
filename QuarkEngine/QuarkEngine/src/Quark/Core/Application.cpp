@@ -62,9 +62,9 @@ namespace Quark {
 		dispatcher.Dispatch<WindowCloseEvent>(QK_BIND_EVENT_FN(Application::OnWindowClose));
 		dispatcher.Dispatch<WindowResizeEvent>(QK_BIND_EVENT_FN(Application::OnWindowResize));
 
-		for (auto it = mLayerStack.end(); it != mLayerStack.begin(); )
+		for (auto it = mLayerStack.rbegin(); it != mLayerStack.rend(); ++it)
 		{
-			(*--it)->OnEvent(e);
+			(*it)->OnEvent(e);
 			if (e.Handled)
 				break;
 		}
