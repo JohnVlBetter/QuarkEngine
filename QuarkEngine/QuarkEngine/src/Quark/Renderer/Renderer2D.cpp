@@ -9,65 +9,127 @@
 
 namespace Quark {
 
-	struct Renderer2DStorage
+	struct QuadVertex
 	{
-		SPtr<VertexArray> QuadVertexArray; 
-		SPtr<Texture2D> WhiteTexture;
-		SPtr<Shader> TextureShader;
+		glm::vec3 Position;
+		glm::vec4 Color;
+		glm::vec2 TexCoord;
+		float TexIndex;
+		float TilingFactor;
 	};
 
-	static Renderer2DStorage* sData;
+
+	struct Renderer2DData
+	{
+		const uint32_t MaxQuads = 10000;
+		const uint32_t MaxVertices = MaxQuads * 4;
+		const uint32_t MaxIndices = MaxQuads * 6;
+		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
+
+		SPtr<VertexArray> QuadVertexArray; 
+		SPtr<VertexBuffer> QuadVertexBuffer;
+		SPtr<Texture2D> WhiteTexture;
+		SPtr<Shader> TextureShader;
+
+		uint32_t QuadIndexCount = 0;
+		QuadVertex* QuadVertexBufferBase = nullptr;
+		QuadVertex* QuadVertexBufferPtr = nullptr;
+
+		std::array<SPtr<Texture2D>, MaxTextureSlots> TextureSlots;
+		uint32_t TextureSlotIndex = 1; // 0 = white texture
+	};
+
+	static Renderer2DData sData;
 
 	void Renderer2D::Init()
 	{
 		QK_PROFILE_FUNCTION();
 
-		sData = new Renderer2DStorage();
-		sData->QuadVertexArray = VertexArray::Create();
+		sData.QuadVertexArray = VertexArray::Create();
 
-		float squareVertices[5 * 4] = {
-			-0.5f, -0.5f, 0.0f, 0.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f, 1.0f, 0.0f,
-			 0.5f,  0.5f, 0.0f, 1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f, 0.0f, 1.0f
-		};
-
-		SPtr<VertexBuffer> squareVB = VertexBuffer::Create(squareVertices, sizeof(squareVertices));
-		squareVB->SetLayout({
+		sData.QuadVertexBuffer = VertexBuffer::Create(sData.MaxVertices * sizeof(QuadVertex));
+		sData.QuadVertexBuffer->SetLayout({
 			{ ShaderDataType::Float3, "a_Position" },
-			{ ShaderDataType::Float2, "a_TexCoord" }
+			{ ShaderDataType::Float4, "a_Color" },
+			{ ShaderDataType::Float2, "a_TexCoord" },
+			{ ShaderDataType::Float, "a_TexIndex" },
+			{ ShaderDataType::Float, "a_TilingFactor" }
 			});
-		sData->QuadVertexArray->AddVertexBuffer(squareVB);
+		sData.QuadVertexArray->AddVertexBuffer(sData.QuadVertexBuffer);
 
-		uint32_t squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
-		SPtr<IndexBuffer> squareIB = IndexBuffer::Create(squareIndices, sizeof(squareIndices) / sizeof(uint32_t));
-		sData->QuadVertexArray->SetIndexBuffer(squareIB);
+		sData.QuadVertexBufferBase = new QuadVertex[sData.MaxVertices];
 
-		sData->WhiteTexture = Texture2D::Create(1, 1);
+		uint32_t* quadIndices = new uint32_t[sData.MaxIndices];
+
+		uint32_t offset = 0;
+		for (uint32_t i = 0; i < sData.MaxIndices; i += 6)
+		{
+			quadIndices[i + 0] = offset + 0;
+			quadIndices[i + 1] = offset + 1;
+			quadIndices[i + 2] = offset + 2;
+
+			quadIndices[i + 3] = offset + 2;
+			quadIndices[i + 4] = offset + 3;
+			quadIndices[i + 5] = offset + 0;
+
+			offset += 4;
+		}
+
+		SPtr<IndexBuffer> quadIB = IndexBuffer::Create(quadIndices, sData.MaxIndices);
+		sData.QuadVertexArray->SetIndexBuffer(quadIB);
+		delete[] quadIndices;
+
+		sData.WhiteTexture = Texture2D::Create(1, 1);
 		uint32_t whiteTextureData = 0xffffffff;
-		sData->WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
+		sData.WhiteTexture->SetData(&whiteTextureData, sizeof(uint32_t));
 
-		sData->TextureShader = Shader::Create("assets/shaders/Texture.glsl");
-		sData->TextureShader->Bind();
-		sData->TextureShader->SetInt("u_Texture", 0);
+		int32_t samplers[sData.MaxTextureSlots];
+		for (uint32_t i = 0; i < sData.MaxTextureSlots; i++)
+			samplers[i] = i;
+
+		sData.TextureShader = Shader::Create("assets/shaders/Texture.glsl");
+		sData.TextureShader->Bind();
+		sData.TextureShader->SetIntArray("u_Textures", samplers, sData.MaxTextureSlots);
+
+		// Set all texture slots to 0
+		sData.TextureSlots[0] = sData.WhiteTexture;
 	}
 
 	void Renderer2D::Shutdown()
 	{
-		delete sData;
+		QK_PROFILE_FUNCTION();
 	}
 
 	void Renderer2D::BeginScene(const OrthographicCamera& camera)
 	{
 		QK_PROFILE_FUNCTION();
 
-		sData->TextureShader->Bind();
-		sData->TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+		sData.TextureShader->Bind();
+		sData.TextureShader->SetMat4("u_ViewProjection", camera.GetViewProjectionMatrix());
+
+		sData.QuadIndexCount = 0;
+		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
+
+		sData.TextureSlotIndex = 1;
 	}
 
 	void Renderer2D::EndScene()
 	{
 		QK_PROFILE_FUNCTION();
+
+		uint32_t dataSize = (uint8_t*)sData.QuadVertexBufferPtr - (uint8_t*)sData.QuadVertexBufferBase;
+		sData.QuadVertexBuffer->SetData(sData.QuadVertexBufferBase, dataSize);
+
+		Flush();
+	}
+
+	void Renderer2D::Flush()
+	{
+		// Bind textures
+		for (uint32_t i = 0; i < sData.TextureSlotIndex; i++)
+			sData.TextureSlots[i]->Bind(i);
+
+		RenderCommand::DrawIndexed(sData.QuadVertexArray, sData.QuadIndexCount);
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -79,16 +141,48 @@ namespace Quark {
 	{
 		QK_PROFILE_FUNCTION();
 
-		sData->TextureShader->SetFloat4("u_Color", color);
-		sData->TextureShader->SetFloat("u_TilingFactor", 1.0f);
-		sData->WhiteTexture->Bind();
+		const float texIndex = 0.0f; // White Texture
+		const float tilingFactor = 1.0f;
+
+		sData.QuadVertexBufferPtr->Position = position;
+		sData.QuadVertexBufferPtr->Color = color;
+		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		sData.QuadVertexBufferPtr->TexIndex = texIndex;
+		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr++;
+
+		sData.QuadVertexBufferPtr->Position = { position.x + size.x, position.y, 0.0f };
+		sData.QuadVertexBufferPtr->Color = color;
+		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		sData.QuadVertexBufferPtr->TexIndex = texIndex;
+		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr++;
+
+		sData.QuadVertexBufferPtr->Position = { position.x + size.x, position.y + size.y, 0.0f };
+		sData.QuadVertexBufferPtr->Color = color;
+		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		sData.QuadVertexBufferPtr->TexIndex = texIndex;
+		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr++;
+
+		sData.QuadVertexBufferPtr->Position = { position.x, position.y + size.y, 0.0f };
+		sData.QuadVertexBufferPtr->Color = color;
+		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		sData.QuadVertexBufferPtr->TexIndex = texIndex;
+		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr++;
+
+		sData.QuadIndexCount += 6;
+
+		/*sData.TextureShader->SetFloat("u_TilingFactor", 1.0f);
+		sData.WhiteTexture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		sData->TextureShader->SetMat4("u_Transform", transform);
-		sData->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(sData->QuadVertexArray);
+		sData.TextureShader->SetMat4("u_Transform", transform);
+		sData.QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(sData.QuadVertexArray);*/
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const SPtr<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -100,16 +194,68 @@ namespace Quark {
 	{
 		QK_PROFILE_FUNCTION();
 
-		sData->TextureShader->SetFloat4("u_Color", tintColor);
-		sData->TextureShader->SetFloat("u_TilingFactor", tilingFactor);
+		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
+
+		float textureIndex = 0.0f;
+		for (uint32_t i = 1; i < sData.TextureSlotIndex; i++)
+		{
+			if (*sData.TextureSlots[i].get() == *texture.get())
+			{
+				textureIndex = (float)i;
+				break;
+			}
+		}
+
+		if (textureIndex == 0.0f)
+		{
+			textureIndex = (float)sData.TextureSlotIndex;
+			sData.TextureSlots[sData.TextureSlotIndex] = texture;
+			sData.TextureSlotIndex++;
+		}
+
+		sData.QuadVertexBufferPtr->Position = position;
+		sData.QuadVertexBufferPtr->Color = color;
+		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
+		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr++;
+
+		sData.QuadVertexBufferPtr->Position = { position.x + size.x, position.y, 0.0f };
+		sData.QuadVertexBufferPtr->Color = color;
+		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
+		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr++;
+
+		sData.QuadVertexBufferPtr->Position = { position.x + size.x, position.y + size.y, 0.0f };
+		sData.QuadVertexBufferPtr->Color = color;
+		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
+		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr++;
+
+		sData.QuadVertexBufferPtr->Position = { position.x, position.y + size.y, 0.0f };
+		sData.QuadVertexBufferPtr->Color = color;
+		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
+		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
+		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr++;
+
+		sData.QuadIndexCount += 6;
+
+#if OLD_PATH
+
+		sData.TextureShader->SetFloat4("u_Color", tintColor);
+		sData.TextureShader->SetFloat("u_TilingFactor", tilingFactor);
 		texture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f }); 
-		sData->TextureShader->SetMat4("u_Transform", transform);
+		sData.TextureShader->SetMat4("u_Transform", transform);
 
-		sData->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(sData->QuadVertexArray);
+		sData.QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(sData.QuadVertexArray);
+#endif
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
@@ -121,16 +267,16 @@ namespace Quark {
 	{
 		QK_PROFILE_FUNCTION();
 
-		sData->TextureShader->SetFloat4("u_Color", color);
-		sData->TextureShader->SetFloat("u_TilingFactor", 1.0f);
-		sData->WhiteTexture->Bind();
+		sData.TextureShader->SetFloat4("u_Color", color);
+		sData.TextureShader->SetFloat("u_TilingFactor", 1.0f);
+		sData.WhiteTexture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		sData->TextureShader->SetMat4("u_Transform", transform);
-		sData->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(sData->QuadVertexArray);
+		sData.TextureShader->SetMat4("u_Transform", transform);
+		sData.QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(sData.QuadVertexArray);
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const SPtr<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -142,17 +288,17 @@ namespace Quark {
 	{
 		QK_PROFILE_FUNCTION();
 
-		sData->TextureShader->SetFloat4("u_Color", tintColor);
-		sData->TextureShader->SetFloat("u_TilingFactor", tilingFactor);
+		sData.TextureShader->SetFloat4("u_Color", tintColor);
+		sData.TextureShader->SetFloat("u_TilingFactor", tilingFactor);
 		texture->Bind();
 
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::rotate(glm::mat4(1.0f), rotation, { 0.0f, 0.0f, 1.0f })
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
-		sData->TextureShader->SetMat4("u_Transform", transform);
+		sData.TextureShader->SetMat4("u_Transform", transform);
 
-		sData->QuadVertexArray->Bind();
-		RenderCommand::DrawIndexed(sData->QuadVertexArray);
+		sData.QuadVertexArray->Bind();
+		RenderCommand::DrawIndexed(sData.QuadVertexArray);
 	}
 
 }

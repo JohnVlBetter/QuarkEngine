@@ -38,10 +38,10 @@ void Sandbox2D::OnUpdate(Quark::Timestep ts)
 	{
 		QK_PROFILE_SCOPE("Renderer Draw");
 		Quark::Renderer2D::BeginScene(mCameraController.GetCamera());
-		Quark::Renderer2D::DrawRotatedQuad({ 0,0 }, { 1.5,1.6 }, 45, { 1,1,1,1 });
 		Quark::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
 		Quark::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-		Quark::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 10.0f, 10.0f }, mCheckerboardTexture);
+		Quark::Renderer2D::DrawQuad({ -5.0f, -5.0f, -0.1f }, { 10.0f, 10.0f }, mCheckerboardTexture, 10.0f);
+		Quark::Renderer2D::DrawQuad({ -0.5f, -0.5f, 0.0f }, { 1.0f, 1.0f }, mCheckerboardTexture, 20.0f);
 		Quark::Renderer2D::EndScene();
 	}
 }

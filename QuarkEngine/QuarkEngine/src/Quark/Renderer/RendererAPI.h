@@ -19,7 +19,7 @@ namespace Quark {
 		virtual void SetClearColor(const glm::vec4& color) = 0;
 		virtual void Clear() = 0;
 
-		virtual void DrawIndexed(const SPtr<VertexArray>& vertexArray) = 0;
+		virtual void DrawIndexed(const SPtr<VertexArray>& vertexArray, uint32_t indexCount = 0) = 0;
 
 		inline static API GetAPI() { return sAPI; }
 		static UPtr<RendererAPI> Create();

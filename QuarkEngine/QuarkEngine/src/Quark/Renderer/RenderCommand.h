@@ -27,9 +27,9 @@ namespace Quark {
 			sRendererAPI->Clear();
 		}
 
-		inline static void DrawIndexed(const SPtr<VertexArray>& vertexArray)
+		inline static void DrawIndexed(const SPtr<VertexArray>& vertexArray, uint32_t count = 0)
 		{
-			sRendererAPI->DrawIndexed(vertexArray);
+			sRendererAPI->DrawIndexed(vertexArray, count);
 		}
 	private:
 		static UPtr<RendererAPI> sRendererAPI;
