@@ -20,6 +20,7 @@ private:
 	// Temp
 	Quark::SPtr<Quark::VertexArray> mSquareVA;
 	Quark::SPtr<Quark::Shader> mFlatColorShader;
+	Quark::SPtr<Quark::Framebuffer> mFramebuffer;
 
 	Quark::SPtr<Quark::Texture2D> mCheckerboardTexture;
 

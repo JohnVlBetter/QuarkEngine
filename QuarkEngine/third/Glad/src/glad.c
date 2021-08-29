@@ -667,7 +667,7 @@ PFNGLOBJECTPTRLABELPROC glad_glObjectPtrLabel = NULL;
 PFNGLPATCHPARAMETERFVPROC glad_glPatchParameterfv = NULL;
 PFNGLPATCHPARAMETERIPROC glad_glPatchParameteri = NULL;
 PFNGLPAUSETRANSFORMFEEDBACKPROC glad_glPauseTransformFeedback = NULL;
-PFNGLPIXELSTOREFPROC glad_glPixelStoref = NULL;
+PFNGLPIXELSTOSPtrPROC glad_glPixelStoref = NULL;
 PFNGLPIXELSTOREIPROC glad_glPixelStorei = NULL;
 PFNGLPOINTPARAMETERFPROC glad_glPointParameterf = NULL;
 PFNGLPOINTPARAMETERFVPROC glad_glPointParameterfv = NULL;
@@ -1005,7 +1005,7 @@ static void load_GL_VERSION_1_0(GLADloadproc load) {
 	glad_glStencilFunc = (PFNGLSTENCILFUNCPROC)load("glStencilFunc");
 	glad_glStencilOp = (PFNGLSTENCILOPPROC)load("glStencilOp");
 	glad_glDepthFunc = (PFNGLDEPTHFUNCPROC)load("glDepthFunc");
-	glad_glPixelStoref = (PFNGLPIXELSTOREFPROC)load("glPixelStoref");
+	glad_glPixelStoref = (PFNGLPIXELSTOSPtrPROC)load("glPixelStoref");
 	glad_glPixelStorei = (PFNGLPIXELSTOREIPROC)load("glPixelStorei");
 	glad_glReadBuffer = (PFNGLREADBUFFERPROC)load("glReadBuffer");
 	glad_glReadPixels = (PFNGLREADPIXELSPROC)load("glReadPixels");

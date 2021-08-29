@@ -46,6 +46,11 @@ namespace Quark {
 		layer->OnAttach();
 	}
 
+	void Application::Close()
+	{
+		mRunning = false;
+	}
+
 	void Application::PushOverlay(Layer* layer)
 	{
 		QK_PROFILE_FUNCTION();

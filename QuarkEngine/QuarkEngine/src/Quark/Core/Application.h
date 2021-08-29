@@ -27,6 +27,8 @@ namespace Quark {
 
 		inline Window& GetWindow() { return *mWindow; }
 
+		void Close();
+
 		inline static Application& Get() { return *sInstance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);

@@ -25,6 +25,7 @@
 
 #include "Quark/Renderer/Buffer.h"
 #include "Quark/Renderer/Shader.h"
+#include "Quark/Renderer/Framebuffer.h"
 #include "Quark/Renderer/Texture.h"
 #include "Quark/Renderer/VertexArray.h"
 
