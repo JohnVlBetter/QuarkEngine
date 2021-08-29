@@ -1,80 +1,82 @@
-#include "EditorLayer.h"
 #include <imgui/imgui.h>
 
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-EditorLayer::EditorLayer()
-	: Layer("EditorLayer"), mCameraController(1280.0f / 720.0f)
-{
-}
+#include "../src/EditorLayer.h"
 
-void EditorLayer::OnAttach()
-{
-	QK_PROFILE_FUNCTION();
+namespace Quark {
 
-	mCheckerboardTexture = Quark::Texture2D::Create("assets/textures/scene.jpg");
-
-	Quark::FramebufferSpecification fbSpec;
-	fbSpec.Width = 1280;
-	fbSpec.Height = 720;
-	mFramebuffer = Quark::Framebuffer::Create(fbSpec);
-}
-
-void EditorLayer::OnDetach()
-{
-	QK_PROFILE_FUNCTION();
-}
-
-void EditorLayer::OnUpdate(Quark::Timestep ts)
-{
-	QK_PROFILE_FUNCTION();
-
-	// Update
-	mCameraController.OnUpdate(ts);
-
-	// Render
-	Quark::Renderer2D::ResetStats();
+	EditorLayer::EditorLayer()
+		: Layer("EditorLayer"), mCameraController(1280.0f / 720.0f), mSquareColor({ 0.2f, 0.3f, 0.8f, 1.0f })
 	{
-		QK_PROFILE_SCOPE("Renderer Prep");
-		mFramebuffer->Bind();
-		Quark::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-		Quark::RenderCommand::Clear();
 	}
 
+	void EditorLayer::OnAttach()
 	{
-		static float rotation = 0.0f;
-		rotation += ts * 50.0f;
+		QK_PROFILE_FUNCTION();
 
-		QK_PROFILE_SCOPE("Renderer Draw");
-		Quark::Renderer2D::BeginScene(mCameraController.GetCamera());
-		Quark::Renderer2D::DrawRotatedQuad({ 1.0f, 0.0f }, { 0.8f, 0.8f }, -45.0f, { 0.8f, 0.2f, 0.3f, 1.0f });
-		Quark::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-		Quark::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, { 0.2f, 0.3f, 0.8f, 1.0f });
-		Quark::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, mCheckerboardTexture, 10.0f);
-		Quark::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, mCheckerboardTexture, 20.0f);
+		mCheckerboardTexture = Quark::Texture2D::Create("assets/textures/scene.jpg");
 
-		for (float y = -5.0f; y < 5.0f; y += 0.5f)
+		Quark::FramebufferSpecification fbSpec;
+		fbSpec.Width = 1280;
+		fbSpec.Height = 720;
+		mFramebuffer = Quark::Framebuffer::Create(fbSpec);
+	}
+
+	void EditorLayer::OnDetach()
+	{
+		QK_PROFILE_FUNCTION();
+	}
+
+	void EditorLayer::OnUpdate(Quark::Timestep ts)
+	{
+		QK_PROFILE_FUNCTION();
+
+		// Update
+		mCameraController.OnUpdate(ts);
+
+		// Render
+		Quark::Renderer2D::ResetStats();
 		{
-			for (float x = -5.0f; x < 5.0f; x += 0.5f)
-			{
-				glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-				Quark::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
-			}
+			QK_PROFILE_SCOPE("Renderer Prep");
+			mFramebuffer->Bind();
+			Quark::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+			Quark::RenderCommand::Clear();
 		}
-		Quark::Renderer2D::EndScene();
-		mFramebuffer->Unbind();
+
+		{
+			static float rotation = 0.0f;
+			rotation += ts * 50.0f;
+
+			QK_PROFILE_SCOPE("Renderer Draw");
+			Quark::Renderer2D::BeginScene(mCameraController.GetCamera());
+			Quark::Renderer2D::DrawRotatedQuad({ 1.0f, 0.0f }, { 0.8f, 0.8f }, -45.0f, { 0.8f, 0.2f, 0.3f, 1.0f });
+			Quark::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
+			Quark::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, mSquareColor);
+			Quark::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, mCheckerboardTexture, 10.0f);
+			Quark::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, mCheckerboardTexture, 20.0f);
+			Quark::Renderer2D::EndScene();
+
+			Quark::Renderer2D::BeginScene(mCameraController.GetCamera());
+			for (float y = -5.0f; y < 5.0f; y += 0.5f)
+			{
+				for (float x = -5.0f; x < 5.0f; x += 0.5f)
+				{
+					glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
+					Quark::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
+				}
+			}
+			Quark::Renderer2D::EndScene();
+			mFramebuffer->Unbind();
+		}
 	}
-}
 
-void EditorLayer::OnImGuiRender()
-{
-	QK_PROFILE_FUNCTION();
-
-	// Note: Switch this to true to enable dockspace
-	static bool dockingEnabled = true;
-	if (dockingEnabled)
+	void EditorLayer::OnImGuiRender()
 	{
+		QK_PROFILE_FUNCTION();
+
+		// Note: Switch this to true to enable dockspace
 		static bool dockspaceOpen = true;
 		static bool opt_fullscreen_persistant = true;
 		bool opt_fullscreen = opt_fullscreen_persistant;
@@ -145,32 +147,29 @@ void EditorLayer::OnImGuiRender()
 
 		ImGui::ColorEdit4("Square Color", glm::value_ptr(mSquareColor));
 
+		ImGui::End();
+
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
+		ImGui::Begin("Viewport");
+		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
+		if (mViewportSize != *((glm::vec2*)&viewportPanelSize))
+		{
+			mFramebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
+			mViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+
+			mCameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
+		}
 		uint32_t textureID = mFramebuffer->GetColorAttachmentRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 1280, 720 }, ImVec2{ 1, 0 }, ImVec2{ 0, 1 });
+		ImGui::Image((void*)textureID, ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 1, 0 }, ImVec2{ 0, 1 });
 		ImGui::End();
+		ImGui::PopStyleVar();
 
 		ImGui::End();
 	}
-	else
+
+	void EditorLayer::OnEvent(Quark::Event& e)
 	{
-		ImGui::Begin("Settings");
-
-		auto stats = Quark::Renderer2D::GetStats();
-		ImGui::Text("Renderer2D Stats:");
-		ImGui::Text("Draw Calls: %d", stats.DrawCalls);
-		ImGui::Text("Quads: %d", stats.QuadCount);
-		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
-		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(mSquareColor));
-
-		uint32_t textureID = mCheckerboardTexture->GetRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ 1280, 720 }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 });
-		ImGui::End();
+		mCameraController.OnEvent(e);
 	}
-}
 
-void EditorLayer::OnEvent(Quark::Event& e)
-{
-	mCameraController.OnEvent(e);
 }

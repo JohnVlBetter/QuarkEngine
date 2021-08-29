@@ -2,27 +2,32 @@
 
 #include "Quark.h"
 
-class EditorLayer : public Quark::Layer
-{
-public:
-	EditorLayer();
-	virtual ~EditorLayer() = default;
+namespace Quark {
 
-	virtual void OnAttach() override;
-	virtual void OnDetach() override;
+	class EditorLayer : public Layer
+	{
+	public:
+		EditorLayer();
+		virtual ~EditorLayer() = default;
 
-	void OnUpdate(Quark::Timestep ts) override;
-	virtual void OnImGuiRender() override;
-	void OnEvent(Quark::Event& e) override;
-private:
-	Quark::OrthographicCameraController mCameraController;
+		virtual void OnAttach() override;
+		virtual void OnDetach() override;
 
-	// Temp
-	Quark::SPtr<Quark::VertexArray> mSquareVA;
-	Quark::SPtr<Quark::Shader> mFlatColorShader;
-	Quark::SPtr<Quark::Framebuffer> mFramebuffer;
+		void OnUpdate(Timestep ts) override;
+		virtual void OnImGuiRender() override;
+		void OnEvent(Event& e) override;
+	private:
+		OrthographicCameraController mCameraController;
 
-	Quark::SPtr<Quark::Texture2D> mCheckerboardTexture;
+		// Temp
+		SPtr<VertexArray> mSquareVA;
+		SPtr<Shader> mFlatColorShader;
+		SPtr<Framebuffer> mFramebuffer;
 
-	glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
-};
+		SPtr<Texture2D> mCheckerboardTexture;
+
+		glm::vec2 mViewportSize = { 0.0f, 0.0f };
+
+		glm::vec4 mSquareColor = { 0.2f, 0.3f, 0.8f, 1.0f };
+	};
+}
