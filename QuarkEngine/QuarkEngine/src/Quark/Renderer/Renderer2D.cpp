@@ -21,9 +21,9 @@ namespace Quark {
 
 	struct Renderer2DData
 	{
-		const uint32_t MaxQuads = 10000;
-		const uint32_t MaxVertices = MaxQuads * 4;
-		const uint32_t MaxIndices = MaxQuads * 6;
+		static const uint32_t MaxQuads = 20000;
+		static const uint32_t MaxVertices = MaxQuads * 4;
+		static const uint32_t MaxIndices = MaxQuads * 6;
 		static const uint32_t MaxTextureSlots = 32; // TODO: RenderCaps
 
 		SPtr<VertexArray> QuadVertexArray; 
@@ -39,6 +39,8 @@ namespace Quark {
 		uint32_t TextureSlotIndex = 1; // 0 = white texture
 
 		glm::vec4 QuadVertexPositions[4];
+
+		Renderer2D::Statistics Stats;
 	};
 
 	static Renderer2DData sData;
@@ -137,6 +139,17 @@ namespace Quark {
 			sData.TextureSlots[i]->Bind(i);
 
 		RenderCommand::DrawIndexed(sData.QuadVertexArray, sData.QuadIndexCount);
+		sData.Stats.DrawCalls++;
+	}
+
+	void Renderer2D::FlushAndReset()
+	{
+		EndScene();
+
+		sData.QuadIndexCount = 0;
+		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
+
+		sData.TextureSlotIndex = 1;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -148,6 +161,9 @@ namespace Quark {
 	{
 		QK_PROFILE_FUNCTION();
 
+		if (sData.QuadIndexCount >= Renderer2DData::MaxIndices)
+			FlushAndReset();
+
 		const float textureIndex = 0.0f; // White Texture
 		const float tilingFactor = 1.0f;
 
@@ -183,6 +199,8 @@ namespace Quark {
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadIndexCount += 6;
+
+		sData.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const SPtr<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -194,6 +212,9 @@ namespace Quark {
 	{
 		QK_PROFILE_FUNCTION();
 
+		if (sData.QuadIndexCount >= Renderer2DData::MaxIndices)
+			FlushAndReset();
+
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
 		float textureIndex = 0.0f;
@@ -245,6 +266,8 @@ namespace Quark {
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadIndexCount += 6;
+
+		sData.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const glm::vec4& color)
@@ -255,6 +278,9 @@ namespace Quark {
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const glm::vec4& color)
 	{
 		QK_PROFILE_FUNCTION();
+
+		if (sData.QuadIndexCount >= Renderer2DData::MaxIndices)
+			FlushAndReset();
 
 		const float textureIndex = 0.0f; // White Texture
 		const float tilingFactor = 1.0f;
@@ -292,6 +318,8 @@ namespace Quark {
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadIndexCount += 6;
+
+		sData.Stats.QuadCount++;
 	}
 
 	void Renderer2D::DrawRotatedQuad(const glm::vec2& position, const glm::vec2& size, float rotation, const SPtr<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
@@ -302,6 +330,9 @@ namespace Quark {
 	void Renderer2D::DrawRotatedQuad(const glm::vec3& position, const glm::vec2& size, float rotation, const SPtr<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
 	{
 		QK_PROFILE_FUNCTION();
+
+		if (sData.QuadIndexCount >= Renderer2DData::MaxIndices)
+			FlushAndReset();
 
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
@@ -355,6 +386,18 @@ namespace Quark {
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadIndexCount += 6;
+
+		sData.Stats.QuadCount++;
+	}
+
+	void Renderer2D::ResetStats()
+	{
+		memset(&sData.Stats, 0, sizeof(Statistics));
+	}
+
+	Renderer2D::Statistics Renderer2D::GetStats()
+	{
+		return sData.Stats;
 	}
 
 }
