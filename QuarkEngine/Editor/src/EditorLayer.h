@@ -2,11 +2,11 @@
 
 #include "Quark.h"
 
-class Sandbox2D : public Quark::Layer
+class EditorLayer : public Quark::Layer
 {
 public:
-	Sandbox2D();
-	virtual ~Sandbox2D() = default;
+	EditorLayer();
+	virtual ~EditorLayer() = default;
 
 	virtual void OnAttach() override;
 	virtual void OnDetach() override;
@@ -20,6 +20,7 @@ private:
 	// Temp
 	Quark::SPtr<Quark::VertexArray> mSquareVA;
 	Quark::SPtr<Quark::Shader> mFlatColorShader;
+	Quark::SPtr<Quark::Framebuffer> mFramebuffer;
 
 	Quark::SPtr<Quark::Texture2D> mCheckerboardTexture;
 

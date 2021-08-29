@@ -15,7 +15,7 @@ namespace Quark {
 	class Application
 	{
 	public:
-		Application();
+		Application(const std::string& name = "Quark App");
 		virtual ~Application();
 
 		void Run();

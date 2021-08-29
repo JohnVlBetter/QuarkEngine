@@ -19,10 +19,11 @@ IncludeDir["ImGui"] = "third/imgui"
 IncludeDir["glm"] = "third/glm"
 IncludeDir["stb_image"] = "third/stb_image"
 
-
-include "third/GLFW"
-include "third/Glad"
-include "third/imgui"
+group "Dependencies"
+	include "third/GLFW"
+	include "third/Glad"
+	include "third/imgui"
+group ""
 
 project "QuarkEngine"
 	location "QuarkEngine"
@@ -98,6 +99,58 @@ project "QuarkEngine"
 
 project "Sandbox"
 	location "Sandbox"
+	kind "ConsoleApp"
+	language "C++"
+	cppdialect "C++17"
+	staticruntime "on"
+
+	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+
+	files
+	{
+		"%{prj.name}/src/**.h",
+		"%{prj.name}/src/**.cpp"
+	}
+
+	includedirs
+	{
+		"third/spdlog/include",
+		"QuarkEngine/src",
+		"third",
+		"%{IncludeDir.glm}"
+	}
+
+	links
+	{
+		"QuarkEngine"
+	}
+
+	filter "system:windows"
+		systemversion "latest"
+
+		defines
+		{
+			"QK_PLATFORM_WINDOWS"
+		}
+
+	filter "configurations:Debug"
+		defines "QK_DEBUG"
+		runtime "Debug"
+		symbols "on"
+
+	filter "configurations:Release"
+		defines "QK_RELEASE"
+		runtime "Release"
+		optimize "on"
+
+	filter "configurations:Dist"
+		defines "QK_DIST"
+		runtime "Release"
+		optimize "on"
+
+project "Editor"
+	location "Editor"
 	kind "ConsoleApp"
 	language "C++"
 	cppdialect "C++17"

@@ -15,14 +15,14 @@ namespace Quark {
 
 	Application* Application::sInstance = nullptr;
 
-	Application::Application()
+	Application::Application(const std::string& name)
 	{
 		QK_PROFILE_FUNCTION();
 
 		QK_CORE_ASSERT(!sInstance, "Application already exists!");
 		sInstance = this;
 
-		mWindow = Window::Create();
+		mWindow = Window::Create(WindowProps(name));
 		mWindow->SetEventCallback(QK_BIND_EVENT_FN(Application::OnEvent));
 
 		Renderer::Init();
