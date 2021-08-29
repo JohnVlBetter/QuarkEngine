@@ -34,7 +34,8 @@ namespace Quark {
 		QK_PROFILE_FUNCTION();
 
 		// Update
-		mCameraController.OnUpdate(ts);
+		if (mViewportFocused)
+			mCameraController.OnUpdate(ts);
 
 		// Render
 		Quark::Renderer2D::ResetStats();
@@ -151,6 +152,11 @@ namespace Quark {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
+
+		mViewportFocused = ImGui::IsWindowFocused();
+		mViewportHovered = ImGui::IsWindowHovered();
+		Application::Get().GetImGuiLayer()->BlockEvents(!mViewportFocused || !mViewportHovered);
+
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		if (mViewportSize != *((glm::vec2*)&viewportPanelSize))
 		{

@@ -1326,9 +1326,6 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\Windows\WindowsInput.h">
-      <Filter>src\Platform\Windows</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
       <Filter>src\Platform\Windows</Filter>
     </ClInclude>
@@ -1357,9 +1354,6 @@
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Core\Log.h">
-      <Filter>src\Quark\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\Core\MouseButtonCodes.h">
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Core\Timestep.h">
@@ -1424,6 +1418,9 @@
     </ClInclude>
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Core\MouseCodes.h">
+      <Filter>src\Quark\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

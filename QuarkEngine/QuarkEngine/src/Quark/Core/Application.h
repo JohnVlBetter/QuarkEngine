@@ -29,6 +29,8 @@ namespace Quark {
 
 		void Close();
 
+		ImGuiLayer* GetImGuiLayer() { return mImGuiLayer; }
+
 		inline static Application& Get() { return *sInstance; }
 	private:
 		bool OnWindowClose(WindowCloseEvent& e);
