@@ -24,6 +24,9 @@ namespace Quark {
 		SPtr<Shader> mFlatColorShader;
 		SPtr<Framebuffer> mFramebuffer;
 
+		SPtr<Scene> mActiveScene;
+		entt::entity mSquareEntity;
+
 		SPtr<Texture2D> mCheckerboardTexture;
 
 		bool mViewportFocused = false, mViewportHovered = false;

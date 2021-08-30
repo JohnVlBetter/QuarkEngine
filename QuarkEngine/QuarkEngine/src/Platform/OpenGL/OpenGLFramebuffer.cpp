@@ -4,6 +4,7 @@
 #include <glad/glad.h>
 
 namespace Quark {
+	static const uint32_t sMaxFramebufferSize = 8192;
 
 	OpenGLFramebuffer::OpenGLFramebuffer(const FramebufferSpecification& spec)
 		: mSpecification(spec)
@@ -61,6 +62,12 @@ namespace Quark {
 
 	void OpenGLFramebuffer::Resize(uint32_t width, uint32_t height)
 	{
+		if (width == 0 || height == 0 || width > sMaxFramebufferSize || height > sMaxFramebufferSize)
+		{
+			QK_CORE_WARNING("Attempted to rezize framebuffer to {0}, {1}", width, height);
+			return;
+		}
+
 		mSpecification.Width = width;
 		mSpecification.Height = height;
 

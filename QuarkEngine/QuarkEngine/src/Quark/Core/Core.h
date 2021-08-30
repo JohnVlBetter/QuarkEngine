@@ -62,6 +62,7 @@
 	#define QK_ENABLE_ASSERTS
 #endif
 
+// TODO: Make this macro able to take in no arguments except condition
 #ifdef QK_ENABLE_ASSERTS
 	#define QK_CORE_ASSERT(x, ...) { if(!(x)) { QK_CORE_ERROR("Assertion Failed: {0}", __VA_ARGS__); __debugbreak(); } }
 #else

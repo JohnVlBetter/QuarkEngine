@@ -2,6 +2,9 @@
 
 #include <stdio.h>
 
+#include "Quark/Scene/Scene.h"
+#include "Quark/Scene/Components.h"
+
 //for use by quark apps
 #include "Quark/Core/Core.h"
 

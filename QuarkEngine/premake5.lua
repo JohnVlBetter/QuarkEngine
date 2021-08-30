@@ -18,6 +18,7 @@ IncludeDir["Glad"] = "third/Glad/include"
 IncludeDir["ImGui"] = "third/imgui"
 IncludeDir["glm"] = "third/glm"
 IncludeDir["stb_image"] = "third/stb_image"
+IncludeDir["entt"] = "third/entt/include"
 
 group "Dependencies"
 	include "third/GLFW"
@@ -61,7 +62,8 @@ project "QuarkEngine"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}"
 	}
 
 	links 
@@ -79,7 +81,8 @@ project "QuarkEngine"
 		{
 			"QK_PLATFORM_WINDOWS",
 			"QUARK_BUILD_DLL",
-			"GLFW_INCLUDE_NONE"
+			"GLFW_INCLUDE_NONE",
+			"NOMINMAX"
 		}
 
 	filter "configurations:Debug"
@@ -118,7 +121,8 @@ project "Sandbox"
 		"third/spdlog/include",
 		"QuarkEngine/src",
 		"third",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links
@@ -170,7 +174,8 @@ project "Editor"
 		"third/spdlog/include",
 		"QuarkEngine/src",
 		"third",
-		"%{IncludeDir.glm}"
+		"%{IncludeDir.glm}",
+		"%{IncludeDir.entt}"
 	}
 
 	links
@@ -183,7 +188,8 @@ project "Editor"
 
 		defines
 		{
-			"QK_PLATFORM_WINDOWS"
+			"QK_PLATFORM_WINDOWS",
+			"NOMINMAX"
 		}
 
 	filter "configurations:Debug"

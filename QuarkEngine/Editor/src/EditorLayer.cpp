@@ -21,7 +21,15 @@ namespace Quark {
 		Quark::FramebufferSpecification fbSpec;
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
-		mFramebuffer = Quark::Framebuffer::Create(fbSpec);
+		mFramebuffer = Framebuffer::Create(fbSpec);
+
+		mActiveScene = CreateSPtr<Scene>();
+
+		auto square = mActiveScene->CreateEntity();
+		mActiveScene->Reg().emplace<TransformComponent>(square);
+		mActiveScene->Reg().emplace<SpriteRendererComponent>(square, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+
+		mSquareEntity = square;
 	}
 
 	void EditorLayer::OnDetach()
@@ -38,39 +46,19 @@ namespace Quark {
 			mCameraController.OnUpdate(ts);
 
 		// Render
-		Quark::Renderer2D::ResetStats();
-		{
-			QK_PROFILE_SCOPE("Renderer Prep");
-			mFramebuffer->Bind();
-			Quark::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
-			Quark::RenderCommand::Clear();
-		}
+		Renderer2D::ResetStats();
+		mFramebuffer->Bind();
+		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
+		RenderCommand::Clear();
 
-		{
-			static float rotation = 0.0f;
-			rotation += ts * 50.0f;
+		Renderer2D::BeginScene(mCameraController.GetCamera());
 
-			QK_PROFILE_SCOPE("Renderer Draw");
-			Quark::Renderer2D::BeginScene(mCameraController.GetCamera());
-			Quark::Renderer2D::DrawRotatedQuad({ 1.0f, 0.0f }, { 0.8f, 0.8f }, -45.0f, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Quark::Renderer2D::DrawQuad({ -1.0f, 0.0f }, { 0.8f, 0.8f }, { 0.8f, 0.2f, 0.3f, 1.0f });
-			Quark::Renderer2D::DrawQuad({ 0.5f, -0.5f }, { 0.5f, 0.75f }, mSquareColor);
-			Quark::Renderer2D::DrawQuad({ 0.0f, 0.0f, -0.1f }, { 20.0f, 20.0f }, mCheckerboardTexture, 10.0f);
-			Quark::Renderer2D::DrawRotatedQuad({ -2.0f, 0.0f, 0.0f }, { 1.0f, 1.0f }, rotation, mCheckerboardTexture, 20.0f);
-			Quark::Renderer2D::EndScene();
+		// Update scene
+		mActiveScene->OnUpdate(ts);
 
-			Quark::Renderer2D::BeginScene(mCameraController.GetCamera());
-			for (float y = -5.0f; y < 5.0f; y += 0.5f)
-			{
-				for (float x = -5.0f; x < 5.0f; x += 0.5f)
-				{
-					glm::vec4 color = { (x + 5.0f) / 10.0f, 0.4f, (y + 5.0f) / 10.0f, 0.7f };
-					Quark::Renderer2D::DrawQuad({ x, y }, { 0.45f, 0.45f }, color);
-				}
-			}
-			Quark::Renderer2D::EndScene();
-			mFramebuffer->Unbind();
-		}
+		Renderer2D::EndScene();
+
+		mFramebuffer->Unbind();
 	}
 
 	void EditorLayer::OnImGuiRender()
@@ -146,7 +134,8 @@ namespace Quark {
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(mSquareColor));
+		auto& squareColor = mActiveScene->Reg().get<SpriteRendererComponent>(mSquareEntity).Color;
+		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
 
 		ImGui::End();
 
@@ -158,7 +147,7 @@ namespace Quark {
 		Application::Get().GetImGuiLayer()->BlockEvents(!mViewportFocused || !mViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (mViewportSize != *((glm::vec2*)&viewportPanelSize))
+		if (mViewportSize != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
 		{
 			mFramebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
 			mViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
