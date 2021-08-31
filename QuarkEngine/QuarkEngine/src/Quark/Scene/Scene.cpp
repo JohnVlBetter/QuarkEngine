@@ -6,17 +6,9 @@
 
 #include <glm/glm.hpp>
 
+#include "Entity.h"
+
 namespace Quark {
-
-	static void DoMath(const glm::mat4& transform)
-	{
-
-	}
-
-	static void OnTransformConstruct(entt::registry& registry, entt::entity entity)
-	{
-
-	}
 
 	Scene::Scene()
 	{
@@ -27,20 +19,50 @@ namespace Quark {
 	{
 	}
 
-	entt::entity Scene::CreateEntity()
+	Entity Scene::CreateEntity(const std::string& name)
 	{
-		return mRegistry.create();
+		Entity entity = { mRegistry.create(), this };
+		entity.AddComponent<TransformComponent>();
+		auto& tag = entity.AddComponent<TagComponent>();
+		tag.Tag = name.empty() ? "Entity" : name;
+		return entity;
 	}
 
 	void Scene::OnUpdate(Timestep ts)
 	{
-		auto group = mRegistry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
+		// Render 2D
+		Camera* mainCamera = nullptr;
+		glm::mat4* cameraTransform = nullptr;
 		{
-			auto&[transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+			auto group = mRegistry.view<TransformComponent, CameraComponent>();
+			for (auto entity : group)
+			{
+				auto&[transform, camera] = group.get<TransformComponent, CameraComponent>(entity);
 
-			Renderer2D::DrawQuad(transform, sprite.Color);
+				if (camera.Primary)
+				{
+					mainCamera = &camera.Camera;
+					cameraTransform = &transform.Transform;
+					break;
+				}
+			}
 		}
+
+		if (mainCamera)
+		{
+			Renderer2D::BeginScene(mainCamera->GetProjection(), *cameraTransform);
+
+			auto group = mRegistry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
+			for (auto entity : group)
+			{
+				auto&[transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+
+				Renderer2D::DrawQuad(transform, sprite.Color);
+			}
+
+			Renderer2D::EndScene();
+		}
+
 	}
 
 }

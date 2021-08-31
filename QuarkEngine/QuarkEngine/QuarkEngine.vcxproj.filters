@@ -1431,6 +1431,12 @@
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Scene\Entity.h">
+      <Filter>src\Quark\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\Camera.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\stb_image\stb_image.cpp">
@@ -1522,6 +1528,9 @@
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Scene\Entity.cpp">
+      <Filter>src\Quark\Scene</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

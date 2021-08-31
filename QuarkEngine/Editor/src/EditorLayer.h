@@ -25,7 +25,11 @@ namespace Quark {
 		SPtr<Framebuffer> mFramebuffer;
 
 		SPtr<Scene> mActiveScene;
-		entt::entity mSquareEntity;
+		Entity mSquareEntity;
+		Entity mCameraEntity;
+		Entity mSecondCamera;
+
+		bool mPrimaryCamera = true;
 
 		SPtr<Texture2D> mCheckerboardTexture;
 

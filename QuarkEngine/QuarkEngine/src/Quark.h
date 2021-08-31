@@ -2,9 +2,6 @@
 
 #include <stdio.h>
 
-#include "Quark/Scene/Scene.h"
-#include "Quark/Scene/Components.h"
-
 //for use by quark apps
 #include "Quark/Core/Core.h"
 
@@ -20,6 +17,10 @@
 #include "Quark/Renderer/OrthographicCameraController.h"
 
 #include "Quark/ImGui/ImGuiLayer.h"
+
+#include "Quark/Scene/Scene.h"
+#include "Quark/Scene/Components.h"
+#include "Quark/Scene/Entity.h"
 
 //Renderer
 #include "Quark/Renderer/Renderer.h"

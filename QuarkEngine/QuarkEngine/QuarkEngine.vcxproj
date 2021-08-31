@@ -584,6 +584,7 @@
     <ClInclude Include="src\Quark\Events\MouseEvent.h" />
     <ClInclude Include="src\Quark\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Quark\Renderer\Buffer.h" />
+    <ClInclude Include="src\Quark\Renderer\Camera.h" />
     <ClInclude Include="src\Quark\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Quark\Renderer\GraphicsContext.h" />
     <ClInclude Include="src\Quark\Renderer\OrthographicCamera.h" />
@@ -596,6 +597,7 @@
     <ClInclude Include="src\Quark\Renderer\Texture.h" />
     <ClInclude Include="src\Quark\Renderer\VertexArray.h" />
     <ClInclude Include="src\Quark\Scene\Components.h" />
+    <ClInclude Include="src\Quark\Scene\Entity.h" />
     <ClInclude Include="src\Quark\Scene\Scene.h" />
     <ClInclude Include="src\qkpch.h" />
   </ItemGroup>
@@ -628,6 +630,7 @@
     <ClCompile Include="src\Quark\Renderer\Shader.cpp" />
     <ClCompile Include="src\Quark\Renderer\Texture.cpp" />
     <ClCompile Include="src\Quark\Renderer\VertexArray.cpp" />
+    <ClCompile Include="src\Quark\Scene\Entity.cpp" />
     <ClCompile Include="src\Quark\Scene\Scene.cpp" />
     <ClCompile Include="src\qkpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>

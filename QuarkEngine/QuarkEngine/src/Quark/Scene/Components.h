@@ -2,7 +2,19 @@
 
 #include <glm/glm.hpp>
 
+#include "Quark/Renderer/Camera.h"
+
 namespace Quark {
+
+	struct TagComponent
+	{
+		std::string Tag;
+
+		TagComponent() = default;
+		TagComponent(const TagComponent&) = default;
+		TagComponent(const std::string& tag)
+			: Tag(tag) {}
+	};
 
 	struct TransformComponent
 	{
@@ -27,4 +39,14 @@ namespace Quark {
 			: Color(color) {}
 	};
 
+	struct CameraComponent
+	{
+		Quark::Camera Camera;
+		bool Primary = true; // TODO: think about moving to Scene
+
+		CameraComponent() = default;
+		CameraComponent(const CameraComponent&) = default;
+		CameraComponent(const glm::mat4& projection)
+			: Camera(projection) {}
+	};
 }

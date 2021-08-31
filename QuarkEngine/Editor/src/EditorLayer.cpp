@@ -25,11 +25,18 @@ namespace Quark {
 
 		mActiveScene = CreateSPtr<Scene>();
 
-		auto square = mActiveScene->CreateEntity();
-		mActiveScene->Reg().emplace<TransformComponent>(square);
-		mActiveScene->Reg().emplace<SpriteRendererComponent>(square, glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
+		// Entity
+		auto square = mActiveScene->CreateEntity("Green Square");
+		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
 		mSquareEntity = square;
+
+		mCameraEntity = mActiveScene->CreateEntity("Camera Entity");
+		mCameraEntity.AddComponent<CameraComponent>(glm::ortho(-16.0f, 16.0f, -9.0f, 9.0f, -1.0f, 1.0f));
+
+		mSecondCamera = mActiveScene->CreateEntity("Clip-Space Entity");
+		auto& cc = mSecondCamera.AddComponent<CameraComponent>(glm::ortho(-1.0f, 1.0f, -1.0f, 1.0f, -1.0f, 1.0f));
+		cc.Primary = false;
 	}
 
 	void EditorLayer::OnDetach()
@@ -41,6 +48,15 @@ namespace Quark {
 	{
 		QK_PROFILE_FUNCTION();
 
+		// Resize
+		if (Quark::FramebufferSpecification spec = mFramebuffer->GetSpecification();
+			mViewportSize.x > 0.0f && mViewportSize.y > 0.0f && // zero sized framebuffer is invalid
+			(spec.Width != mViewportSize.x || spec.Height != mViewportSize.y))
+		{
+			mFramebuffer->Resize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+			mCameraController.OnResize(mViewportSize.x, mViewportSize.y);
+		}
+
 		// Update
 		if (mViewportFocused)
 			mCameraController.OnUpdate(ts);
@@ -51,12 +67,8 @@ namespace Quark {
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		RenderCommand::Clear();
 
-		Renderer2D::BeginScene(mCameraController.GetCamera());
-
 		// Update scene
 		mActiveScene->OnUpdate(ts);
-
-		Renderer2D::EndScene();
 
 		mFramebuffer->Unbind();
 	}
@@ -134,8 +146,25 @@ namespace Quark {
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
 
-		auto& squareColor = mActiveScene->Reg().get<SpriteRendererComponent>(mSquareEntity).Color;
-		ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+		if (mSquareEntity)
+		{
+			ImGui::Separator();
+			auto& tag = mSquareEntity.GetComponent<TagComponent>().Tag;
+			ImGui::Text("%s", tag.c_str());
+
+			auto& squareColor = mSquareEntity.GetComponent<SpriteRendererComponent>().Color;
+			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
+			ImGui::Separator();
+		}
+
+		ImGui::DragFloat3("Camera Transform",
+			glm::value_ptr(mCameraEntity.GetComponent<TransformComponent>().Transform[3]));
+
+		if (ImGui::Checkbox("Camera A", &mPrimaryCamera))
+		{
+			mCameraEntity.GetComponent<CameraComponent>().Primary = mPrimaryCamera;
+			mSecondCamera.GetComponent<CameraComponent>().Primary = !mPrimaryCamera;
+		}
 
 		ImGui::End();
 
@@ -147,13 +176,8 @@ namespace Quark {
 		Application::Get().GetImGuiLayer()->BlockEvents(!mViewportFocused || !mViewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
-		if (mViewportSize != *((glm::vec2*)&viewportPanelSize) && viewportPanelSize.x > 0 && viewportPanelSize.y > 0)
-		{
-			mFramebuffer->Resize((uint32_t)viewportPanelSize.x, (uint32_t)viewportPanelSize.y);
-			mViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
+		mViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
-			mCameraController.OnResize(viewportPanelSize.x, viewportPanelSize.y);
-		}
 		uint32_t textureID = mFramebuffer->GetColorAttachmentRendererID();
 		ImGui::Image((void*)textureID, ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 1, 0 }, ImVec2{ 0, 1 });
 		ImGui::End();
