@@ -21,6 +21,7 @@
 #include "Quark/Scene/Scene.h"
 #include "Quark/Scene/Components.h"
 #include "Quark/Scene/Entity.h"
+#include "Quark/Scene/ScriptableEntity.h"
 
 //Renderer
 #include "Quark/Renderer/Renderer.h"

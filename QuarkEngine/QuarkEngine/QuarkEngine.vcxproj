@@ -601,6 +601,7 @@
     <ClInclude Include="src\Quark\Scene\Scene.h" />
     <ClInclude Include="src\qkpch.h" />
     <ClInclude Include="src\Quark\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Quark\Scene\ScriptableEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\stb_image\stb_image.cpp" />
