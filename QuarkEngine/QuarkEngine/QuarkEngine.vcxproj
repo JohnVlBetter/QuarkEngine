@@ -600,6 +600,7 @@
     <ClInclude Include="src\Quark\Scene\Entity.h" />
     <ClInclude Include="src\Quark\Scene\Scene.h" />
     <ClInclude Include="src\qkpch.h" />
+    <ClInclude Include="src\Quark\Scene\SceneCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\stb_image\stb_image.cpp" />
@@ -635,6 +636,7 @@
     <ClCompile Include="src\qkpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="src\Quark\Scene\SceneCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\third\GLFW\GLFW.vcxproj">
