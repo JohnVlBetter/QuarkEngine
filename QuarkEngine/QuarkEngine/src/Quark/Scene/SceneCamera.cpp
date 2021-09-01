@@ -12,9 +12,19 @@ namespace Quark {
 
 	void SceneCamera::SetOrthographic(float size, float nearClip, float farClip)
 	{
+		mProjectionType = ProjectionType::Orthographic;
 		mOrthographicSize = size;
 		mOrthographicNear = nearClip;
 		mOrthographicFar = farClip;
+		RecalculateProjection();
+	}
+
+	void SceneCamera::SetPerspective(float verticalFOV, float nearClip, float farClip)
+	{
+		mProjectionType = ProjectionType::Perspective;
+		mPerspectiveFOV = verticalFOV;
+		mPerspectiveNear = nearClip;
+		mPerspectiveFar = farClip;
 		RecalculateProjection();
 	}
 
@@ -26,13 +36,20 @@ namespace Quark {
 
 	void SceneCamera::RecalculateProjection()
 	{
-		float orthoLeft = -mOrthographicSize * mAspectRatio * 0.5f;
-		float orthoRight = mOrthographicSize * mAspectRatio * 0.5f;
-		float orthoBottom = -mOrthographicSize * 0.5f;
-		float orthoTop = mOrthographicSize * 0.5f;
+		if (mProjectionType == ProjectionType::Perspective)
+		{
+			mProjection = glm::perspective(mPerspectiveFOV, mAspectRatio, mPerspectiveNear, mPerspectiveFar);
+		}
+		else
+		{
+			float orthoLeft = -mOrthographicSize * mAspectRatio * 0.5f;
+			float orthoRight = mOrthographicSize * mAspectRatio * 0.5f;
+			float orthoBottom = -mOrthographicSize * 0.5f;
+			float orthoTop = mOrthographicSize * 0.5f;
 
-		mProjection = glm::ortho(orthoLeft, orthoRight,
-			orthoBottom, orthoTop, mOrthographicNear, mOrthographicFar);
+			mProjection = glm::ortho(orthoLeft, orthoRight,
+				orthoBottom, orthoTop, mOrthographicNear, mOrthographicFar);
+		}
 	}
 
 }

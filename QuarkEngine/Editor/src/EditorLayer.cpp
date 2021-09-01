@@ -29,6 +29,9 @@ namespace Quark {
 		auto square = mActiveScene->CreateEntity("Green Square");
 		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
 
+		auto redSquare = mActiveScene->CreateEntity("Red Square");
+		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
+
 		mSquareEntity = square;
 
 		mCameraEntity = mActiveScene->CreateEntity("Camera Entity");
