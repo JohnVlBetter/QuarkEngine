@@ -41,6 +41,17 @@ namespace Quark {
 		}
 
 		operator bool() const { return mEntityHandle != 0; }
+		operator uint32_t() const { return (uint32_t)mEntityHandle; }
+
+		bool operator==(const Entity& other) const
+		{
+			return mEntityHandle == other.mEntityHandle && mScene == other.mScene;
+		}
+
+		bool operator!=(const Entity& other) const
+		{
+			return !(*this == other);
+		}
 	private:
 		entt::entity mEntityHandle{ 0 };
 		Scene* mScene = nullptr;

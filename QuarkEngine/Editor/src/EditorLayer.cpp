@@ -69,6 +69,8 @@ namespace Quark {
 
 		mCameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
 		mSecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
+
+		mSceneHierarchyPanel.SetContext(mActiveScene);
 	}
 
 	void EditorLayer::OnDetach()
@@ -170,6 +172,7 @@ namespace Quark {
 
 			ImGui::EndMenuBar();
 		}
+		mSceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Settings");
 

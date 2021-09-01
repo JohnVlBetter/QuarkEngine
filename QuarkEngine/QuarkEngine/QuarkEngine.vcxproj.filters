@@ -58,6 +58,9 @@
     <Filter Include="third\stb_image">
       <UniqueIdentifier>{5A50E696-C6DB-535B-CFEC-D64F3BF7AF5B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Panels">
+      <UniqueIdentifier>{3f892fec-4e14-4f24-8137-8002e2ae54c5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\third\glm\glm\common.hpp">
@@ -1446,6 +1449,9 @@
     <ClInclude Include="src\Quark\Core\PlatformDetection.h">
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Panels\SceneHierarchyPanel.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\stb_image\stb_image.cpp">
@@ -1543,6 +1549,9 @@
     </ClCompile>
     <ClCompile Include="src\Quark\Scene\SceneCamera.cpp">
       <Filter>src\Quark\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp">
+      <Filter>src\Panels</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
