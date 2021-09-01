@@ -34,10 +34,10 @@ namespace Quark {
 
 		mSquareEntity = square;
 
-		mCameraEntity = mActiveScene->CreateEntity("Camera Entity");
+		mCameraEntity = mActiveScene->CreateEntity("Camera A");
 		mCameraEntity.AddComponent<CameraComponent>();
 
-		mSecondCamera = mActiveScene->CreateEntity("Clip-Space Entity");
+		mSecondCamera = mActiveScene->CreateEntity("Camera B");
 		auto& cc = mSecondCamera.AddComponent<CameraComponent>();
 		cc.Primary = false;
 
@@ -46,8 +46,8 @@ namespace Quark {
 		public:
 			virtual void OnCreate() override
 			{
-				auto& transform = GetComponent<TransformComponent>().Transform;
-				transform[3][0] = rand() % 10 - 5.0f;
+				auto& translation = GetComponent<TransformComponent>().Translation;
+				translation.x = rand() % 10 - 5.0f;
 			}
 
 			virtual void OnDestroy() override
@@ -56,17 +56,17 @@ namespace Quark {
 
 			virtual void OnUpdate(Timestep ts) override
 			{
-				auto& transform = GetComponent<TransformComponent>().Transform;
+				auto& translation = GetComponent<TransformComponent>().Translation;
 				float speed = 5.0f;
 
 				if (Input::IsKeyPressed(Key::A))
-					transform[3][0] -= speed * ts;
+					translation.x -= speed * ts;
 				if (Input::IsKeyPressed(Key::D))
-					transform[3][0] += speed * ts;
+					translation.x += speed * ts;
 				if (Input::IsKeyPressed(Key::W))
-					transform[3][1] += speed * ts;
+					translation.y += speed * ts;
 				if (Input::IsKeyPressed(Key::S))
-					transform[3][1] -= speed * ts;
+					translation.y -= speed * ts;
 			}
 		};
 
@@ -177,7 +177,7 @@ namespace Quark {
 		}
 		mSceneHierarchyPanel.OnImGuiRender();
 
-		ImGui::Begin("Settings");
+		ImGui::Begin("Stats");
 
 		auto stats = Quark::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
@@ -185,33 +185,6 @@ namespace Quark {
 		ImGui::Text("Quads: %d", stats.QuadCount);
 		ImGui::Text("Vertices: %d", stats.GetTotalVertexCount());
 		ImGui::Text("Indices: %d", stats.GetTotalIndexCount());
-
-		if (mSquareEntity)
-		{
-			ImGui::Separator();
-			auto& tag = mSquareEntity.GetComponent<TagComponent>().Tag;
-			ImGui::Text("%s", tag.c_str());
-
-			auto& squareColor = mSquareEntity.GetComponent<SpriteRendererComponent>().Color;
-			ImGui::ColorEdit4("Square Color", glm::value_ptr(squareColor));
-			ImGui::Separator();
-		}
-
-		ImGui::DragFloat3("Camera Transform",
-			glm::value_ptr(mCameraEntity.GetComponent<TransformComponent>().Transform[3]));
-
-		if (ImGui::Checkbox("Camera A", &mPrimaryCamera))
-		{
-			mCameraEntity.GetComponent<CameraComponent>().Primary = mPrimaryCamera;
-			mSecondCamera.GetComponent<CameraComponent>().Primary = !mPrimaryCamera;
-		}
-
-		{
-			auto& camera = mSecondCamera.GetComponent<CameraComponent>().Camera;
-			float orthoSize = camera.GetOrthographicSize();
-			if (ImGui::DragFloat("Second Camera Ortho Size", &orthoSize))
-				camera.SetOrthographicSize(orthoSize);
-		}
 
 		ImGui::End();
 
