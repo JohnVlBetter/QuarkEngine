@@ -56,13 +56,13 @@ namespace Quark {
 				auto& transform = GetComponent<TransformComponent>().Transform;
 				float speed = 5.0f;
 
-				if (Input::IsKeyPressed(KeyCode::A))
+				if (Input::IsKeyPressed(Key::A))
 					transform[3][0] -= speed * ts;
-				if (Input::IsKeyPressed(KeyCode::D))
+				if (Input::IsKeyPressed(Key::D))
 					transform[3][0] += speed * ts;
-				if (Input::IsKeyPressed(KeyCode::W))
+				if (Input::IsKeyPressed(Key::W))
 					transform[3][1] += speed * ts;
-				if (Input::IsKeyPressed(KeyCode::S))
+				if (Input::IsKeyPressed(Key::S))
 					transform[3][1] -= speed * ts;
 			}
 		};
@@ -219,8 +219,8 @@ namespace Quark {
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		mViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
-		uint32_t textureID = mFramebuffer->GetColorAttachmentRendererID();
-		ImGui::Image((void*)textureID, ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 1, 0 }, ImVec2{ 0, 1 });
+		uint64_t textureID = mFramebuffer->GetColorAttachmentRendererID();
+		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 1, 0 }, ImVec2{ 0, 1 });
 		ImGui::End();
 		ImGui::PopStyleVar();
 

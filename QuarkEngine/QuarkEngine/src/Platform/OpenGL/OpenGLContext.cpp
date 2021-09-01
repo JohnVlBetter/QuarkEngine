@@ -27,6 +27,8 @@ namespace Quark {
 		QK_CORE_INFO("  Renderer: {0}", glGetString(GL_RENDERER));
 		QK_CORE_INFO("  Version: {0}", glGetString(GL_VERSION));
 		QK_CORE_INFO("---------------------------------------");
+
+		QK_CORE_ASSERT(GLVersion.major > 4 || (GLVersion.major == 4 && GLVersion.minor >= 5), "Quark requires at least OpenGL version 4.5!");
 	}
 
 	void OpenGLContext::SwapBuffers()

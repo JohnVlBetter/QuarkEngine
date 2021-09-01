@@ -575,6 +575,7 @@
     <ClInclude Include="src\Quark\Core\LayerStack.h" />
     <ClInclude Include="src\Quark\Core\Log.h" />
     <ClInclude Include="src\Quark\Core\MouseCodes.h" />
+    <ClInclude Include="src\Quark\Core\PlatformDetection.h" />
     <ClInclude Include="src\Quark\Core\Timestep.h" />
     <ClInclude Include="src\Quark\Core\Window.h" />
     <ClInclude Include="src\Quark\Debug\Instrumentor.h" />

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "qkpch.h"
+#include <sstream>
 
 #include "Quark/Core/Core.h"
 #include "Quark/Events/Event.h"

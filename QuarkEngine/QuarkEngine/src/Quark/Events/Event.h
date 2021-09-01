@@ -1,6 +1,8 @@
 #pragma once
 
-#include "qkpch.h"
+#include <functional>
+
+#include "Quark/Debug/Instrumentor.h"
 #include "Quark/Core/Core.h"
 
 namespace Quark {

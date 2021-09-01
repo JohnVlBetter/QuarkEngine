@@ -1,13 +1,14 @@
 #pragma once
 
 #include "Quark/Events/Event.h"
+#include "Quark/Core/MouseCodes.h"
 
 namespace Quark {
 
 	class QUARK_API MouseMovedEvent : public Event
 	{
 	public:
-		MouseMovedEvent(float x, float y)
+		MouseMovedEvent(const float x, const float y)
 			: mMouseX(x), mMouseY(y) {}
 
 		inline float GetX() const { return mMouseX; }
@@ -29,7 +30,7 @@ namespace Quark {
 	class QUARK_API MouseScrolledEvent : public Event
 	{
 	public:
-		MouseScrolledEvent(float xOffset, float yOffset)
+		MouseScrolledEvent(const float xOffset, const float yOffset)
 			: mXOffset(xOffset), mYOffset(yOffset) {}
 
 		inline float GetXOffset() const { return mXOffset; }
@@ -51,20 +52,20 @@ namespace Quark {
 	class QUARK_API MouseButtonEvent : public Event
 	{
 	public:
-		inline int GetMouseButton() const { return mButton; }
+		MouseCode GetMouseButton() const { return mButton; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryMouse | EventCategoryInput)
 	protected:
-		MouseButtonEvent(int button)
+		MouseButtonEvent(const int button)
 			: mButton(button) {}
 
-		int mButton;
+		MouseCode mButton;
 	};
 
 	class QUARK_API MouseButtonPressedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonPressedEvent(int button)
+		MouseButtonPressedEvent(const MouseCode button)
 			: MouseButtonEvent(button) {}
 
 		std::string ToString() const override
@@ -80,7 +81,7 @@ namespace Quark {
 	class QUARK_API MouseButtonReleasedEvent : public MouseButtonEvent
 	{
 	public:
-		MouseButtonReleasedEvent(int button)
+		MouseButtonReleasedEvent(const MouseCode button)
 			: MouseButtonEvent(button) {}
 
 		std::string ToString() const override

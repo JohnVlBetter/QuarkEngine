@@ -1,29 +1,30 @@
 #pragma once
 
 #include "Quark/Events/Event.h"
+#include "Quark/Core/KeyCodes.h"
 
 namespace Quark {
 
 	class QUARK_API KeyEvent : public Event
 	{
 	public:
-		inline int GetKeyCode() const { return mKeyCode; }
+		KeyCode GetKeyCode() const { return mKeyCode; }
 
 		EVENT_CLASS_CATEGORY(EventCategoryKeyboard | EventCategoryInput)
 	protected:
-		KeyEvent(int keycode)
+		KeyEvent(const int keycode)
 			: mKeyCode(keycode) {}
 
-		int mKeyCode;
+		KeyCode mKeyCode;
 	};
 
 	class QUARK_API KeyPressedEvent : public KeyEvent
 	{
 	public:
-		KeyPressedEvent(int keycode, int repeatCount)
+		KeyPressedEvent(const KeyCode keycode, const uint16_t repeatCount)
 			: KeyEvent(keycode), mRepeatCount(repeatCount) {}
 
-		inline int GetRepeatCount() const { return mRepeatCount; }
+		inline uint16_t GetRepeatCount() const { return mRepeatCount; }
 
 		std::string ToString() const override
 		{
@@ -34,13 +35,13 @@ namespace Quark {
 
 		EVENT_CLASS_TYPE(KeyPressed)
 	private:
-		int mRepeatCount;
+		uint16_t mRepeatCount;
 	};
 
 	class QUARK_API KeyReleasedEvent : public KeyEvent
 	{
 	public:
-		KeyReleasedEvent(int keycode)
+		KeyReleasedEvent(const KeyCode keycode)
 			: KeyEvent(keycode) {}
 
 		std::string ToString() const override
@@ -56,7 +57,7 @@ namespace Quark {
 	class QUARK_API KeyTypedEvent : public KeyEvent
 	{
 	public:
-		KeyTypedEvent(int keycode)
+		KeyTypedEvent(const KeyCode keycode)
 			: KeyEvent(keycode) {}
 
 		std::string ToString() const override

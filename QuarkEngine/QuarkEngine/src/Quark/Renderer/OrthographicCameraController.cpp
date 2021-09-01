@@ -15,21 +15,21 @@ namespace Quark {
 	{
 		QK_PROFILE_FUNCTION();
 
-		if (Input::IsKeyPressed(QK_KEY_A))
+		if (Input::IsKeyPressed(Key::A))
 			mCameraPosition.x -= mCameraTranslationSpeed * ts;
-		else if (Input::IsKeyPressed(QK_KEY_D))
+		else if (Input::IsKeyPressed(Key::D))
 			mCameraPosition.x += mCameraTranslationSpeed * ts;
 
-		if (Input::IsKeyPressed(QK_KEY_W))
+		if (Input::IsKeyPressed(Key::W))
 			mCameraPosition.y += mCameraTranslationSpeed * ts;
-		else if (Input::IsKeyPressed(QK_KEY_S))
+		else if (Input::IsKeyPressed(Key::S))
 			mCameraPosition.y -= mCameraTranslationSpeed * ts;
 
 		if (mRotation)
 		{
-			if (Input::IsKeyPressed(QK_KEY_Q))
+			if (Input::IsKeyPressed(Key::Q))
 				mCameraRotation += mCameraRotationSpeed * ts;
-			if (Input::IsKeyPressed(QK_KEY_E))
+			if (Input::IsKeyPressed(Key::E))
 				mCameraRotation -= mCameraRotationSpeed * ts;
 
 			mCamera.SetRotation(mCameraRotation);

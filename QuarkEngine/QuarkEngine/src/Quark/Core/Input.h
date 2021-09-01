@@ -2,6 +2,7 @@
 
 #include "qkpch.h"
 #include "Quark/Core/Core.h"
+#include <glm/glm.hpp>
 #include "Quark/Core/KeyCodes.h"
 #include "Quark/Core/MouseCodes.h"
 
@@ -13,7 +14,7 @@ namespace Quark {
 		static bool IsKeyPressed(KeyCode key);
 
 		static bool IsMouseButtonPressed(MouseCode button);
-		static std::pair<float, float> GetMousePosition();
+		static glm::vec2 GetMousePosition();
 		static float GetMouseX();
 		static float GetMouseY();
 	};

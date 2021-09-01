@@ -95,7 +95,7 @@ namespace Quark {
 		sData.TextureShader->Bind();
 		sData.TextureShader->SetIntArray("u_Textures", samplers, sData.MaxTextureSlots);
 
-		// Set all texture slots to 0
+		// Set first texture slot to 0
 		sData.TextureSlots[0] = sData.WhiteTexture;
 
 		sData.QuadVertexPositions[0] = { -0.5f, -0.5f, 0.0f, 1.0f };
@@ -194,7 +194,7 @@ namespace Quark {
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), position)
 			* glm::scale(glm::mat4(1.0f), { size.x, size.y, 1.0f });
 
-		DrawQuad(transform, texture, tilingFactor);
+		DrawQuad(transform, texture, tilingFactor, tintColor);
 	}
 
 	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
@@ -257,7 +257,7 @@ namespace Quark {
 		float textureIndex = 0.0f;
 		for (uint32_t i = 1; i < sData.TextureSlotIndex; i++)
 		{
-			if (*sData.TextureSlots[i].get() == *texture.get())
+			if (*sData.TextureSlots[i] == *texture)
 			{
 				textureIndex = (float)i;
 				break;

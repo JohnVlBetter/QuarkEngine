@@ -20,6 +20,7 @@ namespace Quark {
 		virtual const SPtr<IndexBuffer>& GetIndexBuffer() const { return mIndexBuffer; }
 	private:
 		uint32_t mRendererID;
+		uint32_t mVertexBufferIndex = 0;
 		std::vector<SPtr<VertexBuffer>> mVertexBuffers;
 		SPtr<IndexBuffer> mIndexBuffer;
 	};

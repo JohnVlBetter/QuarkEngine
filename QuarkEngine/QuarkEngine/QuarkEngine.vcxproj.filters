@@ -1443,6 +1443,9 @@
     <ClInclude Include="src\Quark\Scene\ScriptableEntity.h">
       <Filter>src\Quark\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Core\PlatformDetection.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\stb_image\stb_image.cpp">
