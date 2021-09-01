@@ -557,7 +557,6 @@
     <ClInclude Include="..\third\glm\glm\vec4.hpp" />
     <ClInclude Include="..\third\glm\glm\vector_relational.hpp" />
     <ClInclude Include="..\third\stb_image\stb_image.h" />
-    <ClInclude Include="src\Panels\SceneHierarchyPanel.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
@@ -607,7 +606,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\stb_image\stb_image.cpp" />
-    <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />

@@ -18,6 +18,7 @@ namespace Quark {
 		void OnImGuiRender();
 	private:
 		void DrawEntityNode(Entity entity);
+		void DrawComponents(Entity entity);
 	private:
 		SPtr<Scene> mContext;
 		Entity mSelectionContext;

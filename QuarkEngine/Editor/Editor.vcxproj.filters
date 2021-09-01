@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\EditorApp.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\EditorLayer.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp">
+      <Filter>src\Panels</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\EditorLayer.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Panels\SceneHierarchyPanel.h">
+      <Filter>src\Panels</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="src">
+      <UniqueIdentifier>{9124ac51-9fb2-42a7-b5b7-be7d726fc694}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Panels">
+      <UniqueIdentifier>{a22950a0-367d-4995-b5da-7d951ab24eca}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

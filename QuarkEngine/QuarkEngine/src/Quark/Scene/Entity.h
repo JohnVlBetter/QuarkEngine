@@ -52,8 +52,10 @@ namespace Quark {
 		{
 			return !(*this == other);
 		}
+
+		bool isNull() { return mEntityHandle == entt::null; }
 	private:
-		entt::entity mEntityHandle{ 0 };
+		entt::entity mEntityHandle{ entt::null };
 		Scene* mScene = nullptr;
 	};
 
