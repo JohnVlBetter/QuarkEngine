@@ -22,6 +22,8 @@ namespace Quark {
 		void End();
 
 		void BlockEvents(bool block) { mBlockEvents = block; }
+
+		void SetDarkThemeColors();
 	private:
 		bool mBlockEvents = true;
 		float mTime = 0.0f;
