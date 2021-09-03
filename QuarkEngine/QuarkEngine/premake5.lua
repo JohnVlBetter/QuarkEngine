@@ -17,7 +17,10 @@ project "QuarkEngine"
 		"%{wks.location}/third/stb_image/**.h",
 		"%{wks.location}/third/stb_image/**.cpp",
 		"%{wks.location}/third/glm/**.hpp",
-		"%{wks.location}/third/glm/**.inl"
+		"%{wks.location}/third/glm/**.inl",
+
+		"%{wks.location}/third/ImGuizmo/ImGuizmo.h",
+		"%{wks.location}/third/ImGuizmo/ImGuizmo.cpp"
 	}
 
 	defines
@@ -36,7 +39,8 @@ project "QuarkEngine"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.yaml_cpp}"
+		"%{IncludeDir.yaml_cpp}",
+		"%{IncludeDir.ImGuizmo}"
 	}
 
 	links

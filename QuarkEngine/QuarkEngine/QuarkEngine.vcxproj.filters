@@ -34,8 +34,14 @@
     <Filter Include="src\Quark\Scene">
       <UniqueIdentifier>{7D183507-E9A3-A2CB-F2B4-25C05EBFFECB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Quark\Utils">
+      <UniqueIdentifier>{C0AC6207-2C38-D0CB-3549-53C0A1532CCC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="third">
       <UniqueIdentifier>{C0EF6C10-2C04-95C1-F585-3821615991F2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third\ImGuizmo">
+      <UniqueIdentifier>{201AA065-0CE8-936B-F57B-0492E1E86FD0}</UniqueIdentifier>
     </Filter>
     <Filter Include="third\glm">
       <UniqueIdentifier>{0F5AFA58-7BC4-AECF-C402-607530AC8C24}</UniqueIdentifier>
@@ -58,11 +64,14 @@
     <Filter Include="third\stb_image">
       <UniqueIdentifier>{5A50E696-C6DB-535B-CFEC-D64F3BF7AF5B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Quark\Utils">
-      <UniqueIdentifier>{08fb2e41-93cd-4d2b-b0d7-a6211bbe12a6}</UniqueIdentifier>
+    <Filter Include="src\Quark\Math">
+      <UniqueIdentifier>{7f83c04b-e65c-44b2-b326-134bd42c2dcf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\third\ImGuizmo\ImGuizmo.h">
+      <Filter>third\ImGuizmo</Filter>
+    </ClInclude>
     <ClInclude Include="..\third\glm\glm\common.hpp">
       <Filter>third\glm\glm</Filter>
     </ClInclude>
@@ -1449,14 +1458,20 @@
     <ClInclude Include="src\Quark\Scene\ScriptableEntity.h">
       <Filter>src\Quark\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\qkpch.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\Quark\Utils\PlatformUtils.h">
       <Filter>src\Quark\Utils</Filter>
     </ClInclude>
+    <ClInclude Include="src\qkpch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Math\Math.h">
+      <Filter>src\Quark\Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\third\ImGuizmo\ImGuizmo.cpp">
+      <Filter>third\ImGuizmo</Filter>
+    </ClCompile>
     <ClCompile Include="..\third\stb_image\stb_image.cpp">
       <Filter>third\stb_image</Filter>
     </ClCompile>
@@ -1482,6 +1497,9 @@
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
       <Filter>src\Platform\Windows</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
@@ -1556,8 +1574,8 @@
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
-      <Filter>src\Platform\Windows</Filter>
+    <ClCompile Include="src\Quark\Math\Math.cpp">
+      <Filter>src\Quark\Math</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
