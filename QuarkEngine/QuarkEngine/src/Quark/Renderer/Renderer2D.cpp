@@ -120,6 +120,8 @@ namespace Quark {
 		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
 
 		sData.TextureSlotIndex = 1;
+
+		StartBatch();
 	}
 
 	void Renderer2D::BeginScene(const Camera& camera, const glm::mat4& transform)
@@ -135,6 +137,20 @@ namespace Quark {
 		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
 
 		sData.TextureSlotIndex = 1;
+
+		StartBatch();
+	}
+
+	void Renderer2D::BeginScene(const EditorCamera& camera)
+	{
+		QK_PROFILE_FUNCTION();
+
+		glm::mat4 viewProj = camera.GetViewProjection();
+
+		sData.TextureShader->Bind();
+		sData.TextureShader->SetMat4("u_ViewProjection", viewProj);
+
+		StartBatch();
 	}
 
 	void Renderer2D::EndScene()
@@ -147,8 +163,22 @@ namespace Quark {
 		Flush();
 	}
 
+	void Renderer2D::StartBatch()
+	{
+		sData.QuadIndexCount = 0;
+		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
+
+		sData.TextureSlotIndex = 1;
+	}
+
 	void Renderer2D::Flush()
 	{
+		if (sData.QuadIndexCount == 0)
+			return; // Nothing to draw
+
+		uint32_t dataSize = (uint32_t)((uint8_t*)sData.QuadVertexBufferPtr - (uint8_t*)sData.QuadVertexBufferBase);
+		sData.QuadVertexBuffer->SetData(sData.QuadVertexBufferBase, dataSize);
+
 		// Bind textures
 		for (uint32_t i = 0; i < sData.TextureSlotIndex; i++)
 			sData.TextureSlots[i]->Bind(i);
@@ -157,14 +187,10 @@ namespace Quark {
 		sData.Stats.DrawCalls++;
 	}
 
-	void Renderer2D::FlushAndReset()
+	void Renderer2D::NextBatch()
 	{
-		EndScene();
-
-		sData.QuadIndexCount = 0;
-		sData.QuadVertexBufferPtr = sData.QuadVertexBufferBase;
-
-		sData.TextureSlotIndex = 1;
+		Flush();
+		StartBatch();
 	}
 
 	void Renderer2D::DrawQuad(const glm::vec2& position, const glm::vec2& size, const glm::vec4& color)
@@ -202,7 +228,7 @@ namespace Quark {
 		QK_PROFILE_FUNCTION();
 
 		if (sData.QuadIndexCount >= Renderer2DData::MaxIndices)
-			FlushAndReset();
+			NextBatch();
 
 		const float textureIndex = 0.0f; // White Texture
 		const float tilingFactor = 1.0f;
@@ -250,7 +276,7 @@ namespace Quark {
 		QK_PROFILE_FUNCTION();
 
 		if (sData.QuadIndexCount >= Renderer2DData::MaxIndices)
-			FlushAndReset();
+			NextBatch();
 
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 
@@ -266,6 +292,9 @@ namespace Quark {
 
 		if (textureIndex == 0.0f)
 		{
+			if (sData.TextureSlotIndex >= Renderer2DData::MaxTextureSlots)
+				NextBatch();
+
 			textureIndex = (float)sData.TextureSlotIndex;
 			sData.TextureSlots[sData.TextureSlotIndex] = texture;
 			sData.TextureSlotIndex++;
@@ -309,7 +338,7 @@ namespace Quark {
 		QK_PROFILE_FUNCTION();
 
 		if (sData.QuadIndexCount >= Renderer2DData::MaxIndices)
-			FlushAndReset();
+			NextBatch();
 
 		const float textureIndex = 0.0f; // White Texture
 		const float tilingFactor = 1.0f;
@@ -361,7 +390,7 @@ namespace Quark {
 		QK_PROFILE_FUNCTION();
 
 		if (sData.QuadIndexCount >= Renderer2DData::MaxIndices)
-			FlushAndReset();
+			NextBatch();
 
 		constexpr glm::vec4 color = { 1.0f, 1.0f, 1.0f, 1.0f };
 

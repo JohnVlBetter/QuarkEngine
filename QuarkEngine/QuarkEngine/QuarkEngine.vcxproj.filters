@@ -1467,6 +1467,9 @@
     <ClInclude Include="src\Quark\Math\Math.h">
       <Filter>src\Quark\Math</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\EditorCamera.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\ImGuizmo\ImGuizmo.cpp">
@@ -1576,6 +1579,9 @@
     </ClCompile>
     <ClCompile Include="src\Quark\Math\Math.cpp">
       <Filter>src\Quark\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\EditorCamera.cpp">
+      <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

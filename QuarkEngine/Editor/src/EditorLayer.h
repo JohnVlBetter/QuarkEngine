@@ -3,6 +3,8 @@
 #include "Quark.h"
 #include "Panels/SceneHierarchyPanel.h"
 
+#include "Quark/Renderer/EditorCamera.h"
+
 namespace Quark {
 
 	class EditorLayer : public Layer
@@ -37,6 +39,8 @@ namespace Quark {
 		Entity mSecondCamera;
 
 		bool mPrimaryCamera = true;
+
+		EditorCamera mEditorCamera;
 
 		SPtr<Texture2D> mCheckerboardTexture;
 

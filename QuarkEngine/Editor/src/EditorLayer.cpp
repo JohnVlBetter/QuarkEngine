@@ -32,6 +32,7 @@ namespace Quark {
 		mFramebuffer = Framebuffer::Create(fbSpec);
 
 		mActiveScene = CreateSPtr<Scene>();
+		mEditorCamera = EditorCamera(30.0f, 1.778f, 0.1f, 1000.0f);
 		mSceneHierarchyPanel.SetContext(mActiveScene);
 	}
 
@@ -52,12 +53,15 @@ namespace Quark {
 			mFramebuffer->Resize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
 			mCameraController.OnResize(mViewportSize.x, mViewportSize.y);
 
+			mEditorCamera.SetViewportSize(mViewportSize.x, mViewportSize.y);
 			mActiveScene->OnViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
 		}
 
 		// Update
 		if (mViewportFocused)
 			mCameraController.OnUpdate(ts);
+
+		mEditorCamera.OnUpdate(ts);
 
 		// Render
 		Renderer2D::ResetStats();
@@ -66,7 +70,7 @@ namespace Quark {
 		RenderCommand::Clear();
 
 		// Update scene
-		mActiveScene->OnUpdate(ts);
+		mActiveScene->OnUpdateEditor(ts, mEditorCamera);
 
 		mFramebuffer->Unbind();
 	}
@@ -170,7 +174,7 @@ namespace Quark {
 		mViewportSize = { viewportPanelSize.x, viewportPanelSize.y };
 
 		uint64_t textureID = mFramebuffer->GetColorAttachmentRendererID();
-		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 1, 0 }, ImVec2{ 0, 1 });
+		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 } );
 		
 		// Gizmos
 		Entity selectedEntity = mSceneHierarchyPanel.GetSelectedEntity();
@@ -183,11 +187,15 @@ namespace Quark {
 			float windowHeight = (float)ImGui::GetWindowHeight();
 			ImGuizmo::SetRect(ImGui::GetWindowPos().x, ImGui::GetWindowPos().y, windowWidth, windowHeight);
 
-			// Camera
-			auto cameraEntity = mActiveScene->GetPrimaryCameraEntity();
-			const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
-			const glm::mat4& cameraProjection = camera.GetProjection();
-			glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+			// Runtime camera from entity
+			// auto cameraEntity = mActiveScene->GetPrimaryCameraEntity();
+			// const auto& camera = cameraEntity.GetComponent<CameraComponent>().Camera;
+			// const glm::mat4& cameraProjection = camera.GetProjection();
+			// glm::mat4 cameraView = glm::inverse(cameraEntity.GetComponent<TransformComponent>().GetTransform());
+
+			// Editor camera
+			const glm::mat4& cameraProjection = mEditorCamera.GetProjection();
+			glm::mat4 cameraView = mEditorCamera.GetViewMatrix();
 
 			// Entity transform
 			auto& tc = selectedEntity.GetComponent<TransformComponent>();
@@ -227,6 +235,7 @@ namespace Quark {
 	void EditorLayer::OnEvent(Quark::Event& e)
 	{
 		mCameraController.OnEvent(e);
+		mEditorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(QK_BIND_EVENT_FN(EditorLayer::OnKeyPressed));

@@ -5,6 +5,7 @@
 #include "Quark/Renderer/Texture.h"
 
 #include "Quark/Renderer/Camera.h"
+#include "Quark/Renderer/EditorCamera.h"
 
 namespace Quark {
 
@@ -15,6 +16,7 @@ namespace Quark {
 		static void Shutdown();
 
 		static void BeginScene(const Camera& camera, const glm::mat4& transform);
+		static void BeginScene(const EditorCamera& camera);
 		static void BeginScene(const OrthographicCamera& camera); // TODO: Remove
 		static void EndScene();
 		static void Flush();
@@ -45,7 +47,8 @@ namespace Quark {
 		static void ResetStats();
 		static Statistics GetStats();
 	private:
-		static void FlushAndReset();
+		static void StartBatch();
+		static void NextBatch();
 	};
 
 }

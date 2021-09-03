@@ -3,6 +3,7 @@
 #include "entt.hpp"
 
 #include "Quark/Core/Timestep.h"
+#include "Quark/Renderer/EditorCamera.h"
 
 namespace Quark {
 
@@ -17,7 +18,8 @@ namespace Quark {
 		Entity CreateEntity(const std::string& name = std::string());
 		void DestroyEntity(Entity entity);
 
-		void OnUpdate(Timestep ts);
+		void OnUpdateRuntime(Timestep ts);
+		void OnUpdateEditor(Timestep ts, EditorCamera& camera);
 		void OnViewportResize(uint32_t width, uint32_t height);
 
 		Entity GetPrimaryCameraEntity();
