@@ -3,7 +3,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
-#include "../src/EditorLayer.h"
+#include "Quark/Scene/SceneSerializer.h"
+
+#include "Quark/Utils/PlatformUtils.h"
+
+#include "EditorLayer.h"
 
 namespace Quark {
 
@@ -24,55 +28,6 @@ namespace Quark {
 		mFramebuffer = Framebuffer::Create(fbSpec);
 
 		mActiveScene = CreateSPtr<Scene>();
-
-		// Entity
-		auto square = mActiveScene->CreateEntity("Green Square");
-		square.AddComponent<SpriteRendererComponent>(glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f });
-
-		auto redSquare = mActiveScene->CreateEntity("Red Square");
-		redSquare.AddComponent<SpriteRendererComponent>(glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f });
-
-		mSquareEntity = square;
-
-		mCameraEntity = mActiveScene->CreateEntity("Camera A");
-		mCameraEntity.AddComponent<CameraComponent>();
-
-		mSecondCamera = mActiveScene->CreateEntity("Camera B");
-		auto& cc = mSecondCamera.AddComponent<CameraComponent>();
-		cc.Primary = false;
-
-		class CameraController : public ScriptableEntity
-		{
-		public:
-			virtual void OnCreate() override
-			{
-				auto& translation = GetComponent<TransformComponent>().Translation;
-				translation.x = rand() % 10 - 5.0f;
-			}
-
-			virtual void OnDestroy() override
-			{
-			}
-
-			virtual void OnUpdate(Timestep ts) override
-			{
-				auto& translation = GetComponent<TransformComponent>().Translation;
-				float speed = 5.0f;
-
-				if (Input::IsKeyPressed(Key::A))
-					translation.x -= speed * ts;
-				if (Input::IsKeyPressed(Key::D))
-					translation.x += speed * ts;
-				if (Input::IsKeyPressed(Key::W))
-					translation.y += speed * ts;
-				if (Input::IsKeyPressed(Key::S))
-					translation.y -= speed * ts;
-			}
-		};
-
-		mCameraEntity.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-		mSecondCamera.AddComponent<NativeScriptComponent>().Bind<CameraController>();
-
 		mSceneHierarchyPanel.SetContext(mActiveScene);
 	}
 
@@ -172,6 +127,14 @@ namespace Quark {
 				// Disabling fullscreen would allow the window to be moved to the front of other windows, 
 				// which we can't undo at the moment without finer window depth/z control.
 				//ImGui::MenuItem("Fullscreen", NULL, &opt_fullscreen_persistant);
+				if (ImGui::MenuItem("New", "Ctrl+N"))
+					NewScene();
+
+				if (ImGui::MenuItem("Open...", "Ctrl+O"))
+					OpenScene();
+
+				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
+					SaveSceneAs();
 
 				if (ImGui::MenuItem("Exit")) Quark::Application::Get().Close();
 				ImGui::EndMenu();
@@ -213,6 +176,74 @@ namespace Quark {
 	void EditorLayer::OnEvent(Quark::Event& e)
 	{
 		mCameraController.OnEvent(e);
+
+		EventDispatcher dispatcher(e);
+		dispatcher.Dispatch<KeyPressedEvent>(QK_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+	}
+
+	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
+	{
+		// Shortcuts
+		if (e.GetRepeatCount() > 0)
+			return false;
+
+		bool control = Input::IsKeyPressed(Key::LeftControl) || Input::IsKeyPressed(Key::RightControl);
+		bool shift = Input::IsKeyPressed(Key::LeftShift) || Input::IsKeyPressed(Key::RightShift);
+		switch (e.GetKeyCode())
+		{
+		case Key::N:
+		{
+			if (control)
+				NewScene();
+
+			break;
+		}
+		case Key::O:
+		{
+			if (control)
+				OpenScene();
+
+			break;
+		}
+		case Key::S:
+		{
+			if (control && shift)
+				SaveSceneAs();
+
+			break;
+		}
+		}
+	}
+
+	void EditorLayer::NewScene()
+	{
+		mActiveScene = CreateSPtr<Scene>();
+		mActiveScene->OnViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+		mSceneHierarchyPanel.SetContext(mActiveScene);
+	}
+
+	void EditorLayer::OpenScene()
+	{
+		std::string filepath = FileDialogs::OpenFile("Quark Scene (*.quark)\0*.quark\0");
+		if (!filepath.empty())
+		{
+			mActiveScene = CreateSPtr<Scene>();
+			mActiveScene->OnViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+			mSceneHierarchyPanel.SetContext(mActiveScene);
+
+			SceneSerializer serializer(mActiveScene);
+			serializer.Deserialize(filepath);
+		}
+	}
+
+	void EditorLayer::SaveSceneAs()
+	{
+		std::string filepath = FileDialogs::SaveFile("Quark Scene (*.quark)\0*.quark\0");
+		if (!filepath.empty())
+		{
+			SceneSerializer serializer(mActiveScene);
+			serializer.Serialize(filepath);
+		}
 	}
 
 }

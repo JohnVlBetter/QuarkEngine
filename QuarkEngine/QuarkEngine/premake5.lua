@@ -8,16 +8,16 @@ project "QuarkEngine"
 	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "qkpch.h"
-	pchsource "QuarkEngine/src/qkpch.cpp"
+	pchsource "%{wks.location}/QuarkEngine/src/qkpch.cpp"
 
 	files
 	{
 		"src/**.h",
 		"src/**.cpp",
-		"third/stb_image/**.h",
-		"third/stb_image/**.cpp",
-		"third/glm/**.hpp",
-		"third/glm/**.inl"
+		"%{wks.location}/third/stb_image/**.h",
+		"%{wks.location}/third/stb_image/**.cpp",
+		"%{wks.location}/third/glm/**.hpp",
+		"%{wks.location}/third/glm/**.inl"
 	}
 
 	defines
@@ -29,13 +29,14 @@ project "QuarkEngine"
 	includedirs
 	{
 		"src",
-		"third/spdlog/include",
+		"%{wks.location}/third/spdlog/include",
 		"%{IncludeDir.GLFW}",
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}"
 	}
 
 	links
@@ -43,6 +44,7 @@ project "QuarkEngine"
 		"GLFW",
 		"Glad",
 		"ImGui",
+		"yaml-cpp",
 		"opengl32.lib"
 	}
 

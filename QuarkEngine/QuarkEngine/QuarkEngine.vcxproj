@@ -77,8 +77,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;GLFW_INCLUDE_NONE;QK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;..\third\glm;..\third\stb_image;..\third\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;QK_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;..\third\glm;..\third\stb_image;..\third\entt\include;..\third\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
@@ -97,8 +97,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;GLFW_INCLUDE_NONE;QK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;..\third\glm;..\third\stb_image;..\third\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;QK_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;..\third\glm;..\third\stb_image;..\third\entt\include;..\third\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -121,8 +121,8 @@
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>qkpch.h</PrecompiledHeaderFile>
       <WarningLevel>Level3</WarningLevel>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;NOMINMAX;QK_PLATFORM_WINDOWS;QUARK_BUILD_DLL;GLFW_INCLUDE_NONE;QK_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;..\third\glm;..\third\stb_image;..\third\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;QK_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>src;..\third\spdlog\include;..\third\GLFW\include;..\third\Glad\include;..\third\imgui;..\third\glm;..\third\stb_image;..\third\entt\include;..\third\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -600,9 +600,11 @@
     <ClInclude Include="src\Quark\Scene\Components.h" />
     <ClInclude Include="src\Quark\Scene\Entity.h" />
     <ClInclude Include="src\Quark\Scene\Scene.h" />
-    <ClInclude Include="src\qkpch.h" />
     <ClInclude Include="src\Quark\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Quark\Scene\SceneSerializer.h" />
     <ClInclude Include="src\Quark\Scene\ScriptableEntity.h" />
+    <ClInclude Include="src\qkpch.h" />
+    <ClInclude Include="src\Quark\Utils\PlatformUtils.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\stb_image\stb_image.cpp" />
@@ -614,6 +616,7 @@
     <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp" />
     <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
     <ClCompile Include="src\Quark\Core\Application.cpp" />
     <ClCompile Include="src\Quark\Core\Layer.cpp" />
@@ -635,10 +638,11 @@
     <ClCompile Include="src\Quark\Renderer\VertexArray.cpp" />
     <ClCompile Include="src\Quark\Scene\Entity.cpp" />
     <ClCompile Include="src\Quark\Scene\Scene.cpp" />
+    <ClCompile Include="src\Quark\Scene\SceneCamera.cpp" />
+    <ClCompile Include="src\Quark\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\qkpch.cpp">
       <PrecompiledHeader>Create</PrecompiledHeader>
     </ClCompile>
-    <ClCompile Include="src\Quark\Scene\SceneCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\third\GLFW\GLFW.vcxproj">
@@ -649,6 +653,9 @@
     </ProjectReference>
     <ProjectReference Include="..\third\imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\third\yaml-cpp\yaml-cpp.vcxproj">
+      <Project>{88F1A057-74BE-FB62-9DD7-E90A890331F1}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -25,6 +25,9 @@
     <Filter Include="..\imgui">
       <UniqueIdentifier>{8B82CA39-774F-2545-A068-13ED8C945AD3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\yaml-cpp">
+      <UniqueIdentifier>{33D4BEDA-9F89-37D0-287E-31A794322ED4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Editor\premake5.lua">
@@ -47,6 +50,9 @@
     </None>
     <None Include="..\imgui\premake5.lua">
       <Filter>..\imgui</Filter>
+    </None>
+    <None Include="..\yaml-cpp\premake5.lua">
+      <Filter>..\yaml-cpp</Filter>
     </None>
     <None Include="premake5.lua" />
   </ItemGroup>

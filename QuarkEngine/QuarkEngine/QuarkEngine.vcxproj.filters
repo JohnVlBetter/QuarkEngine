@@ -58,6 +58,9 @@
     <Filter Include="third\stb_image">
       <UniqueIdentifier>{5A50E696-C6DB-535B-CFEC-D64F3BF7AF5B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Quark\Utils">
+      <UniqueIdentifier>{08fb2e41-93cd-4d2b-b0d7-a6211bbe12a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\third\glm\glm\common.hpp">
@@ -1362,6 +1365,9 @@
     <ClInclude Include="src\Quark\Core\MouseCodes.h">
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Core\PlatformDetection.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Core\Timestep.h">
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
@@ -1387,6 +1393,9 @@
       <Filter>src\Quark\ImGui</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Renderer\Buffer.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\Camera.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Renderer\Framebuffer.h">
@@ -1425,26 +1434,26 @@
     <ClInclude Include="src\Quark\Scene\Components.h">
       <Filter>src\Quark\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Scene\Scene.h">
-      <Filter>src\Quark\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="src\qkpch.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="src\Quark\Scene\Entity.h">
       <Filter>src\Quark\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Renderer\Camera.h">
-      <Filter>src\Quark\Renderer</Filter>
+    <ClInclude Include="src\Quark\Scene\Scene.h">
+      <Filter>src\Quark\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Scene\SceneCamera.h">
+      <Filter>src\Quark\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Scene\SceneSerializer.h">
       <Filter>src\Quark\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Scene\ScriptableEntity.h">
       <Filter>src\Quark\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Core\PlatformDetection.h">
-      <Filter>src\Quark\Core</Filter>
+    <ClInclude Include="src\qkpch.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Utils\PlatformUtils.h">
+      <Filter>src\Quark\Utils</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1532,17 +1541,23 @@
     <ClCompile Include="src\Quark\Renderer\VertexArray.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
+    <ClCompile Include="src\Quark\Scene\Entity.cpp">
+      <Filter>src\Quark\Scene</Filter>
+    </ClCompile>
     <ClCompile Include="src\Quark\Scene\Scene.cpp">
+      <Filter>src\Quark\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Scene\SceneCamera.cpp">
+      <Filter>src\Quark\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Scene\SceneSerializer.cpp">
       <Filter>src\Quark\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Quark\Scene\Entity.cpp">
-      <Filter>src\Quark\Scene</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Quark\Scene\SceneCamera.cpp">
-      <Filter>src\Quark\Scene</Filter>
+    <ClCompile Include="src\Platform\Windows\WindowsPlatformUtils.cpp">
+      <Filter>src\Platform\Windows</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

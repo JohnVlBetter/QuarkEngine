@@ -18,6 +18,12 @@ namespace Quark {
 		virtual void OnImGuiRender() override;
 		void OnEvent(Event& e) override;
 	private:
+		bool OnKeyPressed(KeyPressedEvent& e);
+
+		void NewScene();
+		void OpenScene();
+		void SaveSceneAs();
+	private:
 		OrthographicCameraController mCameraController;
 
 		// Temp

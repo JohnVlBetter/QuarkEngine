@@ -17,6 +17,7 @@ namespace Quark {
 	void SceneHierarchyPanel::SetContext(const SPtr<Scene>& context)
 	{
 		mContext = context;
+		mSelectionContext = {};
 	}
 
 	void SceneHierarchyPanel::OnImGuiRender()

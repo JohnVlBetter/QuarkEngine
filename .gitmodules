@@ -14,3 +14,9 @@
 	path = QuarkEngine/third/GLFW
 	url = https://github.com/JohnVlBetter/glfw
 	ignore = dirty
+[submodule "QuarkEngine/third/ImGuizmo"]
+	path = QuarkEngine/third/ImGuizmo
+	url = https://github.com/JohnVlBetter/ImGuizmo
+[submodule "QuarkEngine/third/yaml-cpp"]
+	path = QuarkEngine/third/yaml-cpp
+	url = https://github.com/JohnVlBetter/yaml-cpp
