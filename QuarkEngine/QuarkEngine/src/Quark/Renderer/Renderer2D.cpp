@@ -16,6 +16,9 @@ namespace Quark {
 		glm::vec2 TexCoord;
 		float TexIndex;
 		float TilingFactor;
+
+		// Editor-only
+		int EntityID;
 	};
 
 
@@ -57,7 +60,8 @@ namespace Quark {
 			{ ShaderDataType::Float4, "a_Color" },
 			{ ShaderDataType::Float2, "a_TexCoord" },
 			{ ShaderDataType::Float, "a_TexIndex" },
-			{ ShaderDataType::Float, "a_TilingFactor" }
+			{ ShaderDataType::Float, "a_TilingFactor" },
+			{ ShaderDataType::Int, "a_EntityID" }
 		});
 		sData.QuadVertexArray->AddVertexBuffer(sData.QuadVertexBuffer);
 
@@ -223,7 +227,7 @@ namespace Quark {
 		DrawQuad(transform, texture, tilingFactor, tintColor);
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const glm::vec4& color, int entityID)
 	{
 		QK_PROFILE_FUNCTION();
 
@@ -238,6 +242,7 @@ namespace Quark {
 		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
 		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
 		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr->EntityID = entityID;
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[1];
@@ -245,6 +250,7 @@ namespace Quark {
 		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
 		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
 		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr->EntityID = entityID;
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[2];
@@ -252,6 +258,7 @@ namespace Quark {
 		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
 		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
 		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr->EntityID = entityID;
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[3];
@@ -259,6 +266,7 @@ namespace Quark {
 		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
 		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
 		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr->EntityID = entityID;
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadIndexCount += 6;
@@ -271,7 +279,7 @@ namespace Quark {
 		DrawRotatedQuad({ position.x, position.y, 0.0f }, size, rotation, color);
 	}
 
-	void Renderer2D::DrawQuad(const glm::mat4& transform, const SPtr<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor)
+	void Renderer2D::DrawQuad(const glm::mat4& transform, const SPtr<Texture2D>& texture, float tilingFactor, const glm::vec4& tintColor, int entityID)
 	{
 		QK_PROFILE_FUNCTION();
 
@@ -305,6 +313,7 @@ namespace Quark {
 		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 0.0f };
 		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
 		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr->EntityID = entityID;
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[1];
@@ -312,6 +321,7 @@ namespace Quark {
 		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 0.0f };
 		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
 		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr->EntityID = entityID;
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[2];
@@ -319,6 +329,7 @@ namespace Quark {
 		sData.QuadVertexBufferPtr->TexCoord = { 1.0f, 1.0f };
 		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
 		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr->EntityID = entityID;
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadVertexBufferPtr->Position = transform * sData.QuadVertexPositions[3];
@@ -326,6 +337,7 @@ namespace Quark {
 		sData.QuadVertexBufferPtr->TexCoord = { 0.0f, 1.0f };
 		sData.QuadVertexBufferPtr->TexIndex = textureIndex;
 		sData.QuadVertexBufferPtr->TilingFactor = tilingFactor;
+		sData.QuadVertexBufferPtr->EntityID = entityID;
 		sData.QuadVertexBufferPtr++;
 
 		sData.QuadIndexCount += 6;
@@ -446,6 +458,11 @@ namespace Quark {
 		sData.QuadIndexCount += 6;
 
 		sData.Stats.QuadCount++;
+	}
+
+	void Renderer2D::DrawSprite(const glm::mat4& transform, SpriteRendererComponent& src, int entityID)
+	{
+		DrawQuad(transform, src.Color, entityID);
 	}
 
 	void Renderer2D::ResetStats()

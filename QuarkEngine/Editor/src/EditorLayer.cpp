@@ -87,7 +87,7 @@ namespace Quark {
 		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 		{
 			int pixelData = mFramebuffer->ReadPixel(1, mouseX, mouseY);
-			QK_CORE_WARNING("Pixel data = {0}", pixelData);
+			mHoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, mActiveScene.get());
 		}
 
 		mFramebuffer->Unbind();
@@ -171,6 +171,11 @@ namespace Quark {
 		mSceneHierarchyPanel.OnImGuiRender();
 
 		ImGui::Begin("Stats");
+
+		std::string name = "None";
+		if (!mHoveredEntity.isNull())
+			name = mHoveredEntity.GetComponent<TagComponent>().Tag;
+		ImGui::Text("Hovered Entity: %s", name.c_str());
 
 		auto stats = Quark::Renderer2D::GetStats();
 		ImGui::Text("Renderer2D Stats:");
@@ -267,6 +272,7 @@ namespace Quark {
 
 		EventDispatcher dispatcher(e);
 		dispatcher.Dispatch<KeyPressedEvent>(QK_BIND_EVENT_FN(EditorLayer::OnKeyPressed));
+		dispatcher.Dispatch<MouseButtonPressedEvent>(QK_BIND_EVENT_FN(EditorLayer::OnMouseButtonPressed));
 	}
 
 	bool EditorLayer::OnKeyPressed(KeyPressedEvent& e)
@@ -315,6 +321,16 @@ namespace Quark {
 			mGizmoType = ImGuizmo::OPERATION::SCALE;
 			break;
 		}
+	}
+
+	bool EditorLayer::OnMouseButtonPressed(MouseButtonPressedEvent& e)
+	{
+		if (e.GetMouseButton() == Mouse::ButtonLeft)
+		{
+			if (mViewportHovered && !ImGuizmo::IsOver() && !Input::IsKeyPressed(Key::LeftAlt))
+				mSceneHierarchyPanel.SetSelectedEntity(mHoveredEntity);
+		}
+		return false;
 	}
 
 	void EditorLayer::NewScene()

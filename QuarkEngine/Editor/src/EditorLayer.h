@@ -21,6 +21,7 @@ namespace Quark {
 		void OnEvent(Event& e) override;
 	private:
 		bool OnKeyPressed(KeyPressedEvent& e);
+		bool OnMouseButtonPressed(MouseButtonPressedEvent& e);
 
 		void NewScene();
 		void OpenScene();
@@ -37,6 +38,8 @@ namespace Quark {
 		Entity mSquareEntity;
 		Entity mCameraEntity;
 		Entity mSecondCamera;
+
+		Entity mHoveredEntity;
 
 		bool mPrimaryCamera = true;
 

@@ -72,6 +72,17 @@ namespace Quark {
 			case ShaderDataType::Float2:
 			case ShaderDataType::Float3:
 			case ShaderDataType::Float4:
+			{
+				glEnableVertexAttribArray(mVertexBufferIndex);
+				glVertexAttribPointer(mVertexBufferIndex,
+					element.GetComponentCount(),
+					ShaderDataTypeToOpenGLBaseType(element.Type),
+					element.Normalized ? GL_TRUE : GL_FALSE,
+					layout.GetStride(),
+					(const void*)element.Offset);
+				mVertexBufferIndex++;
+				break;
+			}
 			case ShaderDataType::Int:
 			case ShaderDataType::Int2:
 			case ShaderDataType::Int3:
@@ -79,10 +90,9 @@ namespace Quark {
 			case ShaderDataType::Bool:
 			{
 				glEnableVertexAttribArray(mVertexBufferIndex);
-				glVertexAttribPointer(mVertexBufferIndex,
+				glVertexAttribIPointer(mVertexBufferIndex,
 					element.GetComponentCount(),
 					ShaderDataTypeToOpenGLBaseType(element.Type),
-					element.Normalized ? GL_TRUE : GL_FALSE,
 					layout.GetStride(),
 					(const void*)element.Offset);
 				mVertexBufferIndex++;
