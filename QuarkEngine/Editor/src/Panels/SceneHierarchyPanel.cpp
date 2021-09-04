@@ -1,3 +1,4 @@
+#include <filesystem>
 #include "SceneHierarchyPanel.h"
 
 #include <imgui/imgui.h>
@@ -8,6 +9,8 @@
 #include "Quark/Scene/Components.h"
 
 namespace Quark {
+
+	extern const std::filesystem::path gAssetPath;
 
 	SceneHierarchyPanel::SceneHierarchyPanel(const SPtr<Scene>& context)
 	{
@@ -44,7 +47,7 @@ namespace Quark {
 
 		ImGui::End();
 		ImGui::Begin("Properties");
-		if (!mSelectionContext.isNull())
+		if (mSelectionContext)
 		{
 			DrawComponents(mSelectionContext);
 		}
@@ -312,6 +315,20 @@ namespace Quark {
 		DrawComponent<SpriteRendererComponent>("Sprite Renderer", entity, [](auto& component)
 		{
 			ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
+
+			ImGui::Button("Texture", ImVec2(100.0f, 0.0f));
+			if (ImGui::BeginDragDropTarget())
+			{
+				if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+				{
+					const wchar_t* path = (const wchar_t*)payload->Data;
+					std::filesystem::path texturePath = std::filesystem::path(gAssetPath) / path;
+					component.Texture = Texture2D::Create(texturePath.string());
+				}
+				ImGui::EndDragDropTarget();
+			}
+
+			ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 		});
 	}
 }

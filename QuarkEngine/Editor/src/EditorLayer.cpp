@@ -15,6 +15,8 @@
 
 namespace Quark {
 
+	extern const std::filesystem::path gAssetPath;
+
 	EditorLayer::EditorLayer()
 		: Layer("EditorLayer"), mCameraController(1280.0f / 720.0f), mSquareColor({ 0.2f, 0.3f, 0.8f, 1.0f })
 	{
@@ -174,7 +176,7 @@ namespace Quark {
 		ImGui::Begin("Stats");
 
 		std::string name = "None";
-		if (!mHoveredEntity.isNull())
+		if (mHoveredEntity)
 			name = mHoveredEntity.GetComponent<TagComponent>().Tag;
 		ImGui::Text("Hovered Entity: %s", name.c_str());
 
@@ -201,6 +203,16 @@ namespace Quark {
 		uint64_t textureID = mFramebuffer->GetColorAttachmentRendererID();
 		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 } );
 		
+		if (ImGui::BeginDragDropTarget())
+		{
+			if (const ImGuiPayload* payload = ImGui::AcceptDragDropPayload("CONTENT_BROWSER_ITEM"))
+			{
+				const wchar_t* path = (const wchar_t*)payload->Data;
+				OpenScene(std::filesystem::path(gAssetPath) / path);
+			}
+			ImGui::EndDragDropTarget();
+		}
+
 		auto windowSize = ImGui::GetWindowSize();
 		ImVec2 minBound = ImGui::GetWindowPos();
 		minBound.x += viewportOffset.x;
@@ -212,7 +224,7 @@ namespace Quark {
 
 		// Gizmos
 		Entity selectedEntity = mSceneHierarchyPanel.GetSelectedEntity();
-		if (!selectedEntity.isNull() && mGizmoType != -1)
+		if (selectedEntity && mGizmoType != -1)
 		{
 			ImGuizmo::SetOrthographic(false);
 			ImGuizmo::SetDrawlist();
@@ -345,14 +357,17 @@ namespace Quark {
 	{
 		std::string filepath = FileDialogs::OpenFile("Quark Scene (*.quark)\0*.quark\0");
 		if (!filepath.empty())
-		{
-			mActiveScene = CreateSPtr<Scene>();
-			mActiveScene->OnViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
-			mSceneHierarchyPanel.SetContext(mActiveScene);
+			OpenScene(filepath);
+	}
 
-			SceneSerializer serializer(mActiveScene);
-			serializer.Deserialize(filepath);
-		}
+	void EditorLayer::OpenScene(const std::filesystem::path& path)
+	{
+		mActiveScene = CreateSPtr<Scene>();
+		mActiveScene->OnViewportResize((uint32_t)mViewportSize.x, (uint32_t)mViewportSize.y);
+		mSceneHierarchyPanel.SetContext(mActiveScene);
+
+		SceneSerializer serializer(mActiveScene);
+		serializer.Deserialize(path.string());
 	}
 
 	void EditorLayer::SaveSceneAs()
