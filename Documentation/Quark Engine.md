@@ -28,6 +28,28 @@ Quark Engine的整体架构图如下图所示。
 
 #### Third Part
 
+##### Assimp
+
+##### Glad
+
+##### GLFW
+
+##### ImGui
+
+##### Premake
+
+##### yaml
+
+##### ImGuizmo
+
+##### entt
+
+##### glm
+
+##### spdlog
+
+##### stb_image
+
 #### Platform Independent Layer
 
 #### Core System
@@ -40,11 +62,19 @@ Quark Engine的整体架构图如下图所示。
 
 ### Development Environment
 
+#### C++17
+
 #### Visual Studio 2017
 
 #### Python
 
+#### Lua
+
+#### GLSL
+
 ### Build
+
+Double left-click on GenerateProjects.bat
 
 ## Engine Documentation
 
@@ -56,40 +86,38 @@ Quark Engine的整体架构图如下图所示。
 
 #### Sprint1 Goal
 
-* ~~搭建GitHub仓库~~以及项目文件结构
-* Render Engine基础结构
-* Engine基础结构
-* 渲染图形
-* 事件系统基础结构
-* logger
+* ~~GitHub repo and Project build~~
+* ~~Basic Engine~~
+* ~~2D Renderer(Quad)~~
+* ~~Basica Events~~
+* ~~Logger~~
+* ~~Camera~~
 
-## Project Status
+#### Sprint2 Goal
 
-### Tasks
++ ~~Basica Editor~~
++ ~~Scene File IO~~
++ ~~Gizmo~~
++ ~~Texture~~
++ ~~ECS~~
 
-***
+#### Sprint3 Goal
 
-#### Task-0001	~~Interpolate keys for animations which has 360x rotation~~ 
++ ~~Drag/Drop Assets~~
++ ~~Input system~~
++ ~~Premake build Solution~~
++ ~~Basic Shader system~~
++ ~~Properties/Scene/Hierarchy/Assets panel~~
 
-Status: Finished
+#### Sprint4 Goal
 
-Description: 角度为-120°与240°、-180°与180°、360°与0°等等的旋转在Assimp中的mRotationKey是相同的，因此需要对动画进行插帧，否则动画将会产生无旋转或者异常旋转的情况。
++ Assimp import model(.obj/.fbx)
++ Skeleton animation
++ Skybox
++ Basic Material
++ Basic 3D Renderer
 
-Conclusion: 在FBXConverter的GenerateSimpleNodeAnim函数中进行插帧操作。
-
-***
-
-#### Task-0002	~~Binding pose has missing nodes~~
-
-Status: Finished
-
-Description: 有些模型文件会缺失Bind Pose的联系，即Bone与Curve Node的联系，对应的tag将会为NULL，从而使得模型导入后pose设置错误，模型动作抽象。
-
-Conclusion: 在FBXDocument中记录null节点，进而联系到对应的model，对于model的名字进行控制台报错输出。
-
----
-
-### Bugs
+#### Sprint5 Goal
 
 ## Road Map
 
