@@ -27,6 +27,7 @@ namespace Quark {
 		mCheckerboardTexture = Quark::Texture2D::Create("assets/textures/scene.jpg");
 
 		Quark::FramebufferSpecification fbSpec;
+		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
 		mFramebuffer = Framebuffer::Create(fbSpec);
@@ -69,8 +70,25 @@ namespace Quark {
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.1f, 1 });
 		RenderCommand::Clear();
 
+		// Clear our entity ID attachment to -1
+		mFramebuffer->ClearAttachment(1, -1);
+
 		// Update scene
 		mActiveScene->OnUpdateEditor(ts, mEditorCamera);
+
+		auto[mx, my] = ImGui::GetMousePos();
+		mx -= mViewportBounds[0].x;
+		my -= mViewportBounds[0].y;
+		glm::vec2 viewportSize = mViewportBounds[1] - mViewportBounds[0];
+		my = viewportSize.y - my;
+		int mouseX = (int)mx;
+		int mouseY = (int)my;
+
+		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
+		{
+			int pixelData = mFramebuffer->ReadPixel(1, mouseX, mouseY);
+			QK_CORE_WARNING("Pixel data = {0}", pixelData);
+		}
 
 		mFramebuffer->Unbind();
 	}
@@ -165,6 +183,7 @@ namespace Quark {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
+		auto viewportOffset = ImGui::GetCursorPos(); // Includes tab bar
 
 		mViewportFocused = ImGui::IsWindowFocused();
 		mViewportHovered = ImGui::IsWindowHovered();
@@ -176,6 +195,15 @@ namespace Quark {
 		uint64_t textureID = mFramebuffer->GetColorAttachmentRendererID();
 		ImGui::Image(reinterpret_cast<void*>(textureID), ImVec2{ mViewportSize.x, mViewportSize.y }, ImVec2{ 0, 1 }, ImVec2{ 1, 0 } );
 		
+		auto windowSize = ImGui::GetWindowSize();
+		ImVec2 minBound = ImGui::GetWindowPos();
+		minBound.x += viewportOffset.x;
+		minBound.y += viewportOffset.y;
+
+		ImVec2 maxBound = { minBound.x + windowSize.x, minBound.y + windowSize.y };
+		mViewportBounds[0] = { minBound.x, minBound.y };
+		mViewportBounds[1] = { maxBound.x, maxBound.y };
+
 		// Gizmos
 		Entity selectedEntity = mSceneHierarchyPanel.GetSelectedEntity();
 		if (!selectedEntity.isNull() && mGizmoType != -1)

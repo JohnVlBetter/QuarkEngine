@@ -58,7 +58,7 @@ namespace Quark {
 			{ ShaderDataType::Float2, "a_TexCoord" },
 			{ ShaderDataType::Float, "a_TexIndex" },
 			{ ShaderDataType::Float, "a_TilingFactor" }
-			});
+		});
 		sData.QuadVertexArray->AddVertexBuffer(sData.QuadVertexBuffer);
 
 		sData.QuadVertexBufferBase = new QuadVertex[sData.MaxVertices];
