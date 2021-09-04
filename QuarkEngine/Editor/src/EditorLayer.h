@@ -2,6 +2,7 @@
 
 #include "Quark.h"
 #include "Panels/SceneHierarchyPanel.h"
+#include "Panels/ContentBrowserPanel.h"
 
 #include "Quark/Renderer/EditorCamera.h"
 
@@ -57,5 +58,6 @@ namespace Quark {
 
 		// Panels
 		SceneHierarchyPanel mSceneHierarchyPanel;
+		ContentBrowserPanel mContentBrowserPanel;
 	};
 }

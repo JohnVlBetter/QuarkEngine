@@ -169,6 +169,7 @@ namespace Quark {
 			ImGui::EndMenuBar();
 		}
 		mSceneHierarchyPanel.OnImGuiRender();
+		mContentBrowserPanel.OnImGuiRender();
 
 		ImGui::Begin("Stats");
 

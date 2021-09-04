@@ -28,6 +28,9 @@
     <Filter Include="src\Quark\ImGui">
       <UniqueIdentifier>{8A208506-F6AB-F2CA-FFBC-75BF6BC74ECB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Quark\Math">
+      <UniqueIdentifier>{392463BA-25F2-56C0-0E86-C7E6FAF23225}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Quark\Renderer">
       <UniqueIdentifier>{06B38086-F296-41DC-5BF7-3B2F47FA2B5E}</UniqueIdentifier>
     </Filter>
@@ -63,9 +66,6 @@
     </Filter>
     <Filter Include="third\stb_image">
       <UniqueIdentifier>{5A50E696-C6DB-535B-CFEC-D64F3BF7AF5B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="src\Quark\Math">
-      <UniqueIdentifier>{7f83c04b-e65c-44b2-b326-134bd42c2dcf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1377,6 +1377,9 @@
     <ClInclude Include="src\Quark\Core\PlatformDetection.h">
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Core\Timer.h">
+      <Filter>src\Quark\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Core\Timestep.h">
       <Filter>src\Quark\Core</Filter>
     </ClInclude>
@@ -1401,10 +1404,16 @@
     <ClInclude Include="src\Quark\ImGui\ImGuiLayer.h">
       <Filter>src\Quark\ImGui</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Math\Math.h">
+      <Filter>src\Quark\Math</Filter>
+    </ClInclude>
     <ClInclude Include="src\Quark\Renderer\Buffer.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Renderer\Camera.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\EditorCamera.h">
       <Filter>src\Quark\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\Quark\Renderer\Framebuffer.h">
@@ -1464,12 +1473,6 @@
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Quark\Math\Math.h">
-      <Filter>src\Quark\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Quark\Renderer\EditorCamera.h">
-      <Filter>src\Quark\Renderer</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\ImGuizmo\ImGuizmo.cpp">
@@ -1526,7 +1529,13 @@
     <ClCompile Include="src\Quark\ImGui\ImGuiLayer.cpp">
       <Filter>src\Quark\ImGui</Filter>
     </ClCompile>
+    <ClCompile Include="src\Quark\Math\Math.cpp">
+      <Filter>src\Quark\Math</Filter>
+    </ClCompile>
     <ClCompile Include="src\Quark\Renderer\Buffer.cpp">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\EditorCamera.cpp">
       <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\Quark\Renderer\Framebuffer.cpp">
@@ -1576,12 +1585,6 @@
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Quark\Math\Math.cpp">
-      <Filter>src\Quark\Math</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Quark\Renderer\EditorCamera.cpp">
-      <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
