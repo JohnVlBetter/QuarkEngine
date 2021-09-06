@@ -11,7 +11,11 @@ namespace Quark {
 	void Renderer::Init()
 	{
 		QK_PROFILE_FUNCTION();
-
+		Assimp::Importer importer;
+		const aiScene* scene = importer.ReadFile("D:/Workspace/EngineSpace/QuarkEngine/QuarkEngine/Model/nanosuit.obj", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+		if (scene->HasMeshes()) {
+			QK_CORE_ERROR(scene->mNumMeshes);
+		}
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}

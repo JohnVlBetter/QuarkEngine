@@ -5,6 +5,10 @@
 #include "Quark/Renderer/OrthographicCamera.h"
 #include "Quark/Renderer/Shader.h"
 
+#include <assimp/Importer.hpp>
+#include <assimp/scene.h>
+#include <assimp/postprocess.h>
+
 namespace Quark {
 
 	class Renderer
