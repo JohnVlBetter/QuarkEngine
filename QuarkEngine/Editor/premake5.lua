@@ -19,7 +19,8 @@ project "Editor"
 		"%{wks.location}/QuarkEngine/src",
 		"%{wks.location}/third",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.assimp}"
 	}
 
 	links

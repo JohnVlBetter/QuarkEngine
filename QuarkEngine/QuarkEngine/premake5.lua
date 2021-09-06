@@ -40,7 +40,8 @@ project "QuarkEngine"
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
-		"%{IncludeDir.ImGuizmo}"
+		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.assimp}"
 	}
 
 	links
@@ -49,7 +50,8 @@ project "QuarkEngine"
 		"Glad",
 		"ImGui",
 		"yaml-cpp",
-		"opengl32.lib"
+		"opengl32.lib",
+		"../third/assimp/lib/assimp-vc141-mtd.lib"
 	}
 
 	filter "system:windows"
