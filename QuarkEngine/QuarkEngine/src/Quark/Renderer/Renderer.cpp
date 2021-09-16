@@ -1,6 +1,6 @@
 #include "qkpch.h"
 #include "Quark/Renderer/Renderer.h"
-
+#include "Model.h"
 #include "Platform/OpenGL/OpenGLShader.h"
 #include "Quark/Renderer/Renderer2D.h"
 
@@ -11,11 +11,7 @@ namespace Quark {
 	void Renderer::Init()
 	{
 		QK_PROFILE_FUNCTION();
-		Assimp::Importer importer;
-		const aiScene* scene = importer.ReadFile("D:/Workspace/EngineSpace/QuarkEngine/QuarkEngine/Model/nanosuit.obj", aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
-		if (scene->HasMeshes()) {
-			QK_CORE_ERROR(scene->mNumMeshes);
-		}
+		Model* model = new Model("D:/Workspace/EngineSpace/QuarkEngine/QuarkEngine/Model/nanosuit.obj");
 		RenderCommand::Init();
 		Renderer2D::Init();
 	}

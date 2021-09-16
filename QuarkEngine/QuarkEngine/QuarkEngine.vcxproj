@@ -592,6 +592,8 @@
     <ClInclude Include="src\Quark\Renderer\EditorCamera.h" />
     <ClInclude Include="src\Quark\Renderer\Framebuffer.h" />
     <ClInclude Include="src\Quark\Renderer\GraphicsContext.h" />
+    <ClInclude Include="src\Quark\Renderer\Mesh.h" />
+    <ClInclude Include="src\Quark\Renderer\Model.h" />
     <ClInclude Include="src\Quark\Renderer\OrthographicCamera.h" />
     <ClInclude Include="src\Quark\Renderer\OrthographicCameraController.h" />
     <ClInclude Include="src\Quark\Renderer\RenderCommand.h" />
@@ -634,6 +636,8 @@
     <ClCompile Include="src\Quark\Renderer\EditorCamera.cpp" />
     <ClCompile Include="src\Quark\Renderer\Framebuffer.cpp" />
     <ClCompile Include="src\Quark\Renderer\GraphicsContext.cpp" />
+    <ClCompile Include="src\Quark\Renderer\Mesh.cpp" />
+    <ClCompile Include="src\Quark\Renderer\Model.cpp" />
     <ClCompile Include="src\Quark\Renderer\OrthographicCamera.cpp" />
     <ClCompile Include="src\Quark\Renderer\OrthographicCameraController.cpp" />
     <ClCompile Include="src\Quark\Renderer\RenderCommand.cpp" />

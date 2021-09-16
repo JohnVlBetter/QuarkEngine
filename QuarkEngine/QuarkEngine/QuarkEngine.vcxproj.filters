@@ -1473,6 +1473,12 @@
     <ClInclude Include="src\qkpch.h">
       <Filter>src</Filter>
     </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\Mesh.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Quark\Renderer\Model.h">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\third\ImGuizmo\ImGuizmo.cpp">
@@ -1585,6 +1591,12 @@
     </ClCompile>
     <ClCompile Include="src\qkpch.cpp">
       <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\Mesh.cpp">
+      <Filter>src\Quark\Renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Quark\Renderer\Model.cpp">
+      <Filter>src\Quark\Renderer</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
